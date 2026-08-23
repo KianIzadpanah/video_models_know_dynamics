@@ -8,16 +8,26 @@
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="../assets/site.css">
 <script>
-/* set the theme before first paint so there is no flash */
-try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+/* Set the theme and the sidebar state before first paint so neither flashes.
+   The sidebar state has to be persisted rather than held in memory: this is a
+   real multi-page site, so clicking a nav link is a full page load and any
+   in-memory "collapsed" flag would be lost on every navigation. */
+(function(){
+  try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+  var n;
+  try{n=localStorage.getItem('vmkd-nav');}catch(e){}
+  if(n!=='open'&&n!=='closed')n=window.innerWidth<941?'closed':'open';
+  document.documentElement.setAttribute('data-nav',n);
+})();
 </script>
 </head>
-<body class="has-toc">
+<body>
 
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="topbar">
-  <button class="burger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+  <button class="burger" type="button" aria-label="Show or hide navigation"
+          title="Show or hide navigation (n)" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
   <div class="crumbs"><a href="../index.html">VMKD</a><span class="sep">/</span><a href="../exp0/overview.html">Exp 0</a><span class="sep">/</span><span>Reading the clips</span></div>
@@ -130,7 +140,6 @@ a property of the motion.</figcaption></figure>
       <nav class="pagenav"><a class="pg prev" href="../exp0/setup.html"><span>Previous</span><strong>Setup</strong></a><a class="pg next" href="../exp0/result-box.html"><span>Next</span><strong>Result 1 · box (heavy/light)</strong></a></nav>
       <footer class="pagefoot">Experiment log &middot; built from Markdown by <code>build.py</code>. Clips are web-sized transcodes; full-resolution originals stay in the experiment folders.</footer>
     </article>
-    <aside class="toc"><div class="toc-t">On this page</div><ul><li class="l2"><a href="#1-clip-lengths-differ-between-arms">1. Clip lengths differ between arms</a></li><li class="l2"><a href="#2-motiongpt3-chooses-its-own-clip-length">2. MotionGPT3 chooses its own clip length</a></li><li class="l2"><a href="#3-the-i2v-seed-frame-is-a-neutral-standing-pose">3. The I2V seed frame is a neutral standing pose</a></li><li class="l2"><a href="#4-the-blue-character-survives-into-the-video-arms">4. The blue character survives into the video arms</a></li><li class="l2"><a href="#5-audio-is-dropped">5. Audio is dropped</a></li><li class="l2"><a href="#consequences-for-what-can-be-claimed">Consequences for what can be claimed</a></li></ul></aside>
   </main>
 </div>
 

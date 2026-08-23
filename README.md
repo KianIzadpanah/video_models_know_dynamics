@@ -454,6 +454,18 @@ Things that were deliberate, in case you want to change them:
   real URL, so deep links, browser history, print and search engines all just
   work. The sidebar is rendered into every page server-side, which means the nav
   is visible even with JavaScript disabled.
+- **The sidebar collapses on navigation, and the state is persisted.** Picking a
+  page hides the sidebar so the clips get the whole window; the burger in the top
+  bar (or `n`) brings it back. Because this is a real multi-page site, the state
+  *has* to live in `localStorage` — an in-memory flag would reset on every
+  navigation and the sidebar would spring open again on each page. It is applied
+  by an inline script in `<head>`, before first paint, so nothing flashes. Below
+  940 px the same state drives an overlay drawer instead of a column, so opening
+  it never squeezes the clips.
+- **There is no "on this page" rail.** It cost ~230 px of width on every page and
+  earned it on almost none: the result pages are five or six headings long and the
+  headings are visible anyway. Headings keep their `id`s and their `#` anchor
+  links, so cross-page deep links still work. The width went to the clip grids.
 - **All internal paths are relative.** The site works at any subpath, at a domain
   root, and by opening `docs/index.html` off the filesystem. Nothing needs a
   configured base URL.
@@ -475,10 +487,11 @@ Things that were deliberate, in case you want to change them:
 
 | key | action |
 |---|---|
+| `n` | show / hide the sidebar |
 | `/` | focus the sidebar filter |
 | `r` | replay all visible clips in sync |
 | `p` | pause / play all |
 | click a clip | open the frame-stepper |
 | `←` `→` or `,` `.` | step one frame (in the frame-stepper) |
 | `space` | play / pause (in the frame-stepper) |
-| `Esc` | close |
+| `Esc` | close the frame-stepper, or the sidebar |

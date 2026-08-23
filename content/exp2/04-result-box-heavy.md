@@ -26,7 +26,7 @@ lead: "a person lifts a heavy box from the floor" — 121 frames @ 25 fps, 512×
 
 ## Timing strip — all eleven sets, time-aligned
 
-::: clips arms=strip ids=box_heavy seeds=1234,5678 width=760px
+::: clips arms=strip ids=box_heavy seeds=1234,5678 width=1000px
 :::
 
 [Observations, numbers and caveats for this prompt →](observations.html#box-heavy)

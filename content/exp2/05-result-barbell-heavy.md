@@ -26,7 +26,7 @@ lead: "a person lifts a heavy barbell from the ground" — 121 frames @ 25 fps, 
 
 ## Timing strip — all eleven sets, time-aligned
 
-::: clips arms=strip ids=barbell_heavy seeds=1234,5678 width=760px
+::: clips arms=strip ids=barbell_heavy seeds=1234,5678 width=1000px
 :::
 
 [Observations, numbers and caveats for this prompt →](observations.html#barbell-heavy)

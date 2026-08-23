@@ -916,14 +916,6 @@ def toolbar_html(seeds: list[str]) -> str:
 </div>"""
 
 
-def toc_html(headings) -> str:
-    if len(headings) < 2:
-        return ""
-    items = "".join(
-        f'<li class="l{lv}"><a href="#{hid}">{txt}</a></li>' for lv, hid, txt in headings)
-    return f'<aside class="toc"><div class="toc-t">On this page</div><ul>{items}</ul></aside>'
-
-
 def pagenav_html(page: Page, flat: list[Page], rel: str) -> str:
     try:
         i = flat.index(page)
@@ -1143,12 +1135,10 @@ def write_page(p: Page, template: str, site, exps, flat) -> None:
         "LANG": site.get("lang", "en"),
         "TITLE": f"{p.title} · {site.get('short_title', site.get('title', ''))}",
         "DESC": (p.lead or site.get("description", "")).replace('"', "&quot;"),
-        "BODY_CLASS": "has-toc" if len(p.headings) >= 2 else "",
         "SIDEBAR": sidebar_html(site, exps, p, rel),
         "BREADCRUMB": '<span class="sep">/</span>'.join(crumbs),
         "PAGEHEAD": "".join(b for b in head_bits if b),
         "TOOLBAR": toolbar_html(seeds if p.ctx.has_clips else []),
-        "TOC": toc_html(p.headings),
         "CONTENT": p.html,
         "PAGENAV": pagenav_html(p, flat, rel) if exp else "",
         "FOOTER": site.get("footer", ""),
@@ -1165,10 +1155,10 @@ def write_404(template, site, exps, flat) -> None:
     subs = {
         "REL": "", "LANG": site.get("lang", "en"),
         "TITLE": f"Not found · {site.get('short_title', '')}", "DESC": "",
-        "BODY_CLASS": "", "SIDEBAR": sidebar_html(site, exps, None, ""),
+        "SIDEBAR": sidebar_html(site, exps, None, ""),
         "BREADCRUMB": '<span>404</span>',
         "PAGEHEAD": '<h1>Page not found</h1><p class="lead">That page moved or never existed.</p>',
-        "TOOLBAR": "", "TOC": "",
+        "TOOLBAR": "",
         "CONTENT": '<p><a href="index.html">Back to the experiment index</a>.</p>',
         "PAGENAV": "", "FOOTER": site.get("footer", ""),
     }

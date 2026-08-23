@@ -31,7 +31,7 @@ lead: "a person throws right and left punches" — 121 frames @ 25 fps in and ou
 
 ## Timing strip — input above every return, all twelve conditions
 
-::: clips arms=strip ids=punch seeds=1234,5678 width=760px
+::: clips arms=strip ids=punch seeds=1234,5678 width=1000px
 :::
 
 [Observations, numbers and caveats for this prompt →](observations.html#punch)

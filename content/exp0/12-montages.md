@@ -15,7 +15,7 @@ final second of each montage.
 
 ## Everything in one clip
 
-::: clips arms=all seeds=0,1,2 size=lg width=620px
+::: clips arms=all seeds=0,1,2 size=lg width=860px
 `all_s{seed}.mp4` — one row per prompt with matched pairs adjacent, all nine
 prompts and all three arms in a single file. The fastest way to get an overall
 impression before looking at anything closely.
@@ -37,7 +37,7 @@ The push pair and the three unloaded controls, composed.
 
 One file per pair, heavy above light, across all three arms.
 
-::: clips arms=pair seeds=0,1,2 ids=box,barbell,push size=lg width=900px
+::: clips arms=pair seeds=0,1,2 ids=box,barbell,push size=lg width=1180px
 `pair_{pair}_s{seed}.mp4` — the cleanest single-file view of the central
 comparison. Each file holds six tiles: two prompts × three arms.
 :::

@@ -28,7 +28,11 @@
   --shadow:0 1px 2px rgba(16,20,28,.05), 0 4px 14px rgba(16,20,28,.05);
   --shadow-lg:0 10px 40px rgba(16,20,28,.18);
   --sidebar-w:294px;
-  --toc-w:210px;
+  /* Wider than it looks: with the sidebar collapsed and no "on this page" rail,
+     this is the whole window, and the clip grids are what fills it. Capped
+     because the exp1/exp2 sources are natively 512px square -- a cell much wider
+     than that is upscaling, not detail. */
+  --content-w:1680px;
   --radius:10px;
   --mono:ui-monospace,"SF Mono",SFMono-Regular,"JetBrains Mono",Menlo,Consolas,monospace;
   --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
@@ -98,7 +102,8 @@ a:hover{text-decoration:underline;text-underline-offset:2px}
   color:var(--muted);cursor:pointer;padding:0;
 }
 .themebtn:hover,.burger:hover{color:var(--accent);border-color:var(--accent)}
-.burger{display:none}
+.burger{display:grid;place-items:center}
+html[data-nav="open"] .burger{color:var(--accent);border-color:var(--accent)}
 .burger span{display:block;width:15px;height:1.5px;background:currentColor;margin:2px 0;border-radius:2px}
 .moon{display:none}
 :root[data-theme="dark"] .sun{display:none}
@@ -116,10 +121,13 @@ a:hover{text-decoration:underline;text-underline-offset:2px}
   padding:18px 12px 40px;border-right:1px solid var(--line);
   background:var(--panel);
 }
-main{flex:1;min-width:0;display:flex;gap:26px;align-items:flex-start;
-  padding:34px 34px 70px;max-width:1440px;margin:0 auto}
-.page{flex:1;min-width:0;max-width:none}
-body:not(.has-toc) .page{max-width:none}
+/* Collapsed, the sidebar leaves the flow entirely rather than shrinking to a
+   rail, so the content column gets all of the width back. */
+@media (min-width:941px){
+  html[data-nav="closed"] .sidebar{display:none}
+}
+main{flex:1;min-width:0;padding:34px 34px 70px;max-width:var(--content-w);margin:0 auto}
+.page{min-width:0;max-width:none}
 
 /* ---------- sidebar ---------- */
 .side-home{display:block;padding:8px 10px 12px;border-radius:8px;color:var(--ink)}
@@ -400,22 +408,6 @@ a.pg:hover{border-color:var(--accent);text-decoration:none}
 .pagefoot{margin-top:2.4em;font-size:11.8px;color:var(--faint);line-height:1.6}
 .pagefoot a{color:var(--muted)}
 
-/* ---------- toc ---------- */
-.toc{
-  position:sticky;top:74px;flex:none;width:var(--toc-w);
-  max-height:calc(100vh - 110px);overflow-y:auto;
-  font-size:12.4px;padding-left:16px;border-left:1px solid var(--line);
-}
-body:not(.has-toc) .toc{display:none}
-.toc-t{font:600 10px/1.4 var(--mono);letter-spacing:.09em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:9px}
-.toc ul{list-style:none;margin:0;padding:0}
-.toc li{margin:0}
-.toc a{display:block;padding:3.5px 0;color:var(--muted);line-height:1.45}
-.toc a:hover{color:var(--ink);text-decoration:none}
-.toc li.l3 a{padding-left:13px;font-size:11.9px}
-.toc a.on{color:var(--accent);font-weight:600}
-
 /* ---------- home ---------- */
 .cards{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
   margin:0 0 2em}
@@ -466,17 +458,17 @@ a.card:hover{border-color:var(--accent);text-decoration:none;transform:translate
 
 /* ---------- responsive ---------- */
 @media (max-width:1180px){
-  body.has-toc .toc{display:none}
   main{padding:30px 26px 60px}
 }
 @media (max-width:940px){
-  .burger{display:grid}
+  /* Below this width the sidebar is an overlay drawer rather than a column, so
+     that opening it never squeezes the clips. Same state, different presentation. */
   .sidebar{
     position:fixed;left:0;top:50px;z-index:35;width:min(320px,86vw);
     transform:translateX(-102%);transition:transform .2s ease;box-shadow:var(--shadow-lg);
   }
-  body.nav-open .sidebar{transform:none}
-  body.nav-open .scrim{display:block;position:fixed;inset:50px 0 0;z-index:30;
+  html[data-nav="open"] .sidebar{transform:none}
+  html[data-nav="open"] .scrim{display:block;position:fixed;inset:50px 0 0;z-index:30;
     background:rgba(6,8,12,.45)}
   .scrim[hidden]{display:none}
   main{padding:24px 18px 56px}
@@ -499,7 +491,7 @@ a.card:hover{border-color:var(--accent);text-decoration:none;transform:translate
   *{transition:none!important;animation:none!important}
 }
 @media print{
-  .topbar,.sidebar,.toc,.toolbar,.pagenav,.scrim,.lightbox,.zoom{display:none!important}
+  .topbar,.sidebar,.toolbar,.pagenav,.scrim,.lightbox,.zoom{display:none!important}
   main{padding:0;max-width:none}
   body{font-size:10.5pt}
   .clip{break-inside:avoid}

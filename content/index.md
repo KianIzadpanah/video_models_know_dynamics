@@ -89,6 +89,9 @@ The split is deliberate. A result page is meant to go on a projector — heading
 name the conditioning set and the frame indices, and the clips underneath. Everything
 that needs reading rather than watching lives on the Observations page.
 
+**Picking a page hides the sidebar**, so the clips get the whole window. The button at
+the top left, or `n`, brings it back.
+
 Clips autoplay muted and loop. The toolbar at the top of a results page switches
 seed, slows playback to ½× or ¼×, and restarts everything from *t = 0* together —
 which matters, because the arms have different clip lengths. Click any clip to open
@@ -104,7 +107,7 @@ frame rate, clip length and visual style by construction, and those differences 
 documented per experiment rather than normalised away.
 
 ::: method title="Keyboard shortcuts"
-`/` focus the sidebar filter · `r` replay all visible clips in sync · `p` pause or
-play all · click a clip to open it · `←` `→` step one frame · `space` play/pause ·
-`Esc` close.
+`n` show or hide the sidebar · `/` focus the sidebar filter · `r` replay all visible
+clips in sync · `p` pause or play all · click a clip to open it · `←` `→` step one
+frame · `space` play/pause · `Esc` close.
 :::

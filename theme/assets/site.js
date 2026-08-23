@@ -24,20 +24,47 @@
     });
   }
 
-  /* -------------------------------------------------------- mobile sidebar */
+  /* ------------------------------------------------------------------- nav */
+  /* The sidebar state lives in localStorage and is applied before first paint by
+     the inline script in the page head. It has to be persisted: every nav link is
+     a real page load, so an in-memory flag would reset on each navigation and the
+     sidebar would spring back open every time you picked a page. */
+  var root = document.documentElement;
   var burger = document.querySelector('.burger');
   var scrim = document.querySelector('.scrim');
-  function closeNav() {
-    document.body.classList.remove('nav-open');
-    if (burger) burger.setAttribute('aria-expanded', 'false');
+
+  function navState() {
+    return root.getAttribute('data-nav') === 'open' ? 'open' : 'closed';
   }
+
+  function setNav(state, remember) {
+    root.setAttribute('data-nav', state);
+    if (burger) burger.setAttribute('aria-expanded', String(state === 'open'));
+    if (remember !== false) STORE.set('nav', state);
+  }
+
+  setNav(navState(), false);          // sync aria to whatever the head script chose
+
   if (burger) {
     burger.addEventListener('click', function () {
-      var open = document.body.classList.toggle('nav-open');
-      burger.setAttribute('aria-expanded', String(open));
+      setNav(navState() === 'open' ? 'closed' : 'open');
     });
   }
-  if (scrim) scrim.addEventListener('click', closeNav);
+  if (scrim) scrim.addEventListener('click', function () { setNav('closed'); });
+
+  /* Picking a page collapses the sidebar, so the clips get the full width on the
+     page you actually wanted to look at. Only page links do this -- the group
+     headers expand and collapse an experiment and must leave the sidebar open. */
+  var sideEl = document.getElementById('sidebar');
+  if (sideEl) {
+    sideEl.addEventListener('click', function (e) {
+      var a = e.target.closest('a');
+      if (!a) return;
+      if (a.closest('.exp-pages') || a.classList.contains('side-home')) {
+        setNav('closed');
+      }
+    });
+  }
 
   /* ------------------------------------------------- sidebar groups + filter */
   document.querySelectorAll('.exp-h').forEach(function (h) {
@@ -318,34 +345,14 @@
     });
   }
 
-  /* ------------------------------------------------------------ toc + keys */
-  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
-  if (tocLinks.length && 'IntersectionObserver' in window) {
-    var heads = tocLinks
-      .map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
-      .filter(Boolean);
-    var seen = new Set();
-    var tio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) seen.add(e.target.id); else seen.delete(e.target.id);
-      });
-      var firstId = null;
-      for (var i = 0; i < heads.length; i++) {
-        if (seen.has(heads[i].id)) { firstId = heads[i].id; break; }
-      }
-      tocLinks.forEach(function (a) {
-        a.classList.toggle('on', firstId !== null && a.getAttribute('href') === '#' + firstId);
-      });
-    }, { rootMargin: '-64px 0px -70% 0px' });
-    heads.forEach(function (h) { tio.observe(h); });
-  }
-
+  /* ------------------------------------------------------------------ keys */
   document.addEventListener('keydown', function (e) {
     if (e.target.matches('input,textarea,select') || e.metaKey || e.ctrlKey || e.altKey) return;
     if (!document.querySelector('.lightbox[hidden]')) return;   // lightbox owns keys
     if (e.key === '/') { e.preventDefault(); if (filter) { filter.focus(); filter.select(); } }
     else if (e.key === 'r' && toolbar) { syncReplay(); }
     else if (e.key === 'p' && toolbar) { togglePlay(); }
-    else if (e.key === 'Escape') { closeNav(); }
+    else if (e.key === 'n') { setNav(navState() === 'open' ? 'closed' : 'open'); }
+    else if (e.key === 'Escape') { setNav('closed'); }
   });
 })();

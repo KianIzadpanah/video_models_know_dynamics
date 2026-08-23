@@ -8,16 +8,26 @@
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="assets/site.css">
 <script>
-/* set the theme before first paint so there is no flash */
-try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+/* Set the theme and the sidebar state before first paint so neither flashes.
+   The sidebar state has to be persisted rather than held in memory: this is a
+   real multi-page site, so clicking a nav link is a full page load and any
+   in-memory "collapsed" flag would be lost on every navigation. */
+(function(){
+  try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+  var n;
+  try{n=localStorage.getItem('vmkd-nav');}catch(e){}
+  if(n!=='open'&&n!=='closed')n=window.innerWidth<941?'closed':'open';
+  document.documentElement.setAttribute('data-nav',n);
+})();
 </script>
 </head>
-<body class="has-toc">
+<body>
 
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="topbar">
-  <button class="burger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+  <button class="burger" type="button" aria-label="Show or hide navigation"
+          title="Show or hide navigation (n)" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
   <div class="crumbs"><a href="index.html">VMKD</a><span class="sep">/</span><span>Video Models Know Dynamics</span></div>
@@ -137,13 +147,13 @@ try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.datas
 <h2 id="how-to-read-these-pages">How to read these pages<a class="anchor" href="#how-to-read-these-pages" aria-label="link to this section">#</a></h2>
 <aside class="callout note"><div class="callout-title">Conventions used throughout</div><div class="callout-body"><p>Every experiment is split into short pages: what the question was, how it was set up, what to watch for, then <strong>one page per prompt</strong> carrying nothing but that prompt's clips, then an <strong>Observations</strong> page holding the discussion and the numbers, then a verdict and provenance.</p>
 <p>The split is deliberate. A result page is meant to go on a projector — headings that name the conditioning set and the frame indices, and the clips underneath. Everything that needs reading rather than watching lives on the Observations page.</p>
+<p><strong>Picking a page hides the sidebar</strong>, so the clips get the whole window. The button at the top left, or <code>n</code>, brings it back.</p>
 <p>Clips autoplay muted and loop. The toolbar at the top of a results page switches seed, slows playback to ½× or ¼×, and restarts everything from <em>t = 0</em> together — which matters, because the arms have different clip lengths. Click any clip to open it full-size and step through it a frame at a time. Click a timing strip to open it full-size and scroll it.</p></div></aside>
 <p>Comparisons are always laid out so that the thing being compared sits <strong>inside one block</strong>. Where a prompt has a matched heavy/light counterpart, the two are adjacent rows of the same grid; where a returned motion has a source video, they are adjacent cells. Comparing across blocks is not meaningful: the arms differ in resolution, frame rate, clip length and visual style by construction, and those differences are documented per experiment rather than normalised away.</p>
-<aside class="callout method"><div class="callout-title">Keyboard shortcuts</div><div class="callout-body"><p><code>/</code> focus the sidebar filter · <code>r</code> replay all visible clips in sync · <code>p</code> pause or play all · click a clip to open it · <code>←</code> <code>→</code> step one frame · <code>space</code> play/pause · <code>Esc</code> close.</p></div></aside></div>
+<aside class="callout method"><div class="callout-title">Keyboard shortcuts</div><div class="callout-body"><p><code>n</code> show or hide the sidebar · <code>/</code> focus the sidebar filter · <code>r</code> replay all visible clips in sync · <code>p</code> pause or play all · click a clip to open it · <code>←</code> <code>→</code> step one frame · <code>space</code> play/pause · <code>Esc</code> close.</p></div></aside></div>
       
       <footer class="pagefoot">Experiment log &middot; built from Markdown by <code>build.py</code>. Clips are web-sized transcodes; full-resolution originals stay in the experiment folders.</footer>
     </article>
-    <aside class="toc"><div class="toc-t">On this page</div><ul><li class="l2"><a href="#the-question-behind-the-log">The question behind the log</a></li><li class="l2"><a href="#experiments">Experiments</a></li><li class="l2"><a href="#what-the-three-experiments-add-up-to">What the three experiments add up to</a></li><li class="l2"><a href="#how-to-read-these-pages">How to read these pages</a></li></ul></aside>
   </main>
 </div>
 

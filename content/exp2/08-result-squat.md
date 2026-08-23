@@ -31,7 +31,7 @@ lead: "a person squats down" — 121 frames @ 25 fps, 512×512, seeds 1234 and 5
 
 ## Timing strip — all eleven sets, time-aligned
 
-::: clips arms=strip ids=squat seeds=1234,5678 width=760px
+::: clips arms=strip ids=squat seeds=1234,5678 width=1000px
 :::
 
 [Observations, numbers and caveats for this prompt →](observations.html#squat)

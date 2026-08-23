@@ -8,16 +8,26 @@
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="assets/site.css">
 <script>
-/* set the theme before first paint so there is no flash */
-try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+/* Set the theme and the sidebar state before first paint so neither flashes.
+   The sidebar state has to be persisted rather than held in memory: this is a
+   real multi-page site, so clicking a nav link is a full page load and any
+   in-memory "collapsed" flag would be lost on every navigation. */
+(function(){
+  try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+  var n;
+  try{n=localStorage.getItem('vmkd-nav');}catch(e){}
+  if(n!=='open'&&n!=='closed')n=window.innerWidth<941?'closed':'open';
+  document.documentElement.setAttribute('data-nav',n);
+})();
 </script>
 </head>
-<body class="">
+<body>
 
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="topbar">
-  <button class="burger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+  <button class="burger" type="button" aria-label="Show or hide navigation"
+          title="Show or hide navigation (n)" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
   <div class="crumbs"><span>404</span></div>
@@ -99,7 +109,6 @@ try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.datas
       
       <footer class="pagefoot">Experiment log &middot; built from Markdown by <code>build.py</code>. Clips are web-sized transcodes; full-resolution originals stay in the experiment folders.</footer>
     </article>
-    
   </main>
 </div>
 

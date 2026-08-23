@@ -36,7 +36,7 @@ lead: "a person lifts a heavy box from the floor" — 121 frames @ 25 fps in and
 
 ## Timing strip — input above every return, all twelve conditions
 
-::: clips arms=strip ids=box_heavy seeds=1234,5678 width=760px
+::: clips arms=strip ids=box_heavy seeds=1234,5678 width=1000px
 :::
 
 [Observations, numbers and caveats for this prompt →](observations.html#box-heavy)
