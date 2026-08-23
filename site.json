@@ -1,0 +1,21 @@
+{
+  "title": "Video Models Know Dynamics",
+  "short_title": "VMKD",
+  "subtitle": "Experiment log",
+  "description": "An experiment log on whether video generation models carry an implicit model of physical dynamics.",
+  "lang": "en",
+  "experiments": [
+    "exp0",
+    "exp1",
+    "exp2"
+  ],
+  "links": [],
+  "footer": "Experiment log &middot; built from Markdown by <code>build.py</code>. Clips are web-sized transcodes; full-resolution originals stay in the experiment folders.",
+  "media": {
+    "video_max_width": 720,
+    "video_crf": 28,
+    "video_preset": "medium",
+    "image_max_width": 720,
+    "image_quality": 4
+  }
+}

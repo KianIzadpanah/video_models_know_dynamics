@@ -1,0 +1,102 @@
+{
+  "id": "exp0",
+  "nav": "Exp 0",
+  "title": "Generating motion with video models vs. a text-to-motion model",
+  "question": "Given the same prompt, does a video model show the weight of an action — the lean, the brace, the slow controlled lift — where a text-to-motion model shows a generic version of it?",
+  "status": "complete",
+  "date": "2026-08-21",
+  "tags": [
+    "MotionGPT3",
+    "LTX-2.5",
+    "SMPL",
+    "HumanML3D"
+  ],
+  "source_dir": "../Exp 00 - Generate motions with video models and compare to T2M",
+  "media": {
+    "seeds": [
+      "0",
+      "1",
+      "2"
+    ],
+    "default_seeds": [
+      "0"
+    ],
+    "items_from": {
+      "path": "configs/prompts.json",
+      "key": "prompts",
+      "id_field": "id"
+    },
+    "chips": [
+      {
+        "field": "load",
+        "labels": {
+          "heavy": "heavy load",
+          "light": "light load",
+          "none": "no load"
+        }
+      },
+      {
+        "field": "tier",
+        "labels": {
+          "core": "core prompt",
+          "pair": "added counterpart"
+        }
+      }
+    ],
+    "sets": {
+      "t2m": {
+        "dir": "data/renders",
+        "pattern": "{id}_s{seed}_t2m.mp4",
+        "label": "T2M",
+        "sublabel": "MotionGPT3 → SMPL render"
+      },
+      "t2v": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_t2v.mp4",
+        "label": "T2V",
+        "sublabel": "LTX-2.5, text only"
+      },
+      "i2v": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_i2v.mp4",
+        "label": "I2V",
+        "sublabel": "LTX-2.5, seeded on frame 0"
+      },
+      "seedframe": {
+        "dir": "data/frames",
+        "pattern": "{id}_s{seed}_seed000.png",
+        "kind": "image",
+        "label": "I2V seed frame",
+        "sublabel": "frame 0 of the T2M render"
+      },
+      "seedframe_wide": {
+        "dir": "data/frames",
+        "pattern": "{id}_s{seed}_seed000_wide.png",
+        "kind": "image",
+        "label": "Conditioning image",
+        "sublabel": "letterboxed to 1280×704"
+      },
+      "3up": {
+        "dir": "results/montage",
+        "pattern": "{id}_s{seed}_3up.mp4",
+        "label": "Three arms, composed",
+        "sublabel": "T2M | T2V | I2V, one file",
+        "max_width": 1440
+      },
+      "pair": {
+        "dir": "results/montage",
+        "pattern": "pair_{id}_s{seed}.mp4",
+        "label": "Matched pair, composed",
+        "sublabel": "heavy above light",
+        "max_width": 1440
+      },
+      "all": {
+        "dir": "results/montage",
+        "pattern": "all_s{seed}.mp4",
+        "label": "Every prompt",
+        "sublabel": "one row per prompt, pairs adjacent",
+        "max_width": 1100
+      }
+    }
+  }
+}

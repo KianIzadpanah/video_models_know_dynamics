@@ -1,0 +1,240 @@
+{
+  "id": "exp1",
+  "nav": "Exp 1",
+  "title": "The round trip — does motion come back more natural than it went in?",
+  "question": "Send a motion through the video model and pull it back out as motion. If the video model knows how bodies move, what comes back should look more natural than what went in — not identical to it.",
+  "status": "complete",
+  "date": "2026-08-23",
+  "tags": [
+    "MotionGPT3",
+    "LTX-2.5",
+    "GVHMR",
+    "SMPL"
+  ],
+  "source_dir": "../Exp 01 - Comparing 3D motions of Loose Control and T2M",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "box_heavy": {
+        "text": "a person lifts a heavy box from the floor",
+        "verdict": "improved",
+        "meta": {
+          "the beat": "the load is taken up — pause at the bottom, then the slow rise"
+        }
+      },
+      "barbell_heavy": {
+        "text": "a person lifts a heavy barbell from the ground",
+        "verdict": "no-change",
+        "meta": {
+          "the beat": "the break off the floor, then acceleration past the knees"
+        }
+      },
+      "push_heavy": {
+        "text": "a person pushes a car",
+        "verdict": "no-change",
+        "meta": {
+          "the beat": "the lean into the load before anything moves"
+        }
+      },
+      "punch": {
+        "text": "a person throws right and left punches",
+        "verdict": "partial",
+        "meta": {
+          "the beat": "hip rotation leads each arm, recovery between punches"
+        }
+      },
+      "squat": {
+        "text": "a person squats down",
+        "verdict": "unusable",
+        "meta": {
+          "the beat": "controlled descent, bottom position, drive back up"
+        }
+      },
+      "baseball": {
+        "text": "a person hit a ball with baseball bat",
+        "verdict": "marginal",
+        "meta": {
+          "the beat": "load onto the back foot, pause, then rotation through contact"
+        }
+      }
+    },
+    "chips": [
+      {
+        "field": "verdict",
+        "labels": {
+          "improved": "clear effect",
+          "partial": "partial effect",
+          "marginal": "marginal",
+          "no-change": "no effect",
+          "unusable": "unusable"
+        }
+      }
+    ],
+    "sets": {
+      "blue": {
+        "dir": "data/renders",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Input motion (A)",
+        "sublabel": "MotionGPT3 → SMPL, the blue render"
+      },
+      "vid_floor": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_floor.mp4",
+        "label": "floor — video",
+        "sublabel": "the blue render itself"
+      },
+      "lift_floor": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_floor.mp4",
+        "label": "floor — returned (B)",
+        "sublabel": "no video model in the loop"
+      },
+      "vid_Kall": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_Kall.mp4",
+        "label": "K = all — video",
+        "sublabel": "16 frames — every 8th"
+      },
+      "lift_Kall": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_Kall.mp4",
+        "label": "K = all — returned (B)",
+        "sublabel": "16 frames — every 8th"
+      },
+      "vid_K9": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K9.mp4",
+        "label": "K = 9 — video",
+        "sublabel": "9 frames — every 16th"
+      },
+      "lift_K9": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K9.mp4",
+        "label": "K = 9 — returned (B)",
+        "sublabel": "9 frames — every 16th"
+      },
+      "vid_K5": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K5.mp4",
+        "label": "K = 5 — video",
+        "sublabel": "0 · 32 · 64 · 88 · 120"
+      },
+      "lift_K5": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K5.mp4",
+        "label": "K = 5 — returned (B)",
+        "sublabel": "0 · 32 · 64 · 88 · 120"
+      },
+      "vid_K3_1": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K3_1.mp4",
+        "label": "K = 3_1 — video",
+        "sublabel": "0 · 64 · 120 — both ends pinned"
+      },
+      "lift_K3_1": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K3_1.mp4",
+        "label": "K = 3_1 — returned (B)",
+        "sublabel": "0 · 64 · 120 — both ends pinned"
+      },
+      "vid_K3_2": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K3_2.mp4",
+        "label": "K = 3_2 — video",
+        "sublabel": "64 · 88 · 120 — head free"
+      },
+      "lift_K3_2": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K3_2.mp4",
+        "label": "K = 3_2 — returned (B)",
+        "sublabel": "64 · 88 · 120 — head free"
+      },
+      "vid_K3_3": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K3_3.mp4",
+        "label": "K = 3_3 — video",
+        "sublabel": "32 · 64 · 88 — both ends free"
+      },
+      "lift_K3_3": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K3_3.mp4",
+        "label": "K = 3_3 — returned (B)",
+        "sublabel": "32 · 64 · 88 — both ends free"
+      },
+      "vid_K3_4": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K3_4.mp4",
+        "label": "K = 3_4 — video",
+        "sublabel": "0 · 32 · 64 — tail free"
+      },
+      "lift_K3_4": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K3_4.mp4",
+        "label": "K = 3_4 — returned (B)",
+        "sublabel": "0 · 32 · 64 — tail free"
+      },
+      "vid_K2_1": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K2_1.mp4",
+        "label": "K = 2_1 — video",
+        "sublabel": "0 · 120 — both ends pinned"
+      },
+      "lift_K2_1": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K2_1.mp4",
+        "label": "K = 2_1 — returned (B)",
+        "sublabel": "0 · 120 — both ends pinned"
+      },
+      "vid_K2_2": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K2_2.mp4",
+        "label": "K = 2_2 — video",
+        "sublabel": "64 · 120 — head free"
+      },
+      "lift_K2_2": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K2_2.mp4",
+        "label": "K = 2_2 — returned (B)",
+        "sublabel": "64 · 120 — head free"
+      },
+      "vid_K2_3": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K2_3.mp4",
+        "label": "K = 2_3 — video",
+        "sublabel": "32 · 88 — both ends free"
+      },
+      "lift_K2_3": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K2_3.mp4",
+        "label": "K = 2_3 — returned (B)",
+        "sublabel": "32 · 88 — both ends free"
+      },
+      "vid_K2_4": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K2_4.mp4",
+        "label": "K = 2_4 — video",
+        "sublabel": "0 · 64 — tail free"
+      },
+      "lift_K2_4": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K2_4.mp4",
+        "label": "K = 2_4 — returned (B)",
+        "sublabel": "0 · 64 — tail free"
+      },
+      "strip": {
+        "dir": "results/strips",
+        "pattern": "{id}_s{seed}.png",
+        "kind": "image",
+        "label": "Timing strip",
+        "sublabel": "input above every returned motion",
+        "max_width": 1500
+      }
+    }
+  }
+}

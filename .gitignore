@@ -1,0 +1,18 @@
+# transcode cache: holds absolute local paths, and is rebuilt on demand
+.build-cache.json
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# NOTE: docs/ is intentionally NOT ignored.
+# GitHub Pages serves it directly, so the build output must be committed.

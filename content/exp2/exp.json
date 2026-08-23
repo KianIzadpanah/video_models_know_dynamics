@@ -1,0 +1,200 @@
+{
+  "id": "exp2",
+  "nav": "Exp 2",
+  "title": "Strong vs. loose control — how much motion does the video model add?",
+  "question": "If we render a motion model's output as video and hand the video model only some of those frames, at what point does it stop copying and start inventing the motion itself?",
+  "status": "complete",
+  "date": "2026-08-23",
+  "tags": [
+    "MotionGPT3",
+    "LTX-2.5",
+    "keyframe conditioning",
+    "SMPL"
+  ],
+  "source_dir": "../Exp 02 - Comparing animations of Loose Control and Strong Control",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "box_heavy": {
+        "text": "a person lifts a heavy box from the floor",
+        "verdict": "improved",
+        "meta": {
+          "the beat": "the load is taken up — pause at the bottom, then the slow rise"
+        }
+      },
+      "barbell_heavy": {
+        "text": "a person lifts a heavy barbell from the ground",
+        "verdict": "no-change",
+        "meta": {
+          "the beat": "the break off the floor, then acceleration past the knees"
+        }
+      },
+      "push_heavy": {
+        "text": "a person pushes a car",
+        "verdict": "no-change",
+        "meta": {
+          "the beat": "the lean into the load before anything moves"
+        }
+      },
+      "punch": {
+        "text": "a person throws right and left punches",
+        "verdict": "partial",
+        "meta": {
+          "the beat": "hip rotation leads each arm, recovery between punches"
+        }
+      },
+      "squat": {
+        "text": "a person squats down",
+        "verdict": "improved",
+        "meta": {
+          "the beat": "controlled descent, bottom position, drive back up"
+        }
+      },
+      "baseball": {
+        "text": "a person hit a ball with baseball bat",
+        "verdict": "marginal",
+        "meta": {
+          "the beat": "load onto the back foot, pause, then rotation through contact"
+        }
+      }
+    },
+    "chips": [
+      {
+        "field": "verdict",
+        "labels": {
+          "improved": "clear effect",
+          "partial": "partial effect",
+          "marginal": "marginal",
+          "no-change": "no effect",
+          "unusable": "unusable"
+        }
+      }
+    ],
+    "sets": {
+      "blue": {
+        "dir": "data/renders",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Blue input",
+        "sublabel": "MotionGPT3 → SMPL, every frame"
+      },
+      "Kall": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_Kall.mp4",
+        "label": "K = all",
+        "sublabel": "16 frames — every 8th"
+      },
+      "K9": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K9.mp4",
+        "label": "K = 9",
+        "sublabel": "9 frames — every 16th"
+      },
+      "K5": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K5.mp4",
+        "label": "K = 5",
+        "sublabel": "0 · 32 · 64 · 88 · 120"
+      },
+      "K3_1": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K3_1.mp4",
+        "label": "K = 3_1",
+        "sublabel": "0 · 64 · 120 — both ends pinned"
+      },
+      "K3_2": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K3_2.mp4",
+        "label": "K = 3_2",
+        "sublabel": "64 · 88 · 120 — head free"
+      },
+      "K3_3": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K3_3.mp4",
+        "label": "K = 3_3",
+        "sublabel": "32 · 64 · 88 — both ends free"
+      },
+      "K3_4": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K3_4.mp4",
+        "label": "K = 3_4",
+        "sublabel": "0 · 32 · 64 — tail free"
+      },
+      "K2_1": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K2_1.mp4",
+        "label": "K = 2_1",
+        "sublabel": "0 · 120 — both ends pinned"
+      },
+      "K2_2": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K2_2.mp4",
+        "label": "K = 2_2",
+        "sublabel": "64 · 120 — head free"
+      },
+      "K2_3": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K2_3.mp4",
+        "label": "K = 2_3",
+        "sublabel": "32 · 88 — both ends free"
+      },
+      "K2_4": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K2_4.mp4",
+        "label": "K = 2_4",
+        "sublabel": "0 · 64 — tail free"
+      },
+      "offgrid": {
+        "dir": "data/videos_offgrid",
+        "pattern": "{id}_s{seed}_Koffgrid.mp4",
+        "label": "Off grid",
+        "sublabel": "0 · 60 · 120 — 60 is not on the grid"
+      },
+      "strip": {
+        "dir": "results/strips",
+        "pattern": "{id}_s{seed}.png",
+        "kind": "image",
+        "label": "Timing strip",
+        "sublabel": "every condition, time-aligned",
+        "max_width": 1500
+      },
+      "chkall": {
+        "dir": "results/checks",
+        "pattern": "test1_{id}_s{seed}_Kall.png",
+        "kind": "image",
+        "label": "K = all",
+        "sublabel": "output vs. the frame handed in",
+        "max_width": 1600
+      },
+      "chk5": {
+        "dir": "results/checks",
+        "pattern": "test1_{id}_s{seed}_K5.png",
+        "kind": "image",
+        "label": "K = 5",
+        "sublabel": "output vs. the frame handed in",
+        "max_width": 1600
+      },
+      "chk3_2": {
+        "dir": "results/checks",
+        "pattern": "test1_{id}_s{seed}_K3_2.png",
+        "kind": "image",
+        "label": "K = 3_2",
+        "sublabel": "output vs. the frame handed in",
+        "max_width": 1600
+      },
+      "chk2_1": {
+        "dir": "results/checks",
+        "pattern": "test1_{id}_s{seed}_K2_1.png",
+        "kind": "image",
+        "label": "K = 2_1",
+        "sublabel": "output vs. the frame handed in",
+        "max_width": 1600
+      }
+    }
+  }
+}
