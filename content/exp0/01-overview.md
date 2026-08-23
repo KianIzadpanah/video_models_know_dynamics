@@ -66,14 +66,16 @@ says. The load word in the prompt is the only thing that differs within a pair.
    arms differ by construction. Worth reading *before* the results, because
    several of them look like findings if you don't know they were designed in.
 3. **The three matched pairs** — [box](result-box.html),
-   [barbell](result-barbell.html), [push](result-push.html). This is where the
-   question is actually answered.
+   [barbell](result-barbell.html), [push](result-push.html). Clips only; this is
+   where the question is actually answered.
 4. **The three unloaded controls** — [punch](result-punch.html),
    [squat](result-squat.html), [baseball](result-baseball.html).
-5. **[Verdict](verdict.html)** — the pairs read against the controls.
-6. **[Composed montages](montages.html)** — the same material pre-rendered into
+5. **[Observations](observations.html)** — what each prompt is testing and what to
+   look for in it. The result pages are deliberately bare so they project well.
+6. **[Verdict](verdict.html)** — the pairs read against the controls.
+7. **[Composed montages](montages.html)** — the same material pre-rendered into
    single files, for when you want to watch rather than click.
-7. **[Fit quality](fit-quality.html)** and
+8. **[Fit quality](fit-quality.html)** and
    **[Provenance](provenance.html)** — how much the joints→SMPL step distorted
    the T2M arm, and where every file came from.
 :::

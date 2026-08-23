@@ -131,8 +131,12 @@ Any conclusion drawn without looking at the source is worthless.
 1. **[How it was run](setup.html)** — the pipeline, the models, and what is reused
    from Experiment 2.
 2. **[The floor](floor.html)** — the control column. Read this before any result.
-3. **The six prompts**, one page each.
-4. **[The numbers](numbers.html)** — joint error, jerk and foot-skate, and a careful
+3. **The six prompts**, one page each — just the clips, with the source video
+   beside every returned motion.
+4. **[Observations](observations.html)** — what was actually seen in each prompt, the
+   per-prompt numbers, and the caveats. This is where the prose lives; the result
+   pages are deliberately bare so they project well.
+5. **[The numbers](numbers.html)** — joint error, jerk and foot-skate, and a careful
    account of what they do *not* say.
-5. **[Verdict](verdict.html)** — what this establishes, and the caveats to carry.
+6. **[Verdict](verdict.html)** — what this establishes, and the caveats to carry.
 :::

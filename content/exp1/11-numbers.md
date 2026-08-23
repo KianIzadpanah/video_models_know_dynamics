@@ -105,11 +105,13 @@ The joint-error table for every clip and every condition is on
 [The floor](floor.html#the-measurement), where it belongs — its main job is
 establishing that the control column is clean.
 
-Per-prompt tables pulled live from `analysis.json` are at the bottom of each result
-page:
-[box_heavy](result-box-heavy.html#the-numbers-for-this-prompt) ·
-[barbell_heavy](result-barbell-heavy.html#the-numbers-for-this-prompt) ·
-[push_heavy](result-push-heavy.html#the-numbers-for-this-prompt) ·
-[punch](result-punch.html#the-numbers-for-this-prompt) ·
-[squat](result-squat.html#the-numbers-for-this-prompt) ·
-[baseball](result-baseball.html#the-numbers-for-this-prompt)
+Per-prompt tables pulled live from `analysis.json` are in
+[Observations](observations.html), one per section:
+[box_heavy](observations.html#box-heavy) ·
+[barbell_heavy](observations.html#barbell-heavy) ·
+[push_heavy](observations.html#push-heavy) ·
+[punch](observations.html#punch) ·
+[squat](observations.html#squat) ·
+[baseball](observations.html#baseball)
+
+The result pages themselves carry only the clips.

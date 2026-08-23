@@ -48,6 +48,7 @@ try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.datas
 <li><a class="" href="exp0/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
 <li><a class="" href="exp0/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
 <li><a class="" href="exp0/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="exp0/observations.html"><span class="pn">Observations</span></a></li>
 <li><a class="" href="exp0/verdict.html"><span class="pn">Verdict</span></a></li>
 <li><a class="" href="exp0/montages.html"><span class="pn">Montages</span></a></li>
 <li><a class="" href="exp0/fit-quality.html"><span class="pn">Fit quality</span></a></li>
@@ -65,6 +66,7 @@ try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.datas
 <li><a class="" href="exp1/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
 <li><a class="" href="exp1/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
 <li><a class="" href="exp1/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="exp1/observations.html"><span class="pn">Observations</span></a></li>
 <li><a class="" href="exp1/numbers.html"><span class="pn">The numbers</span></a></li>
 <li><a class="" href="exp1/verdict.html"><span class="pn">Verdict</span></a></li>
 <li><a class="" href="exp1/provenance.html"><span class="pn">Provenance</span></a></li>
@@ -81,6 +83,7 @@ try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.datas
 <li><a class="" href="exp2/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
 <li><a class="" href="exp2/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
 <li><a class="" href="exp2/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="exp2/observations.html"><span class="pn">Observations</span></a></li>
 <li><a class="" href="exp2/placement.html"><span class="pn">Placement, not K</span></a></li>
 <li><a class="" href="exp2/verdict.html"><span class="pn">Verdict</span></a></li>
 <li><a class="" href="exp2/provenance.html"><span class="pn">Provenance</span></a></li>
@@ -132,7 +135,8 @@ try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.datas
 <h2 id="what-the-three-experiments-add-up-to">What the three experiments add up to<a class="anchor" href="#what-the-three-experiments-add-up-to" aria-label="link to this section">#</a></h2>
 <aside class="callout key"><div class="callout-title">The state of the argument</div><div class="callout-body"><ol><li><strong>Keyframe conditioning works mechanically</strong> — pinned frames land where asked, full conditioning reproduces the input, and no morphing occurs. <a href="exp2/does-it-work.html">(Exp 2's checks)</a></li><li><strong>There is a real window where the video model re-times motion</strong> rather than copying it, and it exists for every prompt. <a href="exp2/verdict.html">(Exp 2's verdict)</a></li><li><strong>The round trip is essentially lossless</strong>, so motion added in the video survives back into 3D. <a href="exp1/floor.html">(Exp 1's floor)</a></li><li><strong>The video prior extends; it does not correct.</strong> It can supply a missing part of an action — the extension of a punch, a box picked up and carried — and it cannot fix an action that is simply wrong for the prompt. <a href="exp1/verdict.html">(Exp 1's verdict)</a></li><li><strong>The control is a placement puzzle, not a dial.</strong> What the video model contributes is governed by <em>where</em> the free run sits, not by how many frames were withheld. <a href="exp2/placement.html">(Exp 2)</a></li></ol></div></aside>
 <h2 id="how-to-read-these-pages">How to read these pages<a class="anchor" href="#how-to-read-these-pages" aria-label="link to this section">#</a></h2>
-<aside class="callout note"><div class="callout-title">Conventions used throughout</div><div class="callout-body"><p>Every experiment is split into short pages: what the question was, how it was set up, what to watch for, then <strong>one page per prompt</strong> with that prompt's clips, then a verdict and provenance.</p>
+<aside class="callout note"><div class="callout-title">Conventions used throughout</div><div class="callout-body"><p>Every experiment is split into short pages: what the question was, how it was set up, what to watch for, then <strong>one page per prompt</strong> carrying nothing but that prompt's clips, then an <strong>Observations</strong> page holding the discussion and the numbers, then a verdict and provenance.</p>
+<p>The split is deliberate. A result page is meant to go on a projector — headings that name the conditioning set and the frame indices, and the clips underneath. Everything that needs reading rather than watching lives on the Observations page.</p>
 <p>Clips autoplay muted and loop. The toolbar at the top of a results page switches seed, slows playback to ½× or ¼×, and restarts everything from <em>t = 0</em> together — which matters, because the arms have different clip lengths. Click any clip to open it full-size and step through it a frame at a time. Click a timing strip to open it full-size and scroll it.</p></div></aside>
 <p>Comparisons are always laid out so that the thing being compared sits <strong>inside one block</strong>. Where a prompt has a matched heavy/light counterpart, the two are adjacent rows of the same grid; where a returned motion has a source video, they are adjacent cells. Comparing across blocks is not meaningful: the arms differ in resolution, frame rate, clip length and visual style by construction, and those differences are documented per experiment rather than normalised away.</p>
 <aside class="callout method"><div class="callout-title">Keyboard shortcuts</div><div class="callout-body"><p><code>/</code> focus the sidebar filter · <code>r</code> replay all visible clips in sync · <code>p</code> pause or play all · click a clip to open it · <code>←</code> <code>→</code> step one frame · <code>space</code> play/pause · <code>Esc</code> close.</p></div></aside></div>

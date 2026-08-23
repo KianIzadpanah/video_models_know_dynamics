@@ -81,8 +81,13 @@ the loop. Reading 2 before 1 is much easier than the reverse.
 
 ::: note title="Conventions used throughout"
 Every experiment is split into short pages: what the question was, how it was set
-up, what to watch for, then **one page per prompt** with that prompt's clips, then a
+up, what to watch for, then **one page per prompt** carrying nothing but that prompt's
+clips, then an **Observations** page holding the discussion and the numbers, then a
 verdict and provenance.
+
+The split is deliberate. A result page is meant to go on a projector — headings that
+name the conditioning set and the frame indices, and the clips underneath. Everything
+that needs reading rather than watching lives on the Observations page.
 
 Clips autoplay muted and loop. The toolbar at the top of a results page switches
 seed, slows playback to ½× or ¼×, and restarts everything from *t = 0* together —

@@ -102,10 +102,14 @@ laziest path between them and the character goes nearly static.
    you are even allowed to pick, the eleven conditioning sets, and the settings.
 2. **[Does it work?](does-it-work.html)** — three sanity checks that had to pass
    before any result here means anything. Read this before the results.
-3. **The six prompts**, one page each. `box_heavy` is the most striking, `squat`
-   is the clearest re-timing, and `barbell_heavy` is the clearest negative.
-4. **[Placement, not K](placement.html)** — the cross-cutting result, and the
+3. **The six prompts**, one page each — just the clips, grouped by conditioning
+   set. `box_heavy` is the most striking, `squat` is the clearest re-timing, and
+   `barbell_heavy` is the clearest negative.
+4. **[Observations](observations.html)** — what was actually seen in each prompt,
+   the per-prompt numbers, and the caveats. This is where the prose lives; the
+   result pages are deliberately bare so they project well.
+5. **[Placement, not K](placement.html)** — the cross-cutting result, and the
    most interesting thing in the experiment.
-5. **[Verdict](verdict.html)** — what this means, and which two K values
+6. **[Verdict](verdict.html)** — what this means, and which two K values
    [Experiment 1](../exp1/overview.html) inherits from here.
 :::
