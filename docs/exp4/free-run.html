@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What fills the free run · VMKD</title>
+<meta name="description" content="The cross-cutting result, and the clearest difference from Experiment 1. Where the earlier sweep filled its unpinned stretches with invented events, this one mostly fills them with whatever the person in the prompt would plausibly be doing — which is often very little.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="../assets/site.css">
+<script>
+/* Set the theme and the sidebar state before first paint so neither flashes.
+   The sidebar state has to be persisted rather than held in memory: this is a
+   real multi-page site, so clicking a nav link is a full page load and any
+   in-memory "collapsed" flag would be lost on every navigation. */
+(function(){
+  try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+  var n;
+  try{n=localStorage.getItem('vmkd-nav');}catch(e){}
+  if(n!=='open'&&n!=='closed')n=window.innerWidth<941?'closed':'open';
+  document.documentElement.setAttribute('data-nav',n);
+})();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <button class="burger" type="button" aria-label="Show or hide navigation"
+          title="Show or hide navigation (n)" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="crumbs"><a href="../index.html">VMKD</a><span class="sep">/</span><a href="../exp4/overview.html">Exp 4</a><span class="sep">/</span><span>What fills the free run</span></div>
+  <button class="themebtn" type="button" aria-label="Switch colour theme" title="Switch colour theme">
+    <svg viewBox="0 0 20 20" aria-hidden="true" width="16" height="16">
+      <path class="sun" d="M10 3.2V1M10 19v-2.2M16.8 10H19M1 10h2.2M14.8 5.2l1.6-1.6M3.6 16.4l1.6-1.6M14.8 14.8l1.6 1.6M3.6 3.6l1.6 1.6"
+            fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <circle class="sun" cx="10" cy="10" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path class="moon" d="M15.5 12.6A6.4 6.4 0 0 1 7.4 4.5a6.4 6.4 0 1 0 8.1 8.1z"
+            fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar"><a class="side-home" href="../index.html"><span class="sh-t">Video Models Know Dynamics</span><span class="sh-s">Experiment log</span></a>
+<div class="side-filter"><input type="search" id="navfilter" placeholder="Filter pages…" autocomplete="off" spellcheck="false"></div>
+<nav class="side-nav" aria-label="Experiments">
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 0</span><span class="exp-t">Generating motion with video models vs. a text-to-motion model</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp0/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp0/setup.html"><span class="pn">Setup</span></a></li>
+<li><a class="" href="../exp0/reading-the-clips.html"><span class="pn">Reading the clips</span></a></li>
+<li><a class="" href="../exp0/result-box.html"><span class="pn">Result 1 · box (heavy/light)</span></a></li>
+<li><a class="" href="../exp0/result-barbell.html"><span class="pn">Result 2 · barbell (heavy/light)</span></a></li>
+<li><a class="" href="../exp0/result-push.html"><span class="pn">Result 3 · push (car/cart)</span></a></li>
+<li><a class="" href="../exp0/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
+<li><a class="" href="../exp0/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
+<li><a class="" href="../exp0/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="../exp0/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp0/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp0/montages.html"><span class="pn">Montages</span></a></li>
+<li><a class="" href="../exp0/fit-quality.html"><span class="pn">Fit quality</span></a></li>
+<li><a class="" href="../exp0/provenance.html"><span class="pn">Provenance & files</span></a></li>
+</ul></div>
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 1</span><span class="exp-t">The round trip — does motion come back more natural than it went in?</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp1/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp1/setup.html"><span class="pn">How it was run</span></a></li>
+<li><a class="" href="../exp1/floor.html"><span class="pn">The floor — read first</span></a></li>
+<li><a class="" href="../exp1/result-box-heavy.html"><span class="pn">Result 1 · box_heavy</span></a></li>
+<li><a class="" href="../exp1/result-barbell-heavy.html"><span class="pn">Result 2 · barbell_heavy</span></a></li>
+<li><a class="" href="../exp1/result-push-heavy.html"><span class="pn">Result 3 · push_heavy</span></a></li>
+<li><a class="" href="../exp1/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
+<li><a class="" href="../exp1/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
+<li><a class="" href="../exp1/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="../exp1/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp1/numbers.html"><span class="pn">The numbers</span></a></li>
+<li><a class="" href="../exp1/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp1/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 2</span><span class="exp-t">Strong vs. loose control — how much motion does the video model add?</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp2/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp2/setup.html"><span class="pn">How it was run</span></a></li>
+<li><a class="" href="../exp2/does-it-work.html"><span class="pn">Does it work?</span></a></li>
+<li><a class="" href="../exp2/result-box-heavy.html"><span class="pn">Result 1 · box_heavy</span></a></li>
+<li><a class="" href="../exp2/result-barbell-heavy.html"><span class="pn">Result 2 · barbell_heavy</span></a></li>
+<li><a class="" href="../exp2/result-push-heavy.html"><span class="pn">Result 3 · push_heavy</span></a></li>
+<li><a class="" href="../exp2/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
+<li><a class="" href="../exp2/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
+<li><a class="" href="../exp2/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="../exp2/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp2/placement.html"><span class="pn">Placement, not K</span></a></li>
+<li><a class="" href="../exp2/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp2/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
+<div class="exp open" data-exp>
+<button class="exp-h" type="button" aria-expanded="true"><span class="exp-c">Exp 4</span><span class="exp-t">Photoreal output, animation as control — splitting what to do from what to look like</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp4/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp4/pipeline.html"><span class="pn">Pipeline</span></a></li>
+<li><a class="" href="../exp4/does-it-work.html"><span class="pn">Did the split work?</span></a></li>
+<li><a class="" href="../exp4/result-box-heavy.html"><span class="pn">Result 1 · box_heavy</span></a></li>
+<li><a class="" href="../exp4/result-barbell-heavy.html"><span class="pn">Result 2 · barbell_heavy</span></a></li>
+<li><a class="" href="../exp4/result-push-heavy.html"><span class="pn">Result 3 · push_heavy</span></a></li>
+<li><a class="" href="../exp4/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
+<li><a class="" href="../exp4/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
+<li><a class="" href="../exp4/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="../exp4/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="on" href="../exp4/free-run.html"><span class="pn">What fills the free run</span></a></li>
+<li><a class="" href="../exp4/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp4/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
+</nav></aside>
+  <div class="scrim" hidden></div>
+
+  <main id="main">
+    <article class="page">
+      <header class="pagehead"><div class="ph-kicker">Exp 4 · Photoreal output, animation as control — splitting what to do from what to look like</div><h1>What fills the free run</h1><p class="lead">The cross-cutting result, and the clearest difference from Experiment 1. Where the earlier sweep filled its unpinned stretches with invented events, this one mostly fills them with whatever the person in the prompt would plausibly be doing — which is often very little.</p></header>
+      <div class="toolbar" data-toolbar>
+  <div class="tb-g"><span class="tb-l">seed</span><div class="seg"><button type="button" data-seed="1234">1234</button></div></div>
+  <div class="tb-g"><span class="tb-l">speed</span><div class="seg">
+    <button type="button" data-rate="0.25">&frac14;&times;</button>
+    <button type="button" data-rate="0.5">&frac12;&times;</button>
+    <button type="button" data-rate="1">1&times;</button>
+    <button type="button" data-rate="2">2&times;</button></div></div>
+  <div class="tb-g"><button type="button" class="btn" data-autosync aria-pressed="true">Sync: on</button>
+    <button type="button" class="btn" data-sync>&#9654; Restart now</button>
+    <button type="button" class="btn" data-toggleplay>Pause all</button></div>
+  <div class="tb-hint">Click any clip to open it frame-by-frame</div>
+</div>
+      <div class="prose"><h2 id="the-finding">The finding<a class="anchor" href="#the-finding" aria-label="link to this section">#</a></h2>
+<p>In <a href="../exp1/observations.html">Experiment 1</a> the free stretches filled with invented <strong>events</strong>: a cardboard box appeared and was carried off, a hand truck was pushed.</p>
+<p>Here they mostly fill with <strong>whatever the person in the prompt would plausibly be doing</strong>. And because the depth track's blank mid-grey frames say <em>"nothing in particular is happening"</em>, plausible often means <strong>idling</strong>.</p>
+<aside class="callout key"><div class="callout-title">The prompt supplies the content of the free run</div><div class="callout-body"><ul><li>The <strong>boxer</strong> keeps a real guard, steps, and throws the occasional punch, at every sparse condition — because the prompt put him in a boxing gym.</li><li>The <strong>warehouse worker</strong> stands in a warehouse and shifts his weight. At <code>K = 2</code> seed 5678 he simply walks across the frame.</li><li>The <strong>man on the street</strong> stands beside a car with one arm out and lowers it.</li></ul>
+<p>This changes what "loose control" buys you. In Experiment 1 the free run was an opportunity for the video prior to supply an action. Here it is an opportunity for it to supply a <em>person doing something reasonable</em> — and the two are only the same thing when the reasonable thing happens to be the action you asked for.</p>
+<p><a href="result-punch.html"><code>punch</code></a> is exactly that case, and it is the one motion of six that improves.</p></div></aside>
+<h2 id="props-and-roles-including-at-dense">Props and roles, including at dense<a class="anchor" href="#props-and-roles-including-at-dense" aria-label="link to this section">#</a></h2>
+<p>The prompt also supplies objects, and it does so even when the pose is fully specified:</p>
+<ul><li>the <strong>baseball player</strong> picks up a bat and takes a stance in <strong>seven of his ten clips</strong>, including at <code>dense</code></li><li>in <code>s5678</code> at <code>K = 8</code> he is handed a <strong>fielder's glove</strong> instead, and catches and throws</li><li>in the two loosest <code>s5678</code> clips he carries nothing and a bat lies on the ground beside him</li></ul>
+<p>None of it is in the control or in the input motion. None of it comes back through pose recovery either — the lift returns a body and nothing else.</p>
+<aside class="callout note"><div class="callout-title">Why it counts anyway</div><div class="callout-body"><p>A prop the recovery cannot see is worthless as <em>motion</em>. But it is visible evidence that the video model is reasoning about the <strong>action</strong>, not only about pixels: it decided a baseball player on a field should be holding a bat, and put one there.</p>
+<p>That is the same faculty we want it to apply to timing and weight. Here it shows up in the one channel that survives to the screen and not to the SMPL.</p></div></aside>
+<h2 id="the-one-case-where-the-free-run-supplied-the-missing-action">The one case where the free run supplied the missing action<a class="anchor" href="#the-one-case-where-the-free-run-supplied-the-missing-action" aria-label="link to this section">#</a></h2>
+<aside class="callout key"><div class="callout-title">barbell_heavy, seed 1234, K = 2</div><div class="callout-body"><p>MotionGPT3 never produced a barbell lift for this motion, and neither <a href="../exp2/result-barbell-heavy.html">Experiment 2</a> nor <a href="../exp1/result-barbell-heavy.html">Experiment 1's round trip</a> could get one out of it.</p>
+<p>With <strong>only frames 0 and 120 pinned</strong>, a loaded barbell appears on the gym floor in the last third of the clip and the man walks to it and folds into a deadlift setup, hands to the bar — and the hip hinge comes back intact as SMPL.</p>
+<p>One clip in sixty. It did not repeat on the other seed.</p></div></aside>
+<figure class="clips" data-clips style="max-width:980px"><div class="clips-grid size-md no-rowhead" style="--cols:1"><div class="ch"><span class="ch-t">barbell_heavy s1234 at K = 2</span><span class="ch-s">the invented deadlift, photoreal above recovered</span></div><div class="cc"><div class="clip is-img" data-seed="1234" style="--ar:1600/964" data-label="barbell_heavy s1234 at K = 2 ·  · seed 1234" data-img="../media/exp4/results/probe/barbell_K2_deadlift.jpg"><img src="../media/exp4/results/probe/barbell_K2_deadlift.jpg" alt="barbell_heavy s1234 at K = 2 ·  · seed 1234" loading="lazy"><span class="sd">s1234</span><button class="zoom" type="button" aria-label="expand image">⤢</button></div></div></div><figcaption>The photoreal row and the recovered motion underneath it.</figcaption></figure>
+<h2 id="why-this-is-less-inventive-than-experiment-1">Why this is less inventive than Experiment 1<a class="anchor" href="#why-this-is-less-inventive-than-experiment-1" aria-label="link to this section">#</a></h2>
+<p>The mechanism is visible in the control videos themselves.</p>
+<aside class="callout warn"><div class="callout-title">A blank control frame is not permission</div><div class="callout-body"><p>A sparse condition hands the model a track that is blank mid-grey for around 90 % of its frames. <strong>A blank control frame is not "do what you like here" — it is a positive statement that the reference has nothing in it.</strong> The model answers it with a person standing still.</p>
+<p>Experiment 1's blue-character conditioning had no equivalent: between two pinned frames there was simply no constraint, so the prior filled the gap with an action. Here the gap is <em>specified as empty</em>.</p></div></aside>
+<figure class="clips" data-clips style="max-width:900px"><div class="clips-grid size-md no-rowhead" style="--cols:1"><div class="ch"><span class="ch-t">The five depth control tracks</span><span class="ch-s">dense to K2</span></div><div class="cc"><div class="clip is-img" data-seed="1234" style="--ar:1600/500" data-label="The five depth control tracks ·  · seed 1234" data-img="../media/exp4/results/probe/step2_depth_conditions.jpg"><img src="../media/exp4/results/probe/step2_depth_conditions.jpg" alt="The five depth control tracks ·  · seed 1234" loading="lazy"><span class="sd">s1234</span><button class="zoom" type="button" aria-label="expand image">⤢</button></div></div></div><figcaption>The five control tracks. Read right to left and the question is not "how much freedom
+does the model have" but "how much of the reference is blank".</figcaption></figure>
+<h2 id="the-lever-to-try-next">The lever to try next<a class="anchor" href="#the-lever-to-try-next" aria-label="link to this section">#</a></h2>
+<aside class="callout key"><div class="callout-title">conditioning_attention_mask</div><div class="callout-body"><p>The API already exposes a mask video over the reference, and it was deliberately left unused here. It would let the free frames be <strong>ignored</strong> rather than read as empty — which is the difference between "nothing is happening" and "no constraint".</p>
+<p><strong>This is the first thing to try next.</strong> It targets the exact mechanism this page identifies, and it needs no new model, no new control signal and no re-rendering: the same 60 depth tracks with a mask alongside them.</p></div></aside>
+<h2 id="one-thing-the-numbers-do-say-and-it-is-not-about-smoothness">One thing the numbers do say, and it is not about smoothness<a class="anchor" href="#one-thing-the-numbers-do-say-and-it-is-not-about-smoothness" aria-label="link to this section">#</a></h2>
+<p>Averaged over the ten clips that lift correctly:</p>
+<div class="table-wrap"><table><thead><tr><th style="text-align:left"></th><th style="text-align:left">input</th><th style="text-align:left">dense</th><th style="text-align:left">K = 8</th><th style="text-align:left">K = 5</th><th style="text-align:left">K = 3</th><th style="text-align:left">K = 2</th></tr></thead><tbody><tr><td style="text-align:left">jerk, relative to input</td><td style="text-align:left">1.00</td><td style="text-align:left">0.87</td><td style="text-align:left">0.93</td><td style="text-align:left">0.75</td><td style="text-align:left">0.78</td><td style="text-align:left">0.78</td></tr><tr><td style="text-align:left">foot-skate, planted (mm/s)</td><td style="text-align:left"><strong>158</strong></td><td style="text-align:left">146</td><td style="text-align:left"><strong>77</strong></td><td style="text-align:left"><strong>58</strong></td><td style="text-align:left">82</td><td style="text-align:left">121</td></tr></tbody></table></div>
+<aside class="callout key"><div class="callout-title">The free runs come back with less than half the input's foot-skate</div><div class="callout-body"><p>Foot-skate is a planted foot sliding along the ground — a foot carrying weight that is not staying put. The motion the video model invents <strong>obeys the ground better than the motion MotionGPT3 produced</strong>: 58–82 mm/s against 158, while <code>dense</code>, which is copying, inherits the input's 146.</p>
+<p>That is a small, specific piece of evidence for the bet behind the project. A plausible-looking person shot by a static camera plants their feet, and the video prior knows it.</p></div></aside>
+<aside class="callout warn"><div class="callout-title">But it is not a claim that the returned motion is better</div><div class="callout-body"><p>Jerk falls in every column, and <a href="../exp1/numbers.html">Experiment 1 already made the point</a> that smoothness is not the quantity of interest — a real punch <em>is</em> jerky. These two rows are here to bound the round trip, not to score it.</p></div></aside></div>
+      <nav class="pagenav"><a class="pg prev" href="../exp4/observations.html"><span>Previous</span><strong>Observations</strong></a><a class="pg next" href="../exp4/verdict.html"><span>Next</span><strong>Verdict</strong></a></nav>
+      <footer class="pagefoot">Experiment log &middot; built from Markdown by <code>build.py</code>. Clips are web-sized transcodes; full-resolution originals stay in the experiment folders.</footer>
+    </article>
+  </main>
+</div>
+
+<div class="lightbox" hidden>
+  <div class="lb-back"></div>
+  <figure class="lb-fig">
+    <video class="lb-video" loop muted playsinline></video>
+    <img class="lb-img" alt="" hidden>
+    <div class="lb-bar">
+      <button class="lb-play" type="button" aria-label="Play or pause">&#9654;</button>
+      <button class="lb-step" data-step="-1" type="button" aria-label="Previous frame">&#8249;</button>
+      <button class="lb-step" data-step="1" type="button" aria-label="Next frame">&#8250;</button>
+      <input class="lb-seek" type="range" min="0" max="1000" value="0" aria-label="Seek">
+      <span class="lb-time">0.00s</span>
+      <div class="seg lb-rates">
+        <button type="button" data-lbrate="0.25">&frac14;&times;</button>
+        <button type="button" data-lbrate="0.5">&frac12;&times;</button>
+        <button type="button" data-lbrate="1">1&times;</button>
+        <button type="button" data-lbrate="2">2&times;</button>
+      </div>
+      <button class="lb-close" type="button" aria-label="Close">&times;</button>
+    </div>
+    <figcaption class="lb-cap"></figcaption>
+  </figure>
+</div>
+
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

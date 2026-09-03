@@ -113,6 +113,7 @@
   var state = {
     seed: STORE.get('seed', null),
     rate: parseFloat(STORE.get('rate', '1')) || 1,
+    autosync: STORE.get('autosync', '1') !== '0',
     paused: false
   };
 
@@ -143,8 +144,31 @@
     }, { rootMargin: '350px 0px', threshold: 0.01 });
   }
 
+  /* Attached clips are the only ones the sync loop touches. A clip the observer
+     has not reached yet has no src, and force-loading it would pull every clip on
+     the page at once -- which is what the lazy loading exists to avoid. */
+  function attachedVideos() {
+    return visibleClips()
+      .map(function (c) { return c.querySelector('video'); })
+      .filter(function (v) { return v && v.src; });
+  }
+
   function attach(v) {
-    if (!v.src && v.dataset.src) v.src = v.dataset.src;
+    var fresh = !v.src;
+    if (fresh && v.dataset.src) v.src = v.dataset.src;
+    v.loop = !state.autosync;
+    // A clip revealed mid-cycle starts at the group's elapsed time rather than at
+    // 0, so scrolling down a long page does not put it out of step with the rest.
+    if (fresh && state.autosync && cycleStart !== null) {
+      var into = ((performance.now() - cycleStart) / 1000) * state.rate;
+      var seek = function () {
+        if (v.duration && isFinite(v.duration) && into < v.duration) {
+          try { v.currentTime = into; } catch (e) {}
+        }
+      };
+      if (v.readyState >= 1) seek();
+      else v.addEventListener('loadedmetadata', seek, { once: true });
+    }
   }
 
   function play(v) {
@@ -152,6 +176,65 @@
     v.playbackRate = state.rate;
     var p = v.play();
     if (p && p.catch) p.catch(function () {});
+  }
+
+  /* ---- synchronised looping -------------------------------------------------
+     Clips are compared frame against frame, so they have to start together. Left
+     to themselves they drift: each <video> begins whenever the observer attaches
+     it, and within an experiment the arms can differ in length. So instead of
+     letting each clip loop on its own, one timer restarts every visible clip
+     together, on a period set by the longest of them. A shorter clip holds on its
+     last frame until the group comes round again -- the same behaviour as the
+     pre-composed montages. */
+  var syncTimer = null;
+  var cycleStart = null;
+
+  function clearCycle() {
+    if (syncTimer) { clearTimeout(syncTimer); syncTimer = null; }
+    cycleStart = null;
+  }
+
+  function cycleLength(vids) {
+    var d = 0;
+    vids.forEach(function (v) {
+      if (v.duration && isFinite(v.duration)) d = Math.max(d, v.duration);
+    });
+    return d;
+  }
+
+  function syncCycle() {
+    if (syncTimer) { clearTimeout(syncTimer); syncTimer = null; }
+    if (!state.autosync || state.paused) { cycleStart = null; return; }
+    var vids = attachedVideos();
+    var len = cycleLength(vids);
+    if (!vids.length || !len) {          // nothing loaded yet; look again shortly
+      cycleStart = null;
+      syncTimer = setTimeout(syncCycle, 250);
+      return;
+    }
+    vids.forEach(function (v) {
+      v.loop = false;
+      try { v.currentTime = 0; } catch (e) {}
+      play(v);
+    });
+    cycleStart = performance.now();
+    // a little past the longest clip, so it actually reaches its final frame
+    syncTimer = setTimeout(syncCycle, (len / state.rate) * 1000 + 90);
+  }
+
+  function applyAutosync() {
+    var b = document.querySelector('[data-autosync]');
+    if (b) {
+      b.setAttribute('aria-pressed', String(state.autosync));
+      b.textContent = 'Sync: ' + (state.autosync ? 'on' : 'off');
+    }
+    if (state.autosync) {
+      syncCycle();
+    } else {
+      clearCycle();
+      videos().forEach(function (v) { v.loop = true; });
+      if (!state.paused) attachedVideos().forEach(play);
+    }
   }
 
   function applySeed() {
@@ -171,6 +254,7 @@
     } else {
       visibleClips().forEach(function (c) { if (!state.paused) play(c.querySelector('video')); });
     }
+    if (state.autosync) syncCycle();      // the visible set changed; restart in step
   }
 
   function applyRate() {
@@ -178,15 +262,14 @@
     document.querySelectorAll('[data-rate]').forEach(function (b) {
       b.setAttribute('aria-pressed', String(parseFloat(b.dataset.rate) === state.rate));
     });
+    if (state.autosync) syncCycle();      // the cycle period is in wall-clock time
   }
 
   function syncReplay() {
     state.paused = false;
     updatePlayLabel();
-    visibleClips().forEach(function (c) {
-      var v = c.querySelector('video');
-      if (!v) return;
-      attach(v);
+    if (state.autosync) { syncCycle(); return; }
+    attachedVideos().forEach(function (v) {
       try { v.currentTime = 0; } catch (e) {}
       play(v);
     });
@@ -200,11 +283,14 @@
   function togglePlay() {
     state.paused = !state.paused;
     updatePlayLabel();
-    visibleClips().forEach(function (c) {
-      var v = c.querySelector('video');
-      if (!v) return;
-      if (state.paused) v.pause(); else play(v);
-    });
+    if (state.paused) {
+      clearCycle();
+      attachedVideos().forEach(function (v) { v.pause(); });
+    } else if (state.autosync) {
+      syncCycle();
+    } else {
+      attachedVideos().forEach(play);
+    }
   }
 
   var toolbar = document.querySelector('[data-toolbar]');
@@ -220,6 +306,12 @@
       if (s) { state.seed = s.dataset.seed; STORE.set('seed', state.seed); applySeed(); return; }
       var r = e.target.closest('[data-rate]');
       if (r) { state.rate = parseFloat(r.dataset.rate); STORE.set('rate', r.dataset.rate); applyRate(); return; }
+      if (e.target.closest('[data-autosync]')) {
+        state.autosync = !state.autosync;
+        STORE.set('autosync', state.autosync ? '1' : '0');
+        applyAutosync();
+        return;
+      }
       if (e.target.closest('[data-sync]')) syncReplay();
       if (e.target.closest('[data-toggleplay]')) togglePlay();
     });
@@ -231,6 +323,12 @@
     updatePlayLabel();
     if (io) clips.forEach(function (c) { if (!c.hidden) io.observe(c); });
     else clips.forEach(function (c) { if (!c.hidden) play(c.querySelector('video')); });
+    applyAutosync();
+    // A backgrounded tab throttles timers, so the cycle drifts while you are away.
+    // Re-align on return rather than letting it stay wrong.
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden && state.autosync && !state.paused) syncCycle();
+    });
   }
 
   /* -------------------------------------------------------------- lightbox */

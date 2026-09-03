@@ -907,10 +907,12 @@ def toolbar_html(seeds: list[str]) -> str:
     return f"""<div class="toolbar" data-toolbar>
   <div class="tb-g"><span class="tb-l">seed</span><div class="seg">{btns}{allb}</div></div>
   <div class="tb-g"><span class="tb-l">speed</span><div class="seg">
-    <button type="button" data-rate="1">1&times;</button>
+    <button type="button" data-rate="0.25">&frac14;&times;</button>
     <button type="button" data-rate="0.5">&frac12;&times;</button>
-    <button type="button" data-rate="0.25">&frac14;&times;</button></div></div>
-  <div class="tb-g"><button type="button" class="btn" data-sync>&#9654; Replay in sync</button>
+    <button type="button" data-rate="1">1&times;</button>
+    <button type="button" data-rate="2">2&times;</button></div></div>
+  <div class="tb-g"><button type="button" class="btn" data-autosync aria-pressed="true">Sync: on</button>
+    <button type="button" class="btn" data-sync>&#9654; Restart now</button>
     <button type="button" class="btn" data-toggleplay>Pause all</button></div>
   <div class="tb-hint">Click any clip to open it frame-by-frame</div>
 </div>"""

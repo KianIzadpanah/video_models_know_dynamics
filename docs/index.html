@@ -98,6 +98,23 @@
 <li><a class="" href="exp2/verdict.html"><span class="pn">Verdict</span></a></li>
 <li><a class="" href="exp2/provenance.html"><span class="pn">Provenance</span></a></li>
 </ul></div>
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 4</span><span class="exp-t">Photoreal output, animation as control — splitting what to do from what to look like</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="exp4/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="exp4/pipeline.html"><span class="pn">Pipeline</span></a></li>
+<li><a class="" href="exp4/does-it-work.html"><span class="pn">Did the split work?</span></a></li>
+<li><a class="" href="exp4/result-box-heavy.html"><span class="pn">Result 1 · box_heavy</span></a></li>
+<li><a class="" href="exp4/result-barbell-heavy.html"><span class="pn">Result 2 · barbell_heavy</span></a></li>
+<li><a class="" href="exp4/result-push-heavy.html"><span class="pn">Result 3 · push_heavy</span></a></li>
+<li><a class="" href="exp4/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
+<li><a class="" href="exp4/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
+<li><a class="" href="exp4/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="exp4/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="exp4/free-run.html"><span class="pn">What fills the free run</span></a></li>
+<li><a class="" href="exp4/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="exp4/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
 </nav></aside>
   <div class="scrim" hidden></div>
 
@@ -140,15 +157,27 @@
     <span class="meta-chip tag">144 clips</span>
   </div>
 </a>
+<a class="card" href="exp4/overview.html">
+  <div class="card-c">Exp 4</div>
+  <div class="card-t">Photoreal output, animation as control</div>
+  <div class="card-q">Earlier experiments made the video model hold an appearance it had never seen. If the animation is control only and the appearance comes from text, does the model spend its capacity on motion instead?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-09-03</span>
+    <span class="meta-chip tag">60 clips</span>
+  </div>
+</a>
 </div>
-<aside class="callout note"><div class="callout-title">Why Exp 2 is listed before Exp 1</div><div class="callout-body"><p>They were numbered by when they were designed, not by when they run. Experiment 2 builds and validates the keyframe-conditioning machinery and chooses the two control settings; Experiment 1 then reuses that code, those settings and those files to close the loop. Reading 2 before 1 is much easier than the reverse.</p></div></aside>
+<aside class="callout note"><div class="callout-title">Why the numbering is out of order</div><div class="callout-body"><p>They were numbered by when they were designed, not by when they run. Experiment 2 builds and validates the keyframe-conditioning machinery and chooses the two control settings; Experiment 1 then reuses that code, those settings and those files to close the loop. Reading 2 before 1 is much easier than the reverse.</p>
+<p>Experiment 4 comes last in every sense: it is the one that identified what was wrong with 1–3 — the blue character was doing two jobs at once — and fixed it.</p></div></aside>
 <h2 id="what-the-three-experiments-add-up-to">What the three experiments add up to<a class="anchor" href="#what-the-three-experiments-add-up-to" aria-label="link to this section">#</a></h2>
 <aside class="callout key"><div class="callout-title">The state of the argument</div><div class="callout-body"><ol><li><strong>Keyframe conditioning works mechanically</strong> — pinned frames land where asked, full conditioning reproduces the input, and no morphing occurs. <a href="exp2/does-it-work.html">(Exp 2's checks)</a></li><li><strong>There is a real window where the video model re-times motion</strong> rather than copying it, and it exists for every prompt. <a href="exp2/verdict.html">(Exp 2's verdict)</a></li><li><strong>The round trip is essentially lossless</strong>, so motion added in the video survives back into 3D. <a href="exp1/floor.html">(Exp 1's floor)</a></li><li><strong>The video prior extends; it does not correct.</strong> It can supply a missing part of an action — the extension of a punch, a box picked up and carried — and it cannot fix an action that is simply wrong for the prompt. <a href="exp1/verdict.html">(Exp 1's verdict)</a></li><li><strong>The control is a placement puzzle, not a dial.</strong> What the video model contributes is governed by <em>where</em> the free run sits, not by how many frames were withheld. <a href="exp2/placement.html">(Exp 2)</a></li></ol></div></aside>
 <h2 id="how-to-read-these-pages">How to read these pages<a class="anchor" href="#how-to-read-these-pages" aria-label="link to this section">#</a></h2>
 <aside class="callout note"><div class="callout-title">Conventions used throughout</div><div class="callout-body"><p>Every experiment is split into short pages: what the question was, how it was set up, what to watch for, then <strong>one page per prompt</strong> carrying nothing but that prompt's clips, then an <strong>Observations</strong> page holding the discussion and the numbers, then a verdict and provenance.</p>
 <p>The split is deliberate. A result page is meant to go on a projector — headings that name the conditioning set and the frame indices, and the clips underneath. Everything that needs reading rather than watching lives on the Observations page.</p>
 <p><strong>Picking a page hides the sidebar</strong>, so the clips get the whole window. The button at the top left, or <code>n</code>, brings it back.</p>
-<p>Clips autoplay muted and loop. The toolbar at the top of a results page switches seed, slows playback to ½× or ¼×, and restarts everything from <em>t = 0</em> together — which matters, because the arms have different clip lengths. Click any clip to open it full-size and step through it a frame at a time. Click a timing strip to open it full-size and scroll it.</p></div></aside>
+<p>Clips autoplay muted. <strong>They loop in lockstep rather than independently</strong> — one timer restarts every visible clip together, so a comparison stays frame-aligned instead of drifting apart after a few seconds. Where the arms differ in length, the shorter one holds on its last frame until the group comes round again.</p>
+<p>The toolbar at the top of a results page switches seed, runs the whole page at ¼×, ½×, 1× or 2×, restarts everything from <em>t = 0</em>, and turns the lockstep off if you want it. Click any clip to open it full-size and step through it a frame at a time. Click a timing strip to open it full-size and scroll it.</p></div></aside>
 <p>Comparisons are always laid out so that the thing being compared sits <strong>inside one block</strong>. Where a prompt has a matched heavy/light counterpart, the two are adjacent rows of the same grid; where a returned motion has a source video, they are adjacent cells. Comparing across blocks is not meaningful: the arms differ in resolution, frame rate, clip length and visual style by construction, and those differences are documented per experiment rather than normalised away.</p>
 <aside class="callout method"><div class="callout-title">Keyboard shortcuts</div><div class="callout-body"><p><code>n</code> show or hide the sidebar · <code>/</code> focus the sidebar filter · <code>r</code> replay all visible clips in sync · <code>p</code> pause or play all · click a clip to open it · <code>←</code> <code>→</code> step one frame · <code>space</code> play/pause · <code>Esc</code> close.</p></div></aside></div>
       
@@ -169,9 +198,10 @@
       <input class="lb-seek" type="range" min="0" max="1000" value="0" aria-label="Seek">
       <span class="lb-time">0.00s</span>
       <div class="seg lb-rates">
-        <button type="button" data-lbrate="1">1&times;</button>
-        <button type="button" data-lbrate="0.5">&frac12;&times;</button>
         <button type="button" data-lbrate="0.25">&frac14;&times;</button>
+        <button type="button" data-lbrate="0.5">&frac12;&times;</button>
+        <button type="button" data-lbrate="1">1&times;</button>
+        <button type="button" data-lbrate="2">2&times;</button>
       </div>
       <button class="lb-close" type="button" aria-label="Close">&times;</button>
     </div>

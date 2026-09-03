@@ -48,13 +48,26 @@ contact — that a motion model's samples do not.
     <span class="meta-chip tag">144 clips</span>
   </div>
 </a>
+<a class="card" href="exp4/overview.html">
+  <div class="card-c">Exp 4</div>
+  <div class="card-t">Photoreal output, animation as control</div>
+  <div class="card-q">Earlier experiments made the video model hold an appearance it had never seen. If the animation is control only and the appearance comes from text, does the model spend its capacity on motion instead?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-09-03</span>
+    <span class="meta-chip tag">60 clips</span>
+  </div>
+</a>
 </div>
 
-::: note title="Why Exp 2 is listed before Exp 1"
+::: note title="Why the numbering is out of order"
 They were numbered by when they were designed, not by when they run. Experiment 2
 builds and validates the keyframe-conditioning machinery and chooses the two control
 settings; Experiment 1 then reuses that code, those settings and those files to close
 the loop. Reading 2 before 1 is much easier than the reverse.
+
+Experiment 4 comes last in every sense: it is the one that identified what was wrong
+with 1–3 — the blue character was doing two jobs at once — and fixed it.
 :::
 
 ## What the three experiments add up to
@@ -92,11 +105,15 @@ that needs reading rather than watching lives on the Observations page.
 **Picking a page hides the sidebar**, so the clips get the whole window. The button at
 the top left, or `n`, brings it back.
 
-Clips autoplay muted and loop. The toolbar at the top of a results page switches
-seed, slows playback to ½× or ¼×, and restarts everything from *t = 0* together —
-which matters, because the arms have different clip lengths. Click any clip to open
-it full-size and step through it a frame at a time. Click a timing strip to open it
-full-size and scroll it.
+Clips autoplay muted. **They loop in lockstep rather than independently** — one
+timer restarts every visible clip together, so a comparison stays frame-aligned
+instead of drifting apart after a few seconds. Where the arms differ in length, the
+shorter one holds on its last frame until the group comes round again.
+
+The toolbar at the top of a results page switches seed, runs the whole page at ¼×,
+½×, 1× or 2×, restarts everything from *t = 0*, and turns the lockstep off if you
+want it. Click any clip to open it full-size and step through it a frame at a time.
+Click a timing strip to open it full-size and scroll it.
 :::
 
 Comparisons are always laid out so that the thing being compared sits **inside one

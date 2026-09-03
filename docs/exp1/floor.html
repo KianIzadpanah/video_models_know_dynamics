@@ -98,6 +98,23 @@
 <li><a class="" href="../exp2/verdict.html"><span class="pn">Verdict</span></a></li>
 <li><a class="" href="../exp2/provenance.html"><span class="pn">Provenance</span></a></li>
 </ul></div>
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 4</span><span class="exp-t">Photoreal output, animation as control — splitting what to do from what to look like</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp4/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp4/pipeline.html"><span class="pn">Pipeline</span></a></li>
+<li><a class="" href="../exp4/does-it-work.html"><span class="pn">Did the split work?</span></a></li>
+<li><a class="" href="../exp4/result-box-heavy.html"><span class="pn">Result 1 · box_heavy</span></a></li>
+<li><a class="" href="../exp4/result-barbell-heavy.html"><span class="pn">Result 2 · barbell_heavy</span></a></li>
+<li><a class="" href="../exp4/result-push-heavy.html"><span class="pn">Result 3 · push_heavy</span></a></li>
+<li><a class="" href="../exp4/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
+<li><a class="" href="../exp4/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
+<li><a class="" href="../exp4/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="../exp4/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp4/free-run.html"><span class="pn">What fills the free run</span></a></li>
+<li><a class="" href="../exp4/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp4/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
 </nav></aside>
   <div class="scrim" hidden></div>
 
@@ -107,10 +124,12 @@
       <div class="toolbar" data-toolbar>
   <div class="tb-g"><span class="tb-l">seed</span><div class="seg"><button type="button" data-seed="1234">1234</button><button type="button" data-seed="5678">5678</button><button type="button" data-seed="all">all</button></div></div>
   <div class="tb-g"><span class="tb-l">speed</span><div class="seg">
-    <button type="button" data-rate="1">1&times;</button>
+    <button type="button" data-rate="0.25">&frac14;&times;</button>
     <button type="button" data-rate="0.5">&frac12;&times;</button>
-    <button type="button" data-rate="0.25">&frac14;&times;</button></div></div>
-  <div class="tb-g"><button type="button" class="btn" data-sync>&#9654; Replay in sync</button>
+    <button type="button" data-rate="1">1&times;</button>
+    <button type="button" data-rate="2">2&times;</button></div></div>
+  <div class="tb-g"><button type="button" class="btn" data-autosync aria-pressed="true">Sync: on</button>
+    <button type="button" class="btn" data-sync>&#9654; Restart now</button>
     <button type="button" class="btn" data-toggleplay>Pause all</button></div>
   <div class="tb-hint">Click any clip to open it frame-by-frame</div>
 </div>
@@ -159,9 +178,10 @@ camera; both recoveries face towards it. No video model was involved in either.<
       <input class="lb-seek" type="range" min="0" max="1000" value="0" aria-label="Seek">
       <span class="lb-time">0.00s</span>
       <div class="seg lb-rates">
-        <button type="button" data-lbrate="1">1&times;</button>
-        <button type="button" data-lbrate="0.5">&frac12;&times;</button>
         <button type="button" data-lbrate="0.25">&frac14;&times;</button>
+        <button type="button" data-lbrate="0.5">&frac12;&times;</button>
+        <button type="button" data-lbrate="1">1&times;</button>
+        <button type="button" data-lbrate="2">2&times;</button>
       </div>
       <button class="lb-close" type="button" aria-label="Close">&times;</button>
     </div>

@@ -1,0 +1,251 @@
+{
+  "id": "exp4",
+  "nav": "Exp 4",
+  "title": "Photoreal output, animation as control — splitting what to do from what to look like",
+  "question": "Earlier experiments made the video model hold an appearance it had never seen. If the animation is control only and the appearance comes from text, does the video model spend its capacity on motion instead?",
+  "status": "complete",
+  "date": "2026-09-03",
+  "tags": [
+    "MotionGPT3",
+    "LTX-2.3 distilled",
+    "Depth IC-LoRA",
+    "GVHMR",
+    "SMPL"
+  ],
+  "source_dir": "../Exp 04 - Photoreal Output, Animation as Control",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "box_heavy": {
+        "text": "a person lifts a heavy box from the floor",
+        "verdict": "no-change",
+        "meta": {
+          "scene": "warehouse worker, warehouse"
+        }
+      },
+      "barbell_heavy": {
+        "text": "a person lifts a heavy barbell from the ground",
+        "verdict": "partial",
+        "meta": {
+          "scene": "weightlifter, gym"
+        }
+      },
+      "push_heavy": {
+        "text": "a person pushes a car",
+        "verdict": "no-change",
+        "meta": {
+          "scene": "man on a suburban street, parked car"
+        }
+      },
+      "punch": {
+        "text": "a person throws right and left punches",
+        "verdict": "improved",
+        "meta": {
+          "scene": "boxer, boxing gym"
+        }
+      },
+      "squat": {
+        "text": "a person squats down",
+        "verdict": "unusable",
+        "meta": {
+          "scene": "man in a gym"
+        }
+      },
+      "baseball": {
+        "text": "a person hit a ball with baseball bat",
+        "verdict": "marginal",
+        "meta": {
+          "scene": "baseball player, baseball field"
+        }
+      }
+    },
+    "chips": [
+      {
+        "field": "verdict",
+        "labels": {
+          "improved": "clear effect",
+          "partial": "one clip only",
+          "marginal": "marginal",
+          "no-change": "no effect",
+          "unusable": "unusable"
+        }
+      }
+    ],
+    "sets": {
+      "input": {
+        "dir": "data/renders",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Input motion",
+        "sublabel": "MotionGPT3 → SMPL, neutral body"
+      },
+      "depth_dense": {
+        "dir": "data/depth",
+        "pattern": "{id}_s{seed}_dense.mp4",
+        "label": "Depth control — dense",
+        "sublabel": "every latent frame — 0·8·…·120 (16)"
+      },
+      "vid_dense": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_dense.mp4",
+        "label": "Photoreal — dense",
+        "sublabel": "every latent frame — 0·8·…·120 (16)"
+      },
+      "lift_dense": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_dense.mp4",
+        "label": "Recovered SMPL — dense",
+        "sublabel": "every latent frame — 0·8·…·120 (16)"
+      },
+      "depth_K8": {
+        "dir": "data/depth",
+        "pattern": "{id}_s{seed}_K8.mp4",
+        "label": "Depth control — K = 8",
+        "sublabel": "0·16·32·48·72·88·104·120"
+      },
+      "vid_K8": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K8.mp4",
+        "label": "Photoreal — K = 8",
+        "sublabel": "0·16·32·48·72·88·104·120"
+      },
+      "lift_K8": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K8.mp4",
+        "label": "Recovered SMPL — K = 8",
+        "sublabel": "0·16·32·48·72·88·104·120"
+      },
+      "depth_K5": {
+        "dir": "data/depth",
+        "pattern": "{id}_s{seed}_K5.mp4",
+        "label": "Depth control — K = 5",
+        "sublabel": "0·32·64·88·120"
+      },
+      "vid_K5": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K5.mp4",
+        "label": "Photoreal — K = 5",
+        "sublabel": "0·32·64·88·120"
+      },
+      "lift_K5": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K5.mp4",
+        "label": "Recovered SMPL — K = 5",
+        "sublabel": "0·32·64·88·120"
+      },
+      "depth_K3": {
+        "dir": "data/depth",
+        "pattern": "{id}_s{seed}_K3.mp4",
+        "label": "Depth control — K = 3",
+        "sublabel": "0·64·120"
+      },
+      "vid_K3": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K3.mp4",
+        "label": "Photoreal — K = 3",
+        "sublabel": "0·64·120"
+      },
+      "lift_K3": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K3.mp4",
+        "label": "Recovered SMPL — K = 3",
+        "sublabel": "0·64·120"
+      },
+      "depth_K2": {
+        "dir": "data/depth",
+        "pattern": "{id}_s{seed}_K2.mp4",
+        "label": "Depth control — K = 2",
+        "sublabel": "0·120 — the two ends"
+      },
+      "vid_K2": {
+        "dir": "data/videos",
+        "pattern": "{id}_s{seed}_K2.mp4",
+        "label": "Photoreal — K = 2",
+        "sublabel": "0·120 — the two ends"
+      },
+      "lift_K2": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_s{seed}_K2.mp4",
+        "label": "Recovered SMPL — K = 2",
+        "sublabel": "0·120 — the two ends"
+      },
+      "strip": {
+        "dir": "results/strips",
+        "pattern": "{id}_s{seed}.png",
+        "kind": "image",
+        "label": "Timing strip",
+        "sublabel": "control, photoreal and recovered, time-aligned",
+        "max_width": 1500
+      },
+      "probe_all60": {
+        "dir": "results/probe",
+        "pattern": "all60_frame76.png",
+        "kind": "image",
+        "label": "All 60 videos, frame 76",
+        "sublabel": "one glance at every clip",
+        "max_width": 1140
+      },
+      "probe_overlay": {
+        "dir": "results/probe",
+        "pattern": "step3_dense_overlay.png",
+        "kind": "image",
+        "label": "Control silhouette over the generated body",
+        "sublabel": "dense — pixel for pixel",
+        "max_width": 1760
+      },
+      "probe_dense_ctrl": {
+        "dir": "results/probe",
+        "pattern": "step3_dense_vs_control.png",
+        "kind": "image",
+        "label": "dense against its control",
+        "sublabel": "same frames, side by side",
+        "max_width": 1600
+      },
+      "probe_pinned": {
+        "dir": "results/probe",
+        "pattern": "step3_pinned_overlay.png",
+        "kind": "image",
+        "label": "A pinned frame, control over output",
+        "sublabel": "sparse conditions",
+        "max_width": 1020
+      },
+      "probe_depthconds": {
+        "dir": "results/probe",
+        "pattern": "step2_depth_conditions.png",
+        "kind": "image",
+        "label": "The five depth control tracks",
+        "sublabel": "dense to K2",
+        "max_width": 1600
+      },
+      "probe_deadlift": {
+        "dir": "results/probe",
+        "pattern": "barbell_K2_deadlift.png",
+        "kind": "image",
+        "label": "barbell_heavy s1234 at K = 2",
+        "sublabel": "the invented deadlift, photoreal above recovered",
+        "max_width": 1600
+      },
+      "probe_blowout": {
+        "dir": "results/probe",
+        "pattern": "endframe_blowout.png",
+        "kind": "image",
+        "label": "The frame 119–120 blow-out",
+        "sublabel": "17 of 48 sparse clips",
+        "max_width": 1640
+      },
+      "probe_impulse": {
+        "dir": "results/probe",
+        "pattern": "step3_impulse_vs_hold.png",
+        "kind": "image",
+        "label": "impulse against hold encoding",
+        "sublabel": "the rejected alternative",
+        "max_width": 1400
+      }
+    }
+  }
+}

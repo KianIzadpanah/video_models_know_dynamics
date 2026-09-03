@@ -178,6 +178,8 @@ Optional caption in Markdown.
 
 The page's seed/speed/sync toolbar appears automatically on any page containing a
 `:::clips` block, and its seed buttons are the union of every `seeds=` on the page.
+It also carries the speed buttons (¼×, ½×, 1×, 2×), the **Sync** toggle, a manual
+restart, and pause-all.
 
 #### `:::metrics` — a table from a manifest
 
@@ -473,6 +475,18 @@ Things that were deliberate, in case you want to change them:
   viewport, and pauses when it scrolls away. This is what makes a 54-clip page
   usable. Posters are grabbed from ~40 % into each clip rather than frame 0,
   because frame 0 of these clips is often a neutral standing pose.
+- **Clips loop in lockstep, not independently.** The point of these pages is
+  frame-against-frame comparison, and clips left to their own `loop` attribute
+  drift apart immediately: each one starts whenever the observer attaches it, and
+  within an experiment the arms can differ in length. So `loop` is turned off and
+  a single timer restarts every visible clip together, on a period set by the
+  longest of them; a shorter clip holds on its last frame until the group comes
+  round again, exactly as the pre-composed montages do. The toolbar's **Sync**
+  button turns it off if you want independent looping. Two details worth keeping
+  if you touch this: the timer only ever touches clips that are *already
+  attached*, because force-loading the rest would defeat the lazy loading; and a
+  clip revealed mid-cycle is seeked to the group's elapsed time so scrolling does
+  not knock it out of step.
 - **Seed filtering is client-side.** All seeds are in the HTML; the toolbar hides
   the ones you aren't looking at, so switching seeds is instant and hidden clips
   cost nothing until shown.

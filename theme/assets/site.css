@@ -333,6 +333,10 @@ figure.diagram-slot{margin:0 0 1.7em}
   border-radius:7px;background:var(--panel);color:var(--ink-2);cursor:pointer;
 }
 .btn:hover{border-color:var(--accent);color:var(--accent)}
+/* The sync toggle is on by default, so its "on" state has to read as the resting
+   state rather than as an alert -- tinted, not filled. */
+.btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);
+  color:var(--accent-ink);font-weight:600}
 
 /* ---------- clip grids ---------- */
 figure.clips{margin:0 0 2em}
