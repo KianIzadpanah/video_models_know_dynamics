@@ -14,7 +14,11 @@ venv/
 Thumbs.db
 desktop.ini
 
-# Slide decks (<exp>-slides.html) are written one level up, next to the experiment
+# Frames pulled out of the videos to build the PowerPoint deck. Regenerable and
+# large; tools/make_pptx.py refills it on demand.
+.pptx-frames/
+
+# Slide decks (<exp>-slides.html, <exp>-slides.pptx) are written one level up, next to the experiment
 # folders. That is outside this repo, so git never sees them and there is nothing
 # to ignore -- which is the point: a deck carries its clips inlined and is never
 # published. See README section 4b.

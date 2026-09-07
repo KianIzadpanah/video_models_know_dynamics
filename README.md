@@ -401,6 +401,30 @@ still point back at the published pages.
 Missing media and unknown set names surface as build warnings, exactly as they do
 for a page, so a deck cannot silently ship an empty cell.
 
+### The PowerPoint version
+
+```bash
+python tools/make_pptx.py exp6      # -> ../exp6-slides.pptx
+```
+
+Same `slides.json`, same running order, rendered as a **static, light-theme
+`.pptx`** next to the HTML deck. Requires `python-pptx`, `Pillow` and ffmpeg.
+
+PowerPoint cannot play the HTML deck's synchronised video grids, so the motion
+becomes *frames*: every clip is sampled at **f0 · f56 · f112 · f168** and laid out
+conditions-down, time-across — the one arrangement that shows both what changed
+with K and what happened over the six seconds. Each result slide carries two of
+those grids side by side, *what the model made* and *what came back as motion*,
+with the joint error beside each row and the best value in green.
+
+Nothing on a slide is a video, an animation, a SmartArt or an embedded object —
+just pictures and text boxes. It opens anywhere, prints, and is ~4 MB. The
+pipeline diagram and the K timelines are drawn from `slides.json` with Pillow, so
+there is no diagram asset to keep in sync.
+
+Extracted frames are cached in `.pptx-frames/` (gitignored); the second build is
+fast.
+
 ### Presenting
 
 | key | action |
