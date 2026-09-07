@@ -58,6 +58,16 @@ contact — that a motion model's samples do not.
     <span class="meta-chip tag">60 clips</span>
   </div>
 </a>
+<a class="card" href="exp6/overview.html">
+  <div class="card-c">Exp 6</div>
+  <div class="card-t">Photoreal output, correct animation as control</div>
+  <div class="card-q">Given a clean motion-capture clip as depth control and a sentence for appearance, how few conditioned frames still produce the right action, six seconds long, in a real place?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-09-07</span>
+    <span class="meta-chip tag">50 clips</span>
+  </div>
+</a>
 </div>
 
 ::: note title="Why the numbering is out of order"
@@ -66,11 +76,14 @@ builds and validates the keyframe-conditioning machinery and chooses the two con
 settings; Experiment 1 then reuses that code, those settings and those files to close
 the loop. Reading 2 before 1 is much easier than the reverse.
 
-Experiment 4 comes last in every sense: it is the one that identified what was wrong
-with 1–3 — the blue character was doing two jobs at once — and fixed it.
+Experiment 4 identified what was wrong with 1–3 — the blue character was doing two
+jobs at once — and fixed it. Experiment 6 then fixed the *other* problem those
+experiments shared: the control motion itself was often wrong, so it swaps
+MotionGPT3's output for clean motion capture. Experiments 3 and 5 are not written up
+here; 5 is the data-preparation step Experiment 6 consumes.
 :::
 
-## What the three experiments add up to
+## What the experiments add up to
 
 ::: key title="The state of the argument"
 1. **Keyframe conditioning works mechanically** — pinned frames land where asked,
@@ -88,6 +101,30 @@ with 1–3 — the blue character was doing two jobs at once — and fixed it.
 5. **The control is a placement puzzle, not a dial.** What the video model
    contributes is governed by *where* the free run sits, not by how many frames were
    withheld. [(Exp 2)](exp2/placement.html)
+6. **Separating "what to do" from "what to look like" removes the whole appearance
+   confound.** Feed the animation in as depth control and take appearance from text,
+   and every output is a photoreal single person with the pose pinned to within about
+   80 mm wherever it is specified. [(Exp 4)](exp4/does-it-work.html)
+7. **With a correct animation as control, two frames and a sentence produce the right
+   action** — six seconds of it, in a real place, for eight clips of ten. What
+   sparsity costs is the *particular performance*, not the action.
+   [(Exp 6)](exp6/where-it-breaks.html)
+8. **And the model supplies physics the control does not have** — a chair invented
+   under a man who has to sit on something, squat repetitions replacing an
+   implausible six-second hold, and foot contact cleaner than the motion capture's on
+   every slow clip. [(Exp 6's verdict)](exp6/verdict.html)
+:::
+
+::: warn title="What is still missing"
+Control. The model will give you the action; it will not give you *your* action.
+Every experiment so far has hit a ceiling that was a property of the control scheme
+rather than of the model — keyframe placement in Exp 2, blank-frame semantics in
+Exp 4, and in Exp 6 the fact that the frames carrying a specific performance are
+exactly the ones sparsity throws away.
+
+Two concrete items are outstanding across the series: a control signal that is
+**dense but weak** rather than sparse and absolute, and **a second camera** — three
+experiments have now lost a clip to a single fixed viewpoint on a floor-level pose.
 :::
 
 ## How to read these pages

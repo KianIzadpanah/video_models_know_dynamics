@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observations · VMKD</title>
+<meta name="description" content="Everything the ten clip pages leave out — what was actually seen in each, the per-clip numbers, and the caveats. The clip pages carry the clips; this page carries the reading of them.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="../assets/site.css">
+<script>
+/* Set the theme and the sidebar state before first paint so neither flashes.
+   The sidebar state has to be persisted rather than held in memory: this is a
+   real multi-page site, so clicking a nav link is a full page load and any
+   in-memory "collapsed" flag would be lost on every navigation. */
+(function(){
+  try{var t=localStorage.getItem('vmkd-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}
+  var n;
+  try{n=localStorage.getItem('vmkd-nav');}catch(e){}
+  if(n!=='open'&&n!=='closed')n=window.innerWidth<941?'closed':'open';
+  document.documentElement.setAttribute('data-nav',n);
+})();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <button class="burger" type="button" aria-label="Show or hide navigation"
+          title="Show or hide navigation (n)" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="crumbs"><a href="../index.html">VMKD</a><span class="sep">/</span><a href="../exp6/overview.html">Exp 6</a><span class="sep">/</span><span>Observations</span></div>
+  <button class="themebtn" type="button" aria-label="Switch colour theme" title="Switch colour theme">
+    <svg viewBox="0 0 20 20" aria-hidden="true" width="16" height="16">
+      <path class="sun" d="M10 3.2V1M10 19v-2.2M16.8 10H19M1 10h2.2M14.8 5.2l1.6-1.6M3.6 16.4l1.6-1.6M14.8 14.8l1.6 1.6M3.6 3.6l1.6 1.6"
+            fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <circle class="sun" cx="10" cy="10" r="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path class="moon" d="M15.5 12.6A6.4 6.4 0 0 1 7.4 4.5a6.4 6.4 0 1 0 8.1 8.1z"
+            fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar"><a class="side-home" href="../index.html"><span class="sh-t">Video Models Know Dynamics</span><span class="sh-s">Experiment log</span></a>
+<div class="side-filter"><input type="search" id="navfilter" placeholder="Filter pages…" autocomplete="off" spellcheck="false"></div>
+<nav class="side-nav" aria-label="Experiments">
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 0</span><span class="exp-t">Generating motion with video models vs. a text-to-motion model</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp0/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp0/setup.html"><span class="pn">Setup</span></a></li>
+<li><a class="" href="../exp0/reading-the-clips.html"><span class="pn">Reading the clips</span></a></li>
+<li><a class="" href="../exp0/result-box.html"><span class="pn">Result 1 · box (heavy/light)</span></a></li>
+<li><a class="" href="../exp0/result-barbell.html"><span class="pn">Result 2 · barbell (heavy/light)</span></a></li>
+<li><a class="" href="../exp0/result-push.html"><span class="pn">Result 3 · push (car/cart)</span></a></li>
+<li><a class="" href="../exp0/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
+<li><a class="" href="../exp0/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
+<li><a class="" href="../exp0/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="../exp0/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp0/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp0/montages.html"><span class="pn">Montages</span></a></li>
+<li><a class="" href="../exp0/fit-quality.html"><span class="pn">Fit quality</span></a></li>
+<li><a class="" href="../exp0/provenance.html"><span class="pn">Provenance & files</span></a></li>
+</ul></div>
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 1</span><span class="exp-t">The round trip — does motion come back more natural than it went in?</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp1/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp1/setup.html"><span class="pn">How it was run</span></a></li>
+<li><a class="" href="../exp1/floor.html"><span class="pn">The floor — read first</span></a></li>
+<li><a class="" href="../exp1/result-box-heavy.html"><span class="pn">Result 1 · box_heavy</span></a></li>
+<li><a class="" href="../exp1/result-barbell-heavy.html"><span class="pn">Result 2 · barbell_heavy</span></a></li>
+<li><a class="" href="../exp1/result-push-heavy.html"><span class="pn">Result 3 · push_heavy</span></a></li>
+<li><a class="" href="../exp1/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
+<li><a class="" href="../exp1/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
+<li><a class="" href="../exp1/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="../exp1/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp1/numbers.html"><span class="pn">The numbers</span></a></li>
+<li><a class="" href="../exp1/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp1/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 2</span><span class="exp-t">Strong vs. loose control — how much motion does the video model add?</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp2/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp2/setup.html"><span class="pn">How it was run</span></a></li>
+<li><a class="" href="../exp2/does-it-work.html"><span class="pn">Does it work?</span></a></li>
+<li><a class="" href="../exp2/result-box-heavy.html"><span class="pn">Result 1 · box_heavy</span></a></li>
+<li><a class="" href="../exp2/result-barbell-heavy.html"><span class="pn">Result 2 · barbell_heavy</span></a></li>
+<li><a class="" href="../exp2/result-push-heavy.html"><span class="pn">Result 3 · push_heavy</span></a></li>
+<li><a class="" href="../exp2/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
+<li><a class="" href="../exp2/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
+<li><a class="" href="../exp2/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="../exp2/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp2/placement.html"><span class="pn">Placement, not K</span></a></li>
+<li><a class="" href="../exp2/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp2/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 4</span><span class="exp-t">Photoreal output, corrupted animation as control — splitting what to do from what to look like</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp4/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp4/pipeline.html"><span class="pn">Pipeline</span></a></li>
+<li><a class="" href="../exp4/does-it-work.html"><span class="pn">Did the split work?</span></a></li>
+<li><a class="" href="../exp4/result-box-heavy.html"><span class="pn">Result 1 · box_heavy</span></a></li>
+<li><a class="" href="../exp4/result-barbell-heavy.html"><span class="pn">Result 2 · barbell_heavy</span></a></li>
+<li><a class="" href="../exp4/result-push-heavy.html"><span class="pn">Result 3 · push_heavy</span></a></li>
+<li><a class="" href="../exp4/result-punch.html"><span class="pn">Result 4 · punch</span></a></li>
+<li><a class="" href="../exp4/result-squat.html"><span class="pn">Result 5 · squat</span></a></li>
+<li><a class="" href="../exp4/result-baseball.html"><span class="pn">Result 6 · baseball</span></a></li>
+<li><a class="" href="../exp4/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp4/free-run.html"><span class="pn">What fills the free run</span></a></li>
+<li><a class="" href="../exp4/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp4/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
+<div class="exp open" data-exp>
+<button class="exp-h" type="button" aria-expanded="true"><span class="exp-c">Exp 6</span><span class="exp-t">Photoreal output, correct animation as control — how little pose is enough?</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp6/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp6/pipeline.html"><span class="pn">Pipeline</span></a></li>
+<li><a class="" href="../exp6/pilots.html"><span class="pn">What the pilots settled</span></a></li>
+<li><a class="" href="../exp6/result-walk.html"><span class="pn">Result 1 · walk</span></a></li>
+<li><a class="" href="../exp6/result-run.html"><span class="pn">Result 2 · run</span></a></li>
+<li><a class="" href="../exp6/result-jump.html"><span class="pn">Result 3 · jump</span></a></li>
+<li><a class="" href="../exp6/result-kick.html"><span class="pn">Result 4 · kick</span></a></li>
+<li><a class="" href="../exp6/result-sit-down.html"><span class="pn">Result 5 · sit_down</span></a></li>
+<li><a class="" href="../exp6/result-stand-up.html"><span class="pn">Result 6 · stand_up</span></a></li>
+<li><a class="" href="../exp6/result-throw.html"><span class="pn">Result 7 · throw</span></a></li>
+<li><a class="" href="../exp6/result-turn.html"><span class="pn">Result 8 · turn</span></a></li>
+<li><a class="" href="../exp6/result-squat.html"><span class="pn">Result 9 · squat</span></a></li>
+<li><a class="" href="../exp6/result-wave.html"><span class="pn">Result 10 · wave</span></a></li>
+<li><a class="on" href="../exp6/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp6/where-it-breaks.html"><span class="pn">Where the sweep breaks</span></a></li>
+<li><a class="" href="../exp6/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp6/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
+</nav></aside>
+  <div class="scrim" hidden></div>
+
+  <main id="main">
+    <article class="page">
+      <header class="pagehead"><div class="ph-kicker">Exp 6 · Photoreal output, correct animation as control — how little pose is enough?</div><h1>Observations</h1><p class="lead">Everything the ten clip pages leave out — what was actually seen in each, the per-clip numbers, and the caveats. The clip pages carry the clips; this page carries the reading of them.</p></header>
+      
+      <div class="prose"><p>Numbers are mean <strong>root-relative joint error against the input motion, in mm</strong>, on the same neutral body after the same yaw alignment and grounding — so they describe exactly what is on screen. <code>results/analysis.json</code> has the rest.</p>
+<aside class="callout warn"><div class="callout-title">The caution that applies to every row below</div><div class="callout-body"><p>Pose recovery has a motion prior and will return smooth, plausible SMPL from a video that was a mess. <strong>No recovered motion means anything until the photoreal video above it has been watched.</strong> Every conclusion here was read off the photoreal row first.</p></div></aside>
+<h2 id="the-whole-sweep-in-one-table">The whole sweep in one table<a class="anchor" href="#the-whole-sweep-in-one-table" aria-label="link to this section">#</a></h2>
+<div class="table-wrap"><table><thead><tr><th style="text-align:left">clip</th><th style="text-align:left">dense</th><th style="text-align:left">K8</th><th style="text-align:left">K5</th><th style="text-align:left">K3</th><th style="text-align:left">K2</th><th style="text-align:left">stops copying</th><th style="text-align:left">stops doing the action</th></tr></thead><tbody><tr><td style="text-align:left"><a href="result-walk.html">walk</a></td><td style="text-align:left">48</td><td style="text-align:left">84</td><td style="text-align:left">184</td><td style="text-align:left">177</td><td style="text-align:left">170</td><td style="text-align:left"><strong>K5</strong></td><td style="text-align:left">never</td></tr><tr><td style="text-align:left"><a href="result-run.html">run</a></td><td style="text-align:left">78</td><td style="text-align:left">126</td><td style="text-align:left">230</td><td style="text-align:left">220</td><td style="text-align:left">219</td><td style="text-align:left"><strong>K5</strong></td><td style="text-align:left">never</td></tr><tr><td style="text-align:left"><a href="result-jump.html">jump</a></td><td style="text-align:left">73</td><td style="text-align:left">149</td><td style="text-align:left">148</td><td style="text-align:left">147</td><td style="text-align:left">162</td><td style="text-align:left"><strong>K8</strong></td><td style="text-align:left">never</td></tr><tr><td style="text-align:left"><a href="result-kick.html">kick</a></td><td style="text-align:left">74</td><td style="text-align:left">156</td><td style="text-align:left">172</td><td style="text-align:left">241</td><td style="text-align:left">154</td><td style="text-align:left"><strong>K8</strong></td><td style="text-align:left"><strong>K3</strong></td></tr><tr><td style="text-align:left"><a href="result-sit-down.html">sit down</a></td><td style="text-align:left">67</td><td style="text-align:left">69</td><td style="text-align:left">85</td><td style="text-align:left">99</td><td style="text-align:left">79</td><td style="text-align:left">never sharply</td><td style="text-align:left">never</td></tr><tr><td style="text-align:left"><a href="result-stand-up.html">stand up</a></td><td style="text-align:left">140</td><td style="text-align:left">136</td><td style="text-align:left">301</td><td style="text-align:left">279</td><td style="text-align:left">270</td><td style="text-align:left"><strong>K5</strong></td><td style="text-align:left">never</td></tr><tr><td style="text-align:left"><a href="result-throw.html">throw</a></td><td style="text-align:left">113</td><td style="text-align:left">166</td><td style="text-align:left">193</td><td style="text-align:left">244</td><td style="text-align:left">252</td><td style="text-align:left"><strong>K8</strong></td><td style="text-align:left">mis-read at every density</td></tr><tr><td style="text-align:left"><a href="result-turn.html">turn</a></td><td style="text-align:left">56</td><td style="text-align:left">92</td><td style="text-align:left">108</td><td style="text-align:left">98</td><td style="text-align:left">117</td><td style="text-align:left">never sharply</td><td style="text-align:left">never</td></tr><tr><td style="text-align:left"><a href="result-squat.html">squat</a></td><td style="text-align:left">51</td><td style="text-align:left">76</td><td style="text-align:left">102</td><td style="text-align:left">137</td><td style="text-align:left">168</td><td style="text-align:left">gradually, from K8</td><td style="text-align:left">never</td></tr><tr><td style="text-align:left"><a href="result-wave.html">wave</a></td><td style="text-align:left">61</td><td style="text-align:left">56</td><td style="text-align:left">75</td><td style="text-align:left">92</td><td style="text-align:left">78</td><td style="text-align:left">never</td><td style="text-align:left">never</td></tr></tbody></table></div>
+<hr>
+<h2 id="walk">walk<a class="anchor" href="#walk" aria-label="link to this section">#</a></h2>
+<p><strong>"a man walking along a city sidewalk"</strong> — the action survives to two frames; the <em>trajectory</em> does not. <a href="result-walk.html">Clips →</a></p>
+<p><code>dense</code> (48 mm) and <code>K = 8</code> (84 mm) follow the input's <strong>actual path</strong>: approach the camera, pass, turn away. From <code>K = 5</code> the model substitutes a plain steady walk straight across frame and never turns.</p>
+<p>So the action is intact all the way down to two frames, and the specific performance is gone from <code>K = 5</code>. That split — <em>what</em> survives, <em>where and when</em> does not — is <a href="where-it-breaks.html">the result of the whole experiment</a>, and <code>walk</code> is the clearest single case of it.</p>
+<aside class="callout warn"><div class="callout-title">A second pedestrian appears at K = 5 and K = 3</div><div class="callout-body"><p>The model adds another person walking in frame. Pose recovery does not track them, so the recovered column ignores it — but it is the failure mode <a href="../exp1/observations.html#box-heavy">Experiment 1 was poisoned by</a>, and worth knowing is present.</p></div></aside>
+<h3 id="the-numbers">The numbers<a class="anchor" href="#the-numbers" aria-label="link to this section">#</a></h3>
+<figure class="metrics"><div class="table-wrap"><table><thead><tr><th>condition</th><th>frames pinned</th><th>err on pinned mm</th><th>err on free mm</th><th>jerk vs. input</th><th>skate mm/s</th></tr></thead><tbody><tr><td class="">dense</td><td class="num">22</td><td class="num">49.8</td><td class="num">47.9</td><td class="num">3.808</td><td class="num">253.2</td></tr><tr><td class="">K8</td><td class="num">8</td><td class="num">93.0</td><td class="num">83.4</td><td class="num">7.091</td><td class="num">252.9</td></tr><tr><td class="">K5</td><td class="num">5</td><td class="num">167.3</td><td class="num">184.8</td><td class="num">2.895</td><td class="num">452.4</td></tr><tr><td class="">K3</td><td class="num">3</td><td class="num">147.2</td><td class="num">177.7</td><td class="num">3.993</td><td class="num">631.1</td></tr><tr><td class="">K2</td><td class="num">2</td><td class="num">64.7</td><td class="num">171.4</td><td class="num">4.425</td><td class="num">196.1</td></tr></tbody></table></div></figure>
+<hr>
+<h2 id="run">run<a class="anchor" href="#run" aria-label="link to this section">#</a></h2>
+<p><strong>"a man running on an outdoor running track"</strong> — same threshold as <code>walk</code>, sharper. <a href="result-run.html">Clips →</a></p>
+<p><code>dense</code> (78 mm) and <code>K = 8</code> (126 mm) hold the input's stride. <code>K = 5</code> and below are a <strong>generic run</strong>.</p>
+<aside class="callout warn"><div class="callout-title">This is where the model invents fast motion badly</div><div class="callout-body"><p>Foot skate goes from <strong>180 mm/s in the input to 900–1800 mm/s out</strong> — 1812 mm/s at <code>K = 5</code>, ten times the input.</p>
+<p><strong>The model knows what running looks like and does not know where this runner's feet were.</strong> Between distant anchors it has to invent a fast, high-frequency gait, and it invents one that does not stay on the ground.</p></div></aside>
+<h3 id="the-numbers-2">The numbers<a class="anchor" href="#the-numbers-2" aria-label="link to this section">#</a></h3>
+<figure class="metrics"><div class="table-wrap"><table><thead><tr><th>condition</th><th>frames pinned</th><th>err on pinned mm</th><th>err on free mm</th><th>jerk vs. input</th><th>skate mm/s</th></tr></thead><tbody><tr><td class="">dense</td><td class="num">22</td><td class="num">75.7</td><td class="num">78.2</td><td class="num">3.102</td><td class="num">376.7</td></tr><tr><td class="">K8</td><td class="num">8</td><td class="num">127.7</td><td class="num">126.3</td><td class="num">2.673</td><td class="num">925.6</td></tr><tr><td class="">K5</td><td class="num">5</td><td class="num">242.7</td><td class="num">229.7</td><td class="num">5.774</td><td class="num">1811.5</td></tr><tr><td class="">K3</td><td class="num">3</td><td class="num">283.6</td><td class="num">218.8</td><td class="num">1.365</td><td class="num">1033.4</td></tr><tr><td class="">K2</td><td class="num">2</td><td class="num">277.7</td><td class="num">217.8</td><td class="num">1.094</td><td class="num">957.9</td></tr></tbody></table></div></figure>
+<hr>
+<h2 id="jump">jump<a class="anchor" href="#jump" aria-label="link to this section">#</a></h2>
+<p><strong>"a man jumping upward"</strong> — the only clip whose error jumps immediately and then never gets worse. <a href="result-jump.html">Clips →</a></p>
+<p><code>K = 8</code> is already at <strong>twice <code>dense</code></strong> — 149 against 73 mm — and <code>K = 5</code>, <code>K = 3</code> and <code>K = 2</code> sit at 148, 147 and 162. The curve is a step, not a slope.</p>
+<p>The <strong>crouch-and-launch survives at every density including two frames</strong>. A jump is a large, unambiguous, ballistic motion: pin its start and its end and the model knows what has to happen in between.</p>
+<aside class="callout note"><div class="callout-title">And at K = 8 and below it adds a basketball</div><div class="callout-body"><p>Which the depth control never contained. Like Experiment 4's bat and glove, it does not come back through pose recovery — but it is the model reasoning about the <em>action</em>, not only the pixels: a man jumping upward in a gym is, plausibly, going for a rebound.</p></div></aside>
+<p>This clip is also the one the <a href="pilots.html#4-the-sparse-conditions-the-attention-mask">attention-mask pilot</a> was diagnosed on.</p>
+<h3 id="the-numbers-3">The numbers<a class="anchor" href="#the-numbers-3" aria-label="link to this section">#</a></h3>
+<figure class="metrics"><div class="table-wrap"><table><thead><tr><th>condition</th><th>frames pinned</th><th>err on pinned mm</th><th>err on free mm</th><th>jerk vs. input</th><th>skate mm/s</th></tr></thead><tbody><tr><td class="">dense</td><td class="num">22</td><td class="num">72.6</td><td class="num">73.5</td><td class="num">1.067</td><td class="num">138.9</td></tr><tr><td class="">K8</td><td class="num">8</td><td class="num">112.5</td><td class="num">150.5</td><td class="num">1.26</td><td class="num">106.7</td></tr><tr><td class="">K5</td><td class="num">5</td><td class="num">90.1</td><td class="num">149.5</td><td class="num">1.203</td><td class="num">169.0</td></tr><tr><td class="">K3</td><td class="num">3</td><td class="num">85.3</td><td class="num">147.9</td><td class="num">1.212</td><td class="num">459.2</td></tr><tr><td class="">K2</td><td class="num">2</td><td class="num">154.6</td><td class="num">161.7</td><td class="num">0.527</td><td class="num">44.3</td></tr></tbody></table></div></figure>
+<hr>
+<h2 id="kick">kick<a class="anchor" href="#kick" aria-label="link to this section">#</a></h2>
+<p><strong>"a man performing a kick"</strong> — <strong>the only clip where the action itself does not survive.</strong> <a href="result-kick.html">Clips →</a></p>
+<p>Copies at <code>dense</code> (74 mm), loses the input at <code>K = 8</code> (156 mm), and at <code>K = 3</code> and <code>K = 2</code> <strong>the kick itself goes</strong>: what is left is footwork with one late leg raise.</p>
+<aside class="callout warn"><div class="callout-title">Why kick and not jump</div><div class="callout-body"><p>Both are fast. The difference is that a jump is one large ballistic event that two endpoints effectively specify, while a kick is a <em>short, high-frequency</em> event that can happen anywhere in six seconds. Given frames 0 and 168 of a man in a training hall, "footwork" is a perfectly plausible six seconds — and the one moment that made it a kick is not pinned by either end.</p></div></aside>
+<p><code>kick</code> is also the clip that <a href="pilots.html#2-the-control-format-the-expected-winner-lost">decided the control format</a>: its indoor prompt is what the <code>scene</code> format could not satisfy.</p>
+<h3 id="the-numbers-4">The numbers<a class="anchor" href="#the-numbers-4" aria-label="link to this section">#</a></h3>
+<figure class="metrics"><div class="table-wrap"><table><thead><tr><th>condition</th><th>frames pinned</th><th>err on pinned mm</th><th>err on free mm</th><th>jerk vs. input</th><th>skate mm/s</th></tr></thead><tbody><tr><td class="">dense</td><td class="num">22</td><td class="num">83.2</td><td class="num">72.3</td><td class="num">2.494</td><td class="num">136.8</td></tr><tr><td class="">K8</td><td class="num">8</td><td class="num">160.3</td><td class="num">156.3</td><td class="num">1.848</td><td class="num">66.5</td></tr><tr><td class="">K5</td><td class="num">5</td><td class="num">192.4</td><td class="num">171.3</td><td class="num">2.017</td><td class="num">116.7</td></tr><tr><td class="">K3</td><td class="num">3</td><td class="num">270.2</td><td class="num">240.0</td><td class="num">3.657</td><td class="num">210.6</td></tr><tr><td class="">K2</td><td class="num">2</td><td class="num">225.3</td><td class="num">153.0</td><td class="num">1.039</td><td class="num">38.9</td></tr></tbody></table></div><figcaption>Note the skate at <code>K = 2</code>: 39 mm/s against the input's 101. The motion is wrong for
+the prompt and yet stands on the floor better than the capture did.</figcaption></figure>
+<hr>
+<h2 id="sit-down">sit_down<a class="anchor" href="#sit-down" aria-label="link to this section">#</a></h2>
+<p><strong>"a man lowering himself into a seated position"</strong> — the flattest curve in the set, and <strong>the clearest case of the video model supplying physics the control does not have.</strong> <a href="result-sit-down.html">Clips →</a></p>
+<p>67 → 69 → 85 → 99 → 79 mm. It never sharply stops copying.</p>
+<aside class="callout key"><div class="callout-title">The depth render is a body alone with no chair — and LTX puts one there</div><div class="callout-body"><p>At <strong>every density</strong> the model puts a stool or a box under him and sits him on it.</p>
+<p>The control contains no chair. The prompt names no chair. But a man lowering himself into a seated position in a plain interior has to be sitting <em>on</em> something, and the model supplies it — then keeps him in contact with it for the rest of the clip.</p>
+<p>That is the video prior contributing an inference about the physical world, not just about pixels. It is the single best example of the project's premise in any of the six experiments, and it happens on the <em>easiest</em> clip rather than the hardest.</p></div></aside>
+<p>Foot contact also improves: input skate 40.8 mm/s, down to <strong>13.7 at <code>K = 8</code></strong>.</p>
+<h3 id="the-numbers-5">The numbers<a class="anchor" href="#the-numbers-5" aria-label="link to this section">#</a></h3>
+<figure class="metrics"><div class="table-wrap"><table><thead><tr><th>condition</th><th>frames pinned</th><th>err on pinned mm</th><th>err on free mm</th><th>jerk vs. input</th><th>skate mm/s</th></tr></thead><tbody><tr><td class="">dense</td><td class="num">22</td><td class="num">68.3</td><td class="num">67.3</td><td class="num">2.301</td><td class="num">53.6</td></tr><tr><td class="">K8</td><td class="num">8</td><td class="num">66.0</td><td class="num">68.7</td><td class="num">1.112</td><td class="num">13.7</td></tr><tr><td class="">K5</td><td class="num">5</td><td class="num">71.3</td><td class="num">85.9</td><td class="num">1.258</td><td class="num">45.5</td></tr><tr><td class="">K3</td><td class="num">3</td><td class="num">64.0</td><td class="num">99.9</td><td class="num">0.872</td><td class="num">38.1</td></tr><tr><td class="">K2</td><td class="num">2</td><td class="num">50.5</td><td class="num">79.8</td><td class="num">1.223</td><td class="num">20.2</td></tr></tbody></table></div></figure>
+<hr>
+<h2 id="stand-up">stand_up<a class="anchor" href="#stand-up" aria-label="link to this section">#</a></h2>
+<p><strong>"a man rising to his feet from a seated position"</strong> — read this one from the photoreal video, not the recovered SMPL. <a href="result-stand-up.html">Clips →</a></p>
+<aside class="callout warn"><div class="callout-title">The input starts prone on the floor, which is hard for pose recovery</div><div class="callout-body"><p>Even <code>dense</code> is <strong>140 mm</strong> — the highest <code>dense</code> error of the ten. That is not the video model; it is the recovery struggling with a body lying on the ground at frame 0.</p>
+<p>So the numbers in this row describe the recovery's difficulty as much as the generation's. Visually, <strong>the rise off the floor survives to <code>K = 2</code>.</strong></p></div></aside>
+<p>Copying breaks at <code>K = 5</code>, where the error goes 136 → 301 mm.</p>
+<p>This is the same lesson as <a href="../exp4/observations.html#squat">Experiment 4's <code>squat</code></a> and <a href="../exp1/result-squat.html">Experiment 1's</a>: a single fixed viewpoint on a compact, floor-level pose is where recovery fails, and no amount of photorealism fixes it.</p>
+<h3 id="the-numbers-6">The numbers<a class="anchor" href="#the-numbers-6" aria-label="link to this section">#</a></h3>
+<figure class="metrics"><div class="table-wrap"><table><thead><tr><th>condition</th><th>frames pinned</th><th>err on pinned mm</th><th>err on free mm</th><th>jerk vs. input</th><th>skate mm/s</th></tr></thead><tbody><tr><td class="">dense</td><td class="num">22</td><td class="num">141.7</td><td class="num">139.5</td><td class="num">3.746</td><td class="num">160.3</td></tr><tr><td class="">K8</td><td class="num">8</td><td class="num">139.4</td><td class="num">136.0</td><td class="num">3.788</td><td class="num">128.7</td></tr><tr><td class="">K5</td><td class="num">5</td><td class="num">271.1</td><td class="num">302.2</td><td class="num">4.251</td><td class="num">178.9</td></tr><tr><td class="">K3</td><td class="num">3</td><td class="num">247.4</td><td class="num">279.1</td><td class="num">3.474</td><td class="num">40.4</td></tr><tr><td class="">K2</td><td class="num">2</td><td class="num">225.9</td><td class="num">270.3</td><td class="num">2.263</td><td class="num">56.5</td></tr></tbody></table></div></figure>
+<hr>
+<h2 id="throw">throw<a class="anchor" href="#throw" aria-label="link to this section">#</a></h2>
+<p><strong>"a man throwing with an overhand motion"</strong> — <strong>the only clip where the <em>prompt</em> loses.</strong> <a href="result-throw.html">Clips →</a></p>
+<aside class="callout warn"><div class="callout-title">At every density, dense included, the model hands him a racket</div><div class="callout-body"><p>The overhand throw reads to the model as a <strong>racket sport</strong>: it gives the man a tennis or badminton racket and turns the wind-up into a serve.</p>
+<p>The prompt says "throwing with an overhand motion" and <strong>names no ball</strong>. The caution about not naming objects the control does not contain cuts both ways — with nothing named, the model picks its own, and an overhand arm arc plus athletic wear on an outdoor field is a serve as readily as it is a throw.</p></div></aside>
+<p>Copying breaks at <code>K = 8</code>. And this is the worst-behaved clip in the set at <code>K = 3</code>: <strong>nine times the input's jerk</strong> (ratio 9.07) and 548 mm/s of foot skate against the input's 112. Like <a href="#run"><code>run</code></a>, it is inventing fast motion between distant anchors, and it invents badly.</p>
+<aside class="callout note"><div class="callout-title">The fix is a one-word prompt change, and it was not made</div><div class="callout-body"><p>Naming the ball would very likely resolve it. It was left alone deliberately: the run's variable is conditioning density, and changing a prompt mid-sweep would have made this row incomparable with the other nine. It is the first thing to change if this clip is rerun.</p></div></aside>
+<h3 id="the-numbers-7">The numbers<a class="anchor" href="#the-numbers-7" aria-label="link to this section">#</a></h3>
+<figure class="metrics"><div class="table-wrap"><table><thead><tr><th>condition</th><th>frames pinned</th><th>err on pinned mm</th><th>err on free mm</th><th>jerk vs. input</th><th>skate mm/s</th></tr></thead><tbody><tr><td class="">dense</td><td class="num">22</td><td class="num">115.1</td><td class="num">112.9</td><td class="num">4.076</td><td class="num">140.2</td></tr><tr><td class="">K8</td><td class="num">8</td><td class="num">170.9</td><td class="num">165.7</td><td class="num">3.848</td><td class="num">115.3</td></tr><tr><td class="">K5</td><td class="num">5</td><td class="num">167.2</td><td class="num">194.1</td><td class="num">3.329</td><td class="num">48.1</td></tr><tr><td class="">K3</td><td class="num">3</td><td class="num">186.1</td><td class="num">245.4</td><td class="num">9.071</td><td class="num">548.3</td></tr><tr><td class="">K2</td><td class="num">2</td><td class="num">385.5</td><td class="num">250.9</td><td class="num">7.249</td><td class="num">79.5</td></tr></tbody></table></div></figure>
+<hr>
+<h2 id="turn">turn<a class="anchor" href="#turn" aria-label="link to this section">#</a></h2>
+<p><strong>"a man turning around to face the other direction"</strong> — degrades gently and never breaks. <a href="result-turn.html">Clips →</a></p>
+<p>56 → 92 → 108 → 98 → 117 mm. <strong>Turning around is a large, unambiguous motion, and two frames at the ends are enough to specify it</strong> — the start faces one way, the end faces the other, and there is only one reasonable way to get between them.</p>
+<p>The input's own foot skate is 363 mm/s, the highest of the ten, so this is one row where the recovered motion standing <em>less</em> solidly than the input would be hard to achieve.</p>
+<h3 id="the-numbers-8">The numbers<a class="anchor" href="#the-numbers-8" aria-label="link to this section">#</a></h3>
+<figure class="metrics"><div class="table-wrap"><table><thead><tr><th>condition</th><th>frames pinned</th><th>err on pinned mm</th><th>err on free mm</th><th>jerk vs. input</th><th>skate mm/s</th></tr></thead><tbody><tr><td class="">dense</td><td class="num">22</td><td class="num">56.9</td><td class="num">56.0</td><td class="num">1.866</td><td class="num">168.1</td></tr><tr><td class="">K8</td><td class="num">8</td><td class="num">93.4</td><td class="num">91.7</td><td class="num">1.622</td><td class="num">204.4</td></tr><tr><td class="">K5</td><td class="num">5</td><td class="num">95.7</td><td class="num">108.6</td><td class="num">1.352</td><td class="num">209.2</td></tr><tr><td class="">K3</td><td class="num">3</td><td class="num">104.9</td><td class="num">98.2</td><td class="num">1.146</td><td class="num">366.2</td></tr><tr><td class="">K2</td><td class="num">2</td><td class="num">177.6</td><td class="num">116.6</td><td class="num">2.316</td><td class="num">298.9</td></tr></tbody></table></div></figure>
+<hr>
+<h2 id="squat">squat<a class="anchor" href="#squat" aria-label="link to this section">#</a></h2>
+<p><strong>"a man performing a deep squat"</strong> — the cleanest monotone degradation of the ten, which makes it <strong>the best single row for reading the sweep.</strong> <a href="result-squat.html">Clips →</a></p>
+<p>51 → 76 → 102 → 137 → 168 mm, and the action never goes.</p>
+<aside class="callout key"><div class="callout-title">At K = 2 the model does something interesting rather than wrong</div><div class="callout-body"><p>The input <strong>holds one deep squat for six seconds.</strong> Given only the two ends, the model performs <em>repetitions</em> — down, up, down again — which is what a person in a gym would actually do.</p>
+<p>That is not a failure to follow the control; it is a more plausible six seconds than the control described. And it is the same behaviour <a href="../exp2/result-squat.html">Experiment 2 found on its own <code>squat</code></a>, arrived at through a completely different mechanism — there by withholding keyframes from a blue-character video, here by withholding depth frames from a photoreal one.</p></div></aside>
+<p>Foot contact is also the best in the set: input 39.8 mm/s, down to <strong>10.4 at <code>K = 5</code></strong> — and every density is at or under 28.</p>
+<h3 id="the-numbers-9">The numbers<a class="anchor" href="#the-numbers-9" aria-label="link to this section">#</a></h3>
+<figure class="metrics"><div class="table-wrap"><table><thead><tr><th>condition</th><th>frames pinned</th><th>err on pinned mm</th><th>err on free mm</th><th>jerk vs. input</th><th>skate mm/s</th></tr></thead><tbody><tr><td class="">dense</td><td class="num">22</td><td class="num">51.2</td><td class="num">50.9</td><td class="num">0.988</td><td class="num">12.1</td></tr><tr><td class="">K8</td><td class="num">8</td><td class="num">73.2</td><td class="num">76.3</td><td class="num">1.004</td><td class="num">12.5</td></tr><tr><td class="">K5</td><td class="num">5</td><td class="num">87.5</td><td class="num">101.9</td><td class="num">0.94</td><td class="num">10.4</td></tr><tr><td class="">K3</td><td class="num">3</td><td class="num">128.5</td><td class="num">137.3</td><td class="num">0.994</td><td class="num">28.1</td></tr><tr><td class="">K2</td><td class="num">2</td><td class="num">86.8</td><td class="num">169.3</td><td class="num">1.126</td><td class="num">24.0</td></tr></tbody></table></div><figcaption>The jerk ratio sits at 0.94–1.13 across the whole sweep — this row is as clean as the
+set gets.</figcaption></figure>
+<hr>
+<h2 id="wave">wave<a class="anchor" href="#wave" aria-label="link to this section">#</a></h2>
+<p><strong>"a man waving one arm"</strong> — essentially flat. <a href="result-wave.html">Clips →</a></p>
+<p>61 → 56 → 75 → 92 → 78 mm. <strong><code>K = 8</code> is marginally <em>closer</em> to the input than <code>dense</code>.</strong></p>
+<p>A small, near-static motion is fully specified by its endpoints. There is nothing for sparsity to cost, because there was never much information in the frames it removed.</p>
+<p>Foot contact is the cleanest in the experiment: input 22.6 mm/s, <strong>1.3 at <code>K = 2</code></strong> — the recovered motion stands almost perfectly still on the floor, where the motion capture drifted.</p>
+<aside class="callout note"><div class="callout-title">Why a flat row is worth having</div><div class="callout-body"><p>It is the control for the whole sweep. If sparsity degraded everything uniformly, <code>wave</code> would degrade too. It does not, which means what the other rows lose is specific to the information their motion carried in the removed frames — not an artefact of conditioning fewer frames.</p></div></aside>
+<h3 id="the-numbers-10">The numbers<a class="anchor" href="#the-numbers-10" aria-label="link to this section">#</a></h3>
+<figure class="metrics"><div class="table-wrap"><table><thead><tr><th>condition</th><th>frames pinned</th><th>err on pinned mm</th><th>err on free mm</th><th>jerk vs. input</th><th>skate mm/s</th></tr></thead><tbody><tr><td class="">dense</td><td class="num">22</td><td class="num">60.2</td><td class="num">60.6</td><td class="num">0.828</td><td class="num">16.5</td></tr><tr><td class="">K8</td><td class="num">8</td><td class="num">60.7</td><td class="num">56.2</td><td class="num">2.408</td><td class="num">16.4</td></tr><tr><td class="">K5</td><td class="num">5</td><td class="num">61.8</td><td class="num">75.1</td><td class="num">0.867</td><td class="num">11.7</td></tr><tr><td class="">K3</td><td class="num">3</td><td class="num">95.2</td><td class="num">92.2</td><td class="num">0.69</td><td class="num">7.0</td></tr><tr><td class="">K2</td><td class="num">2</td><td class="num">40.5</td><td class="num">78.8</td><td class="num">0.387</td><td class="num">1.3</td></tr></tbody></table></div></figure></div>
+      <nav class="pagenav"><a class="pg prev" href="../exp6/result-wave.html"><span>Previous</span><strong>Result 10 · wave</strong></a><a class="pg next" href="../exp6/where-it-breaks.html"><span>Next</span><strong>Where the sweep breaks</strong></a></nav>
+      <footer class="pagefoot">Experiment log &middot; built from Markdown by <code>build.py</code>. Clips are web-sized transcodes; full-resolution originals stay in the experiment folders.</footer>
+    </article>
+  </main>
+</div>
+
+<div class="lightbox" hidden>
+  <div class="lb-back"></div>
+  <figure class="lb-fig">
+    <video class="lb-video" loop muted playsinline></video>
+    <img class="lb-img" alt="" hidden>
+    <div class="lb-bar">
+      <button class="lb-play" type="button" aria-label="Play or pause">&#9654;</button>
+      <button class="lb-step" data-step="-1" type="button" aria-label="Previous frame">&#8249;</button>
+      <button class="lb-step" data-step="1" type="button" aria-label="Next frame">&#8250;</button>
+      <input class="lb-seek" type="range" min="0" max="1000" value="0" aria-label="Seek">
+      <span class="lb-time">0.00s</span>
+      <div class="seg lb-rates">
+        <button type="button" data-lbrate="0.25">&frac14;&times;</button>
+        <button type="button" data-lbrate="0.5">&frac12;&times;</button>
+        <button type="button" data-lbrate="1">1&times;</button>
+        <button type="button" data-lbrate="2">2&times;</button>
+      </div>
+      <button class="lb-close" type="button" aria-label="Close">&times;</button>
+    </div>
+    <figcaption class="lb-cap"></figcaption>
+  </figure>
+</div>
+
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

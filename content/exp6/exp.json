@@ -1,0 +1,362 @@
+{
+  "id": "exp6",
+  "nav": "Exp 6",
+  "title": "Photoreal output, correct animation as control — how little pose is enough?",
+  "question": "Given a clean motion-capture clip as depth control and a sentence for appearance, how few conditioned frames can still produce the right action, six seconds long, in a real place?",
+  "status": "complete",
+  "date": "2026-09-07",
+  "tags": [
+    "AMASS/BABEL",
+    "LTX-2.3 distilled",
+    "Depth IC-LoRA",
+    "attention mask",
+    "GVHMR"
+  ],
+  "source_dir": "../Exp 06 - Photoreal Output, Correct Animation as Control",
+  "media": {
+    "seeds": [
+      "1234"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "walk": {
+        "text": "walk — city sidewalk",
+        "holds": "action holds",
+        "breaks": "K5",
+        "meta": {
+          "dense → K2": "48 → 170 mm"
+        }
+      },
+      "run": {
+        "text": "run — outdoor running track",
+        "holds": "action holds",
+        "breaks": "K5",
+        "meta": {
+          "dense → K2": "78 → 219 mm"
+        }
+      },
+      "jump": {
+        "text": "jump — open gym interior",
+        "holds": "action holds",
+        "breaks": "K8",
+        "meta": {
+          "dense → K2": "73 → 162 mm"
+        }
+      },
+      "kick": {
+        "text": "kick — plain training hall",
+        "holds": "action lost",
+        "breaks": "K8",
+        "meta": {
+          "dense → K2": "74 → 154 mm"
+        }
+      },
+      "sit_down": {
+        "text": "sit down — plain interior",
+        "holds": "action holds",
+        "breaks": "never",
+        "meta": {
+          "dense → K2": "67 → 79 mm"
+        }
+      },
+      "stand_up": {
+        "text": "stand up — plain interior",
+        "holds": "action holds",
+        "breaks": "K5",
+        "meta": {
+          "dense → K2": "140 → 270 mm"
+        }
+      },
+      "throw": {
+        "text": "throw — outdoor field",
+        "holds": "prompt misread",
+        "breaks": "K8",
+        "meta": {
+          "dense → K2": "113 → 253 mm"
+        }
+      },
+      "turn": {
+        "text": "turn around — plain interior",
+        "holds": "action holds",
+        "breaks": "never",
+        "meta": {
+          "dense → K2": "56 → 117 mm"
+        }
+      },
+      "squat": {
+        "text": "squat — gym interior",
+        "holds": "action holds",
+        "breaks": "K8",
+        "meta": {
+          "dense → K2": "51 → 168 mm"
+        }
+      },
+      "wave": {
+        "text": "wave — plain outdoor setting",
+        "holds": "action holds",
+        "breaks": "never",
+        "meta": {
+          "dense → K2": "61 → 78 mm"
+        }
+      }
+    },
+    "chips": [
+      {
+        "field": "holds",
+        "labels": {
+          "action holds": "action holds to K = 2",
+          "action lost": "action lost at K = 3",
+          "prompt misread": "prompt misread"
+        }
+      },
+      {
+        "field": "breaks",
+        "labels": {
+          "K8": "copying breaks at K = 8",
+          "K5": "copying breaks at K = 5",
+          "never": "never breaks sharply"
+        }
+      }
+    ],
+    "sets": {
+      "input": {
+        "dir": "data/renders",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Input motion",
+        "sublabel": "AMASS/BABEL clip, neutral SMPL"
+      },
+      "prev_fitted": {
+        "dir": "data/preview",
+        "pattern": "{id}_fitted.mp4",
+        "label": "Fitted preview",
+        "sublabel": "the clip as the renderer takes it"
+      },
+      "prev_depth": {
+        "dir": "data/preview",
+        "pattern": "{id}_depth.mp4",
+        "label": "Depth preview",
+        "sublabel": "dense control, before the sweep"
+      },
+      "depth_dense": {
+        "dir": "data/depth",
+        "pattern": "{id}_dense.mp4",
+        "label": "Depth control — dense",
+        "sublabel": "every latent frame — 0·8·…·168 (22)"
+      },
+      "vid_dense": {
+        "dir": "data/videos",
+        "pattern": "{id}_dense.mp4",
+        "label": "Photoreal — dense",
+        "sublabel": "every latent frame — 0·8·…·168 (22)"
+      },
+      "lift_dense": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_dense.mp4",
+        "label": "Recovered SMPL — dense",
+        "sublabel": "every latent frame — 0·8·…·168 (22)"
+      },
+      "scene_ctrl_dense": {
+        "dir": "data/pilot/depth_scene_full",
+        "pattern": "{id}_dense.mp4",
+        "label": "scene control — dense",
+        "sublabel": "the rejected format: inverse depth, black background"
+      },
+      "depth_K8": {
+        "dir": "data/depth",
+        "pattern": "{id}_K8.mp4",
+        "label": "Depth control — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168"
+      },
+      "vid_K8": {
+        "dir": "data/videos",
+        "pattern": "{id}_K8.mp4",
+        "label": "Photoreal — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168"
+      },
+      "lift_K8": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_K8.mp4",
+        "label": "Recovered SMPL — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168"
+      },
+      "scene_ctrl_K8": {
+        "dir": "data/pilot/depth_scene_full",
+        "pattern": "{id}_K8.mp4",
+        "label": "scene control — K = 8",
+        "sublabel": "the rejected format: inverse depth, black background"
+      },
+      "depth_K5": {
+        "dir": "data/depth",
+        "pattern": "{id}_K5.mp4",
+        "label": "Depth control — K = 5",
+        "sublabel": "0·40·88·128·168"
+      },
+      "vid_K5": {
+        "dir": "data/videos",
+        "pattern": "{id}_K5.mp4",
+        "label": "Photoreal — K = 5",
+        "sublabel": "0·40·88·128·168"
+      },
+      "lift_K5": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_K5.mp4",
+        "label": "Recovered SMPL — K = 5",
+        "sublabel": "0·40·88·128·168"
+      },
+      "scene_ctrl_K5": {
+        "dir": "data/pilot/depth_scene_full",
+        "pattern": "{id}_K5.mp4",
+        "label": "scene control — K = 5",
+        "sublabel": "the rejected format: inverse depth, black background"
+      },
+      "depth_K3": {
+        "dir": "data/depth",
+        "pattern": "{id}_K3.mp4",
+        "label": "Depth control — K = 3",
+        "sublabel": "0·88·168"
+      },
+      "vid_K3": {
+        "dir": "data/videos",
+        "pattern": "{id}_K3.mp4",
+        "label": "Photoreal — K = 3",
+        "sublabel": "0·88·168"
+      },
+      "lift_K3": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_K3.mp4",
+        "label": "Recovered SMPL — K = 3",
+        "sublabel": "0·88·168"
+      },
+      "scene_ctrl_K3": {
+        "dir": "data/pilot/depth_scene_full",
+        "pattern": "{id}_K3.mp4",
+        "label": "scene control — K = 3",
+        "sublabel": "the rejected format: inverse depth, black background"
+      },
+      "depth_K2": {
+        "dir": "data/depth",
+        "pattern": "{id}_K2.mp4",
+        "label": "Depth control — K = 2",
+        "sublabel": "0·168 — the two ends"
+      },
+      "vid_K2": {
+        "dir": "data/videos",
+        "pattern": "{id}_K2.mp4",
+        "label": "Photoreal — K = 2",
+        "sublabel": "0·168 — the two ends"
+      },
+      "lift_K2": {
+        "dir": "data/lifted_renders",
+        "pattern": "{id}_K2.mp4",
+        "label": "Recovered SMPL — K = 2",
+        "sublabel": "0·168 — the two ends"
+      },
+      "scene_ctrl_K2": {
+        "dir": "data/pilot/depth_scene_full",
+        "pattern": "{id}_K2.mp4",
+        "label": "scene control — K = 2",
+        "sublabel": "the rejected format: inverse depth, black background"
+      },
+      "strip": {
+        "dir": "results/strips",
+        "pattern": "{id}.png",
+        "kind": "image",
+        "label": "Timing strip",
+        "sublabel": "control, photoreal and recovered, time-aligned",
+        "max_width": 1500
+      },
+      "p_flat_dense": {
+        "dir": "data/pilot/depth_flat",
+        "pattern": "walk_dense.mp4",
+        "label": "flat control — dense",
+        "sublabel": "the brief's format: body on flat mid-grey"
+      },
+      "p_flat_K3": {
+        "dir": "data/pilot/depth_flat",
+        "pattern": "walk_K3.mp4",
+        "label": "flat control — K = 3",
+        "sublabel": "blank mid-grey between conditioned frames"
+      },
+      "p_scene_dense": {
+        "dir": "data/pilot/depth_scene",
+        "pattern": "walk_dense.mp4",
+        "label": "scene control — dense",
+        "sublabel": "inverse depth, ground plane, black background"
+      },
+      "p_scene_K3": {
+        "dir": "data/pilot/depth_scene",
+        "pattern": "walk_K3.mp4",
+        "label": "scene control — K = 3",
+        "sublabel": "inverse depth, ground plane"
+      },
+      "p_kick_flat": {
+        "dir": "data/videos",
+        "pattern": "kick_dense.mp4",
+        "label": "flat control — output",
+        "sublabel": "training hall, mirrors, wooden floor"
+      },
+      "p_kick_scene": {
+        "dir": "data/pilot/videos_scene",
+        "pattern": "kick_dense.mp4",
+        "label": "scene control — output",
+        "sublabel": "a black void: the failure"
+      },
+      "p_unmasked_K3": {
+        "dir": "data/pilot/videos_unmasked",
+        "pattern": "jump_K3.mp4",
+        "label": "K = 3, no mask",
+        "sublabel": "the depth track drawn into the free stretch"
+      },
+      "p_masked_K3": {
+        "dir": "data/pilot/videos_masked",
+        "pattern": "jump_K3.mp4",
+        "label": "K = 3, masked",
+        "sublabel": "gym held for all 169 frames"
+      },
+      "p_unmasked_K2": {
+        "dir": "data/pilot/videos_unmasked",
+        "pattern": "jump_K2.mp4",
+        "label": "K = 2, no mask",
+        "sublabel": "holds, but drifts pale and flat"
+      },
+      "p_masked_K2": {
+        "dir": "data/pilot/videos_masked",
+        "pattern": "jump_K2.mp4",
+        "label": "K = 2, masked",
+        "sublabel": "scene stable throughout"
+      },
+      "p_none_121": {
+        "dir": "data/pilot/videos",
+        "pattern": "walk_none_121.mp4",
+        "label": "121 frames, no control",
+        "sublabel": "no fade"
+      },
+      "p_none_169": {
+        "dir": "data/pilot/videos",
+        "pattern": "walk_none_169.mp4",
+        "label": "169 frames, no control",
+        "sublabel": "fades to black anyway"
+      },
+      "p_scene_169": {
+        "dir": "data/pilot/videos",
+        "pattern": "walk_scene_169.mp4",
+        "label": "169 frames, with control",
+        "sublabel": "still fades"
+      },
+      "p_fps34": {
+        "dir": "data/pilot/videos",
+        "pattern": "walk_none_169_fps34.mp4",
+        "label": "169 frames @ 33.6 fps cond.",
+        "sublabel": "the 19B workaround"
+      },
+      "p_ltx23_169": {
+        "dir": "data/pilot/videos_ltx23_depth",
+        "pattern": "walk_scene_169.mp4",
+        "label": "LTX-2.3 22B, 169 frames",
+        "sublabel": "holds the full 6.76 s"
+      }
+    }
+  }
+}

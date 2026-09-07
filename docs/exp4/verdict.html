@@ -99,7 +99,7 @@
 <li><a class="" href="../exp2/provenance.html"><span class="pn">Provenance</span></a></li>
 </ul></div>
 <div class="exp open" data-exp>
-<button class="exp-h" type="button" aria-expanded="true"><span class="exp-c">Exp 4</span><span class="exp-t">Photoreal output, animation as control — splitting what to do from what to look like</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<button class="exp-h" type="button" aria-expanded="true"><span class="exp-c">Exp 4</span><span class="exp-t">Photoreal output, corrupted animation as control — splitting what to do from what to look like</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
 <ul class="exp-pages">
 <li><a class="" href="../exp4/overview.html"><span class="pn">Overview</span></a></li>
 <li><a class="" href="../exp4/pipeline.html"><span class="pn">Pipeline</span></a></li>
@@ -115,12 +115,33 @@
 <li><a class="on" href="../exp4/verdict.html"><span class="pn">Verdict</span></a></li>
 <li><a class="" href="../exp4/provenance.html"><span class="pn">Provenance</span></a></li>
 </ul></div>
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 6</span><span class="exp-t">Photoreal output, correct animation as control — how little pose is enough?</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp6/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp6/pipeline.html"><span class="pn">Pipeline</span></a></li>
+<li><a class="" href="../exp6/pilots.html"><span class="pn">What the pilots settled</span></a></li>
+<li><a class="" href="../exp6/result-walk.html"><span class="pn">Result 1 · walk</span></a></li>
+<li><a class="" href="../exp6/result-run.html"><span class="pn">Result 2 · run</span></a></li>
+<li><a class="" href="../exp6/result-jump.html"><span class="pn">Result 3 · jump</span></a></li>
+<li><a class="" href="../exp6/result-kick.html"><span class="pn">Result 4 · kick</span></a></li>
+<li><a class="" href="../exp6/result-sit-down.html"><span class="pn">Result 5 · sit_down</span></a></li>
+<li><a class="" href="../exp6/result-stand-up.html"><span class="pn">Result 6 · stand_up</span></a></li>
+<li><a class="" href="../exp6/result-throw.html"><span class="pn">Result 7 · throw</span></a></li>
+<li><a class="" href="../exp6/result-turn.html"><span class="pn">Result 8 · turn</span></a></li>
+<li><a class="" href="../exp6/result-squat.html"><span class="pn">Result 9 · squat</span></a></li>
+<li><a class="" href="../exp6/result-wave.html"><span class="pn">Result 10 · wave</span></a></li>
+<li><a class="" href="../exp6/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp6/where-it-breaks.html"><span class="pn">Where the sweep breaks</span></a></li>
+<li><a class="" href="../exp6/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp6/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
 </nav></aside>
   <div class="scrim" hidden></div>
 
   <main id="main">
     <article class="page">
-      <header class="pagehead"><div class="ph-kicker">Exp 4 · Photoreal output, animation as control — splitting what to do from what to look like</div><h1>Verdict</h1><p class="lead">The appearance split is a clean win and the control does exactly what it claims. What the model does with the freedom is narrower than hoped — and the recovery step, not the generation, is now what limits the project.</p></header>
+      <header class="pagehead"><div class="ph-kicker">Exp 4 · Photoreal output, corrupted animation as control — splitting what to do from what to look like</div><h1>Verdict</h1><p class="lead">The appearance split is a clean win and the control does exactly what it claims. What the model does with the freedom is narrower than hoped — and the recovery step, not the generation, is now what limits the project.</p></header>
       
       <div class="prose"><h2 id="the-result-per-motion">The result, per motion<a class="anchor" href="#the-result-per-motion" aria-label="link to this section">#</a></h2>
 <div class="table-wrap"><table><thead><tr><th style="text-align:left">motion</th><th style="text-align:left">verdict</th></tr></thead><tbody><tr><td style="text-align:left"><a href="result-punch.html"><code>punch</code></a></td><td style="text-align:left"><strong>yes</strong> — the free run holds a real guard and throws punches that reach extension, which the input never does</td></tr><tr><td style="text-align:left"><a href="result-barbell-heavy.html"><code>barbell_heavy</code></a></td><td style="text-align:left"><strong>once, and decisively</strong> — s1234 at <code>K = 2</code> invents a barbell and a deadlift setup. One clip in sixty</td></tr><tr><td style="text-align:left"><a href="result-baseball.html"><code>baseball</code></a></td><td style="text-align:left"><strong>marginally</strong> — a step and a rotation, and a bat the recovery cannot see</td></tr><tr><td style="text-align:left"><a href="result-box-heavy.html"><code>box_heavy</code></a></td><td style="text-align:left"><strong>no</strong> — no box is ever lifted at any condition</td></tr><tr><td style="text-align:left"><a href="result-push-heavy.html"><code>push_heavy</code></a></td><td style="text-align:left"><strong>no</strong> — nothing is ever pushed</td></tr><tr><td style="text-align:left"><a href="result-squat.html"><code>squat</code></a></td><td style="text-align:left"><strong>unusable</strong> — the video is right and the recovery is wrong, at every condition</td></tr></tbody></table></div>
@@ -136,6 +157,8 @@
 <h2 id="where-this-leaves-the-project">Where this leaves the project<a class="anchor" href="#where-this-leaves-the-project" aria-label="link to this section">#</a></h2>
 <p>Taking all four experiments together:</p>
 <ol><li><strong><a href="../exp0/overview.html">Exp 0</a></strong> compared a motion model against a video model on the same prompts, side by side.</li><li><strong><a href="../exp2/overview.html">Exp 2</a></strong> found a real window where a video model re-times motion instead of copying it, and that the window is governed by <em>where</em> the free run sits rather than by how many frames are withheld.</li><li><strong><a href="../exp1/overview.html">Exp 1</a></strong> closed the loop and showed the round trip is essentially lossless, so motion added in the video survives back into 3D — and that the prior <strong>extends</strong> what it is given rather than correcting it.</li><li><strong>This experiment</strong> removed the appearance confound entirely, and in doing so moved the bottleneck. The generation side is now clean: text-driven appearance, a control that holds where you pin it, and sixty usable videos. What is left is a control encoding that says "empty" when it means "free", and a recovery step that cannot resolve a crouch from one viewpoint.</li></ol>
+<aside class="callout key"><div class="callout-title">What this experiment could not fix, and Experiment 6 did</div><div class="callout-body"><p>The input motion. MotionGPT3's clips frequently do not perform the action in the prompt at all, so "did the video model improve the motion?" kept collapsing into "can the video model rescue a motion that was never right?" — which is why the clearest positive here is one clip in sixty.</p>
+<p><a href="../exp6/overview.html">Experiment 6</a> keeps this pipeline and swaps the input for clean AMASS/BABEL motion capture. With a correct animation as control, <strong>two frames and a sentence produce the right action</strong> for eight clips of ten, and the model supplies physics the control does not have. The experiment folders now record the distinction in their names: <em>corrupted</em> animation as control here, <em>correct</em> animation as control there.</p></div></aside>
 <aside class="callout note"><div class="callout-title">The bet, and where it stands</div><div class="callout-body"><p>The bet was that a million hours of footage leaves a video model with a working sense of how bodies move, and that this is more useful than its ability to make pretty pixels.</p>
 <p>The strongest evidence for it so far is small and specific: the invented deadlift in one clip, <code>punch</code>'s extension in six more, and — quietly the most interesting number in this experiment — <strong>the free runs coming back with less than half the input's foot-skate</strong>. A plausible person shot by a static camera plants their feet, and the prior knows it without being asked.</p>
 <p>The evidence against a <em>strong</em> form of the bet is that none of this happens reliably yet, and every mechanism tried so far has hit a ceiling that was a property of the control scheme rather than of the model.</p></div></aside></div>

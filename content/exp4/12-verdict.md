@@ -82,6 +82,20 @@ Taking all four experiments together:
    encoding that says "empty" when it means "free", and a recovery step that cannot
    resolve a crouch from one viewpoint.
 
+::: key title="What this experiment could not fix, and Experiment 6 did"
+The input motion. MotionGPT3's clips frequently do not perform the action in the
+prompt at all, so "did the video model improve the motion?" kept collapsing into "can
+the video model rescue a motion that was never right?" — which is why the clearest
+positive here is one clip in sixty.
+
+[Experiment 6](../exp6/overview.html) keeps this pipeline and swaps the input for
+clean AMASS/BABEL motion capture. With a correct animation as control, **two frames
+and a sentence produce the right action** for eight clips of ten, and the model
+supplies physics the control does not have. The experiment folders now record the
+distinction in their names: *corrupted* animation as control here, *correct* animation
+as control there.
+:::
+
 ::: note title="The bet, and where it stands"
 The bet was that a million hours of footage leaves a video model with a working sense
 of how bodies move, and that this is more useful than its ability to make pretty

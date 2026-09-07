@@ -99,7 +99,7 @@
 <li><a class="" href="../exp2/provenance.html"><span class="pn">Provenance</span></a></li>
 </ul></div>
 <div class="exp open" data-exp>
-<button class="exp-h" type="button" aria-expanded="true"><span class="exp-c">Exp 4</span><span class="exp-t">Photoreal output, animation as control — splitting what to do from what to look like</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<button class="exp-h" type="button" aria-expanded="true"><span class="exp-c">Exp 4</span><span class="exp-t">Photoreal output, corrupted animation as control — splitting what to do from what to look like</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
 <ul class="exp-pages">
 <li><a class="on" href="../exp4/overview.html"><span class="pn">Overview</span></a></li>
 <li><a class="" href="../exp4/pipeline.html"><span class="pn">Pipeline</span></a></li>
@@ -115,12 +115,33 @@
 <li><a class="" href="../exp4/verdict.html"><span class="pn">Verdict</span></a></li>
 <li><a class="" href="../exp4/provenance.html"><span class="pn">Provenance</span></a></li>
 </ul></div>
+<div class="exp" data-exp>
+<button class="exp-h" type="button" aria-expanded="false"><span class="exp-c">Exp 6</span><span class="exp-t">Photoreal output, correct animation as control — how little pose is enough?</span><svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+<ul class="exp-pages">
+<li><a class="" href="../exp6/overview.html"><span class="pn">Overview</span></a></li>
+<li><a class="" href="../exp6/pipeline.html"><span class="pn">Pipeline</span></a></li>
+<li><a class="" href="../exp6/pilots.html"><span class="pn">What the pilots settled</span></a></li>
+<li><a class="" href="../exp6/result-walk.html"><span class="pn">Result 1 · walk</span></a></li>
+<li><a class="" href="../exp6/result-run.html"><span class="pn">Result 2 · run</span></a></li>
+<li><a class="" href="../exp6/result-jump.html"><span class="pn">Result 3 · jump</span></a></li>
+<li><a class="" href="../exp6/result-kick.html"><span class="pn">Result 4 · kick</span></a></li>
+<li><a class="" href="../exp6/result-sit-down.html"><span class="pn">Result 5 · sit_down</span></a></li>
+<li><a class="" href="../exp6/result-stand-up.html"><span class="pn">Result 6 · stand_up</span></a></li>
+<li><a class="" href="../exp6/result-throw.html"><span class="pn">Result 7 · throw</span></a></li>
+<li><a class="" href="../exp6/result-turn.html"><span class="pn">Result 8 · turn</span></a></li>
+<li><a class="" href="../exp6/result-squat.html"><span class="pn">Result 9 · squat</span></a></li>
+<li><a class="" href="../exp6/result-wave.html"><span class="pn">Result 10 · wave</span></a></li>
+<li><a class="" href="../exp6/observations.html"><span class="pn">Observations</span></a></li>
+<li><a class="" href="../exp6/where-it-breaks.html"><span class="pn">Where the sweep breaks</span></a></li>
+<li><a class="" href="../exp6/verdict.html"><span class="pn">Verdict</span></a></li>
+<li><a class="" href="../exp6/provenance.html"><span class="pn">Provenance</span></a></li>
+</ul></div>
 </nav></aside>
   <div class="scrim" hidden></div>
 
   <main id="main">
     <article class="page">
-      <header class="pagehead"><div class="ph-kicker">Exp 4 · Photoreal output, animation as control — splitting what to do from what to look like</div><h1>Overview</h1><p class="lead">The earlier experiments asked the video model to do two jobs at once, and one of them was a mistake. Here the animation is only a control signal, the appearance comes from text, and the output is a photorealistic person.</p><div class="ph-meta"><span class="status s-complete">complete</span><span class="meta-chip">2026-09-03</span><span class="meta-chip tag">MotionGPT3</span><span class="meta-chip tag">LTX-2.3 distilled</span><span class="meta-chip tag">Depth IC-LoRA</span><span class="meta-chip tag">GVHMR</span><span class="meta-chip tag">SMPL</span></div></header>
+      <header class="pagehead"><div class="ph-kicker">Exp 4 · Photoreal output, corrupted animation as control — splitting what to do from what to look like</div><h1>Overview</h1><p class="lead">The earlier experiments asked the video model to do two jobs at once, and one of them was a mistake. Here the animation is only a control signal, the appearance comes from text, and the output is a photorealistic person.</p><div class="ph-meta"><span class="status s-complete">complete</span><span class="meta-chip">2026-09-03</span><span class="meta-chip tag">MotionGPT3</span><span class="meta-chip tag">LTX-2.3 distilled</span><span class="meta-chip tag">Depth IC-LoRA</span><span class="meta-chip tag">GVHMR</span><span class="meta-chip tag">SMPL</span></div></header>
       
       <div class="prose"><h2 id="the-idea-in-plain-words">The idea, in plain words<a class="anchor" href="#the-idea-in-plain-words" aria-label="link to this section">#</a></h2>
 <p>A text-to-motion model learns from a few tens of hours of motion capture. A video model learns from something closer to a million hours of footage of real people moving. The bet behind this whole project is that all that footage leaves a video model with a working sense of <strong>how bodies actually move</strong>, and that this is more useful than its ability to make pretty pixels.</p>
@@ -132,7 +153,7 @@
 <h2 id="so-the-two-jobs-get-split">So the two jobs get split<a class="anchor" href="#so-the-two-jobs-get-split" aria-label="link to this section">#</a></h2>
 <div class="table-wrap"><table><thead><tr><th style="text-align:left"></th><th style="text-align:left">Experiments 1–3</th><th style="text-align:left">This experiment</th></tr></thead><tbody><tr><td style="text-align:left">what to do</td><td style="text-align:left">blue character video</td><td style="text-align:left"><strong>depth video, as a control signal</strong></td></tr><tr><td style="text-align:left">what to look like</td><td style="text-align:left">the same blue character</td><td style="text-align:left"><strong>a text prompt</strong></td></tr><tr><td style="text-align:left">the output</td><td style="text-align:left">a blue character</td><td style="text-align:left"><strong>a photorealistic human</strong></td></tr><tr><td style="text-align:left">what gets recovered</td><td style="text-align:left">blue video → SMPL</td><td style="text-align:left">photoreal video → SMPL</td></tr></tbody></table></div>
 <p>The recovery step benefits too. Pose recovery is trained on real and photorealistic footage, so with a photoreal video it is finally operating <strong>in its own domain</strong> rather than on an untextured mesh.</p>
-<figure class="diagram-slot" style="max-width:760px"><div class="ds-box"><div class="ds-icon" aria-hidden="true"><svg viewBox="0 0 48 34" width="46" height="33"><rect x="1.6" y="1.6" width="18" height="12" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="28.4" y="20.4" width="18" height="12" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M19.6 7.6h6a3 3 0 0 1 3 3v12.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M25.6 23.4l2.8 3 2.8-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div><div class="ds-t">Diagram slot &mdash; empty</div><div class="ds-s">Save a pipeline diagram as <code>diagram.png</code> at either of these paths and it appears here on the next build:</div><ul class="ds-p"><li><code>site/content/exp4/diagram.png</code></li><li><code>Exp 04 - Photoreal Output, Animation as Control/diagram.png</code></li></ul></div><figcaption>The pipeline: a motion becomes a depth video, the depth video plus a text prompt
+<figure class="diagram-slot" style="max-width:760px"><div class="ds-box"><div class="ds-icon" aria-hidden="true"><svg viewBox="0 0 48 34" width="46" height="33"><rect x="1.6" y="1.6" width="18" height="12" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="28.4" y="20.4" width="18" height="12" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M19.6 7.6h6a3 3 0 0 1 3 3v12.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M25.6 23.4l2.8 3 2.8-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div><div class="ds-t">Diagram slot &mdash; empty</div><div class="ds-s">Save a pipeline diagram as <code>diagram.png</code> at either of these paths and it appears here on the next build:</div><ul class="ds-p"><li><code>site/content/exp4/diagram.png</code></li><li><code>Exp 04 - Photoreal Output, Corrupted Animation as Control/diagram.png</code></li></ul></div><figcaption>The pipeline: a motion becomes a depth video, the depth video plus a text prompt
 becomes a photoreal video, and the photoreal video becomes motion again.</figcaption></figure>
 <h2 id="what-we-sweep">What we sweep<a class="anchor" href="#what-we-sweep" aria-label="link to this section">#</a></h2>
 <p>When the pose is specified at every frame, a video model behaves like a renderer — it draws what you gave it, mistakes included. It can only contribute its own sense of motion in the parts you <strong>leave unspecified</strong>.</p>

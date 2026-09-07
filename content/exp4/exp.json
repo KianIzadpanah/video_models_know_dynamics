@@ -1,7 +1,7 @@
 {
   "id": "exp4",
   "nav": "Exp 4",
-  "title": "Photoreal output, animation as control — splitting what to do from what to look like",
+  "title": "Photoreal output, corrupted animation as control — splitting what to do from what to look like",
   "question": "Earlier experiments made the video model hold an appearance it had never seen. If the animation is control only and the appearance comes from text, does the video model spend its capacity on motion instead?",
   "status": "complete",
   "date": "2026-09-03",
@@ -12,7 +12,7 @@
     "GVHMR",
     "SMPL"
   ],
-  "source_dir": "../Exp 04 - Photoreal Output, Animation as Control",
+  "source_dir": "../Exp 04 - Photoreal Output, Corrupted Animation as Control",
   "media": {
     "seeds": [
       "1234",

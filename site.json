@@ -8,7 +8,8 @@
     "exp0",
     "exp1",
     "exp2",
-    "exp4"
+    "exp4",
+    "exp6"
   ],
   "links": [],
   "footer": "Experiment log &middot; built from Markdown by <code>build.py</code>. Clips are web-sized transcodes; full-resolution originals stay in the experiment folders.",

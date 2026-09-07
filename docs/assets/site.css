@@ -371,6 +371,13 @@ figure.clips{margin:0 0 2em}
 .chip-partial,.chip-marginal{color:var(--warnc)}
 .chip-no-change,.chip-no{color:var(--neutral)}
 .chip-unusable,.chip-broken{color:var(--heavy)}
+/* Exp 6 reads on two axes at once: does the action survive, and where does
+   copying break. Two chips per row rather than one verdict. */
+.chip-action-holds{color:var(--key)}
+.chip-action-lost{color:var(--heavy)}
+.chip-prompt-misread{color:var(--warnc)}
+.chip-k8,.chip-k5{color:var(--accent)}
+.chip-never{color:var(--neutral)}
 .cc{display:flex;gap:6px;min-width:0}
 .clip{
   position:relative;flex:1 1 0;min-width:0;aspect-ratio:var(--ar,16/9);
