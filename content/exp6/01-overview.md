@@ -4,6 +4,14 @@ nav: Overview
 lead: Experiment 4 fed the video model a motion that was already wrong. This one feeds it clean motion capture instead, and asks the only question left: how few conditioned frames still produce the right action, six seconds long, in a real place?
 ---
 
+::: key title="There is a slide deck for this experiment"
+**[Open the slide deck &rarr;](../slides/exp6.html)** — fourteen slides, one screen
+per clip, with the depth control, the photoreal output and the recovered motion all
+playing side by side at every density. Built for showing rather than reading: arrow
+keys or click to advance, `f` for full screen, and the speed buttons run the whole
+screen at ¼×, ½×, 1× or 2×.
+:::
+
 ## The idea, in plain words
 
 Every experiment before this one used **MotionGPT3's** motion as the control. That

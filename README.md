@@ -352,6 +352,48 @@ all surface as warnings rather than silently producing an empty grid.
 
 ---
 
+## 4b. Slide decks
+
+An experiment gets a deck by dropping a `slides.json` next to its `exp.json`. The
+build emits `docs/slides/<exp>.html` — a self-contained deck that reuses the
+transcodes the site pages already produced, so a deck costs no extra media.
+
+```bash
+python build.py     # reports: deck: slides/exp6.html (14 slides, 160 clips)
+```
+
+`content/exp6/slides.json` is the worked example. Its shape:
+
+| key | what it is |
+|---|---|
+| `title`, `subtitle`, `footer` | the title slide's text and the bar along the bottom |
+| `intro` | `question`, `bullets`, `stats`, and `pipeline` / `pipeline_side` — the boxes and arrows are **drawn from that list**, so there is no diagram asset to keep in sync |
+| `conditions` | one entry per column: `key` (matches the set names), `label`, `count`, `frames`. The frame list is drawn as a tick timeline. |
+| `rows` | one entry per row of the matrix: `set` (with `{cond}` substituted), `label`, `sub` |
+| `input_set` | an optional single clip shown beside each result's heading |
+| `clips` | per item: `prompt`, `headline`, `errors` (one per condition), `breaks`, `action` |
+| `slides` | the running order. Types: `intro`, `conditions`, `clip` (needs `id`), `row` (a single set across conditions for several `ids`), `closing`. |
+| `closing` | `title`, `headline`, `columns` (each `kind` `good`/`bad`, `title`, `items`), `punchline` |
+
+Missing media and unknown set names surface as build warnings, exactly as they do
+for a page, so a deck cannot silently ship an empty cell.
+
+### Presenting
+
+| key | action |
+|---|---|
+| `→` `space` `PageDown` / click | next slide |
+| `←` `PageUp` | previous |
+| `Home` `End` | first / last |
+| `f` | full screen |
+| `r` | restart the clips on this slide |
+
+The clips on a slide **loop in lockstep**, on a period set by the longest of them,
+and only the current slide and its neighbour hold a loaded video — a fourteen-slide
+deck carries ~160 clips, and attaching them all would stall the tab mid-demo.
+
+---
+
 ## 5. Deploying to GitHub Pages
 
 Target URL: **`https://kianizadpanah.github.io/video_models_know_dynamics/`**

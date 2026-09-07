@@ -990,6 +990,19 @@ def build(args) -> int:
         p.ctx = ctx
         p.rel = rel
 
+    decks = []
+    for e in exps:
+        f = e.dir / "slides.json"
+        if not f.is_file():
+            continue
+        try:
+            d = Deck(e, json.loads(f.read_text(encoding="utf-8")))
+        except Exception as ex:  # noqa: BLE001 - report and keep building
+            warn(f"{e.id}/slides.json: could not be read ({ex})")
+            continue
+        d.collect()
+        decks.append(d)
+
     MEDIA.run(skip=args.no_media)
 
     # pass 2: media dimensions are known now, so patch aspect ratios and emit
@@ -1011,6 +1024,8 @@ def build(args) -> int:
     for f in (THEME / "assets").iterdir():
         if f.is_file():
             shutil.copy2(f, dst / f.name)
+    for d in decks:
+        write_slide_deck(d, site)
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     write_404(template, site, exps, flat)
     write_search_index(all_pages, exps)
@@ -1061,6 +1076,337 @@ def patch_ratios(html_text: str) -> str:
     return re.sub(r'--ar:16/9(.*?)(?:data-src|src)="([^"]+)"', fix, html_text)
 
 
+
+# ---------------------------------------------------------------------------
+# slide decks
+# ---------------------------------------------------------------------------
+# A deck is a second rendering of an experiment's media, for standing up in
+# front of someone: one screen per result, every condition visible at once, no
+# scrolling and no prose to read out. It is driven by content/<exp>/slides.json
+# and reuses the transcodes the site pages already produced.
+
+SLIDE_DECKS: list[str] = []
+
+
+class Deck:
+    """One experiment's slide deck. Media is registered in pass 1 like a page's,
+    so the deck never references a clip the media pipeline has not produced."""
+
+    def __init__(self, exp: "Experiment", spec: dict):
+        self.exp = exp
+        self.spec = spec
+        self.rel = "../"
+        self.out_rel = f"slides/{exp.id}.html"
+        self.assets: dict[tuple[str, str], Asset] = {}
+        self.conds = [c["key"] for c in spec.get("conditions", [])]
+
+    def want(self, set_name: str, item_id: str) -> Asset | None:
+        """Register one clip and remember it under (set, item)."""
+        key = (set_name, item_id)
+        if key in self.assets:
+            return self.assets[key]
+        spec = self.exp.sets.get(set_name)
+        if spec is None:
+            warn(f"{self.exp.id}/slides.json: unknown set '{set_name}'")
+            return None
+        seed = self.exp.default_seeds[0] if self.exp.default_seeds else "0"
+        src = self.exp.resolve(set_name, item_id, seed)
+        if src is None or not src.is_file():
+            warn(f"{self.exp.id}/slides.json: missing media {set_name}/{item_id} -> {src}")
+            return None
+        a = MEDIA.request(src, self.exp, kind=spec.get("kind", "video"),
+                          max_width=spec.get("max_width"))
+        self.assets[key] = a
+        return a
+
+    def collect(self) -> None:
+        sp = self.spec
+        rows = sp.get("rows", [])
+        inp = sp.get("input_set")
+        for sl in sp.get("slides", []):
+            t = sl.get("type")
+            if t == "clip":
+                iid = sl["id"]
+                if inp:
+                    self.want(inp, iid)
+                for r in rows:
+                    for c in self.conds:
+                        self.want(r["set"].replace("{cond}", c), iid)
+            elif t == "conditions" and sl.get("example"):
+                tpl = sl.get("example_set", "depth_{cond}")
+                for c in self.conds:
+                    self.want(tpl.replace("{cond}", c), sl["example"])
+            elif t == "row":
+                for iid in sl.get("ids", []):
+                    for c in self.conds:
+                        self.want(sl["set"].replace("{cond}", c), iid)
+
+
+def _sl_inline(text: str) -> str:
+    """Slide text is plain prose with **bold** and *italic* only."""
+    t = (text or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t, flags=re.S)
+    t = re.sub(r"(?<![\w*])\*([^*\n]+?)\*(?![\w*])", r"<em>\1</em>", t)
+    t = re.sub(r"`([^`]+?)`", r"<code>\1</code>", t)
+    return t
+
+
+def _sl_video(deck: Deck, set_name: str, item_id: str, label: str) -> str:
+    a = deck.assets.get((set_name, item_id))
+    if a is None:
+        return '<div class="sv miss">no clip</div>'
+    ar = f"{a.w}/{a.h}" if a.w and a.h else "720/416"
+    if a.kind == "image":
+        return f'<div class="sv" style="--ar:{ar}"><img src="{deck.rel}{a.url}" alt="{label}"></div>'
+    return (f'<div class="sv" style="--ar:{ar}">'
+            f'<video muted playsinline preload="none" data-src="{deck.rel}{a.url}"'
+            f' poster="{deck.rel}{a.poster}" aria-label="{label}"></video></div>')
+
+
+def _sl_pipeline_svg(stages: list, side: list | None) -> str:
+    """Left-to-right box-and-arrow pipeline, drawn rather than imported so it
+    stays legible in both themes and needs no asset."""
+    n = len(stages)
+    if not n:
+        return ""
+    BW, BH, GAP = 168, 78, 38
+    W = n * BW + (n - 1) * GAP
+    top = 118 if side else 26
+    H = top + BH + 34
+    out = [f'<svg class="pipe" viewBox="0 0 {W} {H}" role="img" '
+           f'aria-label="pipeline diagram">']
+    for i, st in enumerate(stages):
+        label, sub_ = (st + ["", ""])[:2] if isinstance(st, list) else (st, "")
+        x = i * (BW + GAP)
+        out.append(f'<rect class="pb" x="{x}" y="{top}" width="{BW}" height="{BH}" rx="10"/>')
+        out.append(f'<text class="pt" x="{x + BW / 2:.0f}" y="{top + 31}">{label}</text>')
+        if sub_:
+            out.append(f'<text class="ps" x="{x + BW / 2:.0f}" y="{top + 52}">{sub_}</text>')
+        if i < n - 1:
+            ax, bx = x + BW + 7, x + BW + GAP - 7
+            y = top + BH / 2
+            out.append(f'<path class="pa" d="M{ax} {y:.0f}H{bx}"/>'
+                       f'<path class="pa" d="M{bx - 7} {y - 5:.0f}l7 5-7 5"/>')
+    if side:
+        cx = 2 * (BW + GAP) + BW / 2          # centred on the third stage
+        sw = 300
+        out.append(f'<rect class="pb alt" x="{cx - sw / 2:.0f}" y="18" width="{sw}" '
+                   f'height="62" rx="10"/>')
+        out.append(f'<text class="pt" x="{cx:.0f}" y="42">{side[0]}</text>')
+        if len(side) > 1:
+            out.append(f'<text class="ps" x="{cx:.0f}" y="62">{side[1]}</text>')
+        out.append(f'<path class="pa" d="M{cx:.0f} 84V{top - 8}"/>'
+                   f'<path class="pa" d="M{cx - 5:.0f} {top - 15}l5 7 5-7"/>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+def _sl_timeline(frames: list, total: int) -> str:
+    """Ticks on a 0..total axis, so "K = 3" reads as a picture, not a number."""
+    W, H = 560, 30
+    out = [f'<svg class="tl" viewBox="0 0 {W} {H}" preserveAspectRatio="none" '
+           f'role="img" aria-label="conditioned frames">',
+           f'<path class="tlbar" d="M0 {H / 2:.0f}H{W}" '
+           f'vector-effect="non-scaling-stroke"/>']
+    for f in frames:
+        x = (f / max(total - 1, 1)) * W
+        x = min(max(x, 1.5), W - 1.5)
+        out.append(f'<path class="tltick" d="M{x:.1f} 4V{H - 4}" '
+                   f'vector-effect="non-scaling-stroke"/>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+def _slide_intro(deck: Deck, sl: dict) -> str:
+    sp = deck.spec
+    it = sp.get("intro", {})
+    bits = [f'<h1 class="s-title">{_sl_inline(sp.get("title", deck.exp.title))}</h1>',
+            f'<div class="s-sub">{_sl_inline(sp.get("subtitle", ""))}</div>']
+    if it.get("question"):
+        bits.append(f'<p class="s-q">{_sl_inline(it["question"])}</p>')
+    if it.get("pipeline"):
+        bits.append('<div class="s-pipe">'
+                    + _sl_pipeline_svg(it["pipeline"], it.get("pipeline_side"))
+                    + "</div>")
+    if it.get("bullets"):
+        bits.append('<ul class="s-bul">'
+                    + "".join(f"<li>{_sl_inline(b)}</li>" for b in it["bullets"])
+                    + "</ul>")
+    if it.get("stats"):
+        bits.append('<div class="s-stats">' + "".join(
+            f'<div><b>{_sl_inline(str(v))}</b><span>{_sl_inline(l)}</span></div>'
+            for v, l in it["stats"]) + "</div>")
+    return f'<div class="s-intro">{"".join(bits)}</div>'
+
+
+def _slide_conditions(deck: Deck, sl: dict) -> str:
+    sp = deck.spec
+    total = sp.get("num_frames", 169)
+    rows = []
+    for c in sp.get("conditions", []):
+        fr = c.get("frames", [])
+        rows.append(
+            f'<div class="cd-l">{_sl_inline(c["label"])}</div>'
+            f'<div class="cd-n">{_sl_inline(c.get("count", ""))}</div>'
+            f'<div class="cd-t">{_sl_timeline(fr, total)}</div>'
+            f'<div class="cd-f">{" · ".join(str(x) for x in fr[:9])}'
+            + (" · …" if len(fr) > 9 else "") + "</div>")
+    return (
+        '<div class="s-conds">'
+        '<h2 class="s-h">The one variable: how many frames carry a pose</h2>'
+        '<p class="s-headline">Each tick is a frame the depth control specifies. '
+        'Everything between the ticks is the video model\'s own work — the control '
+        'is blank there, and the model is told not to attend to it.</p>'
+        f'<div class="cd">{"".join(rows)}</div>'
+        + _sl_conditions_example(deck, sl)
+        + '<p class="s-note">Frame indices have to sit on the model\'s latent grid '
+        '(every 8th frame), so they are snapped to it before rendering. '
+        'All five conditions use the same clip, the same prompt and the same seed.</p>'
+        "</div>")
+
+
+def _sl_conditions_example(deck: Deck, sl: dict) -> str:
+    """The timelines say what K *is*; these say what it looks like. Reuses the
+    matrix so the clips line up under the condition labels just read above."""
+    ex = sl.get("example")
+    if not ex:
+        return ""
+    conds = deck.spec.get("conditions", [])
+    tpl = sl.get("example_set", "depth_{cond}")
+    cells = [f'<div class="m-row"><b>'
+             f'{_sl_inline(sl.get("example_label", "Control track"))}</b>'
+             f'<span>{ex.replace("_", " ")}</span></div>']
+    for c in conds:
+        cells.append('<div class="m-cell">'
+                     + _sl_video(deck, tpl.replace("{cond}", c["key"]), ex,
+                                 f'control track, {ex}, {c["label"]}')
+                     + "</div>")
+    return (f'<div class="matrix ex" style="--cols:{len(conds)};--rows:1">'
+            + "".join(cells) + "</div>")
+
+def _slide_clip(deck: Deck, sl: dict) -> str:
+    sp, iid = deck.spec, sl["id"]
+    info = sp.get("clips", {}).get(iid, {})
+    conds = sp.get("conditions", [])
+    rows = sp.get("rows", [])
+    chips = "".join(f'<span class="s-chip">{_sl_inline(x)}</span>'
+                    for x in (info.get("action"), info.get("breaks")) if x)
+    head = [f'<div class="s-head-t">',
+            f'<h2 class="s-h">{iid.replace("_", " ")}'
+            f'<span class="s-prompt">&ldquo;{_sl_inline(info.get("prompt", ""))}&rdquo;</span></h2>',
+            f'<p class="s-headline">{_sl_inline(info.get("headline", ""))}</p>',
+            (f'<div class="s-chips">{chips}</div>' if chips else ""),
+            "</div>"]
+    inp = sp.get("input_set")
+    if inp:
+        head.append(
+            '<figure class="s-input">'
+            + _sl_video(deck, inp, iid, f"input motion, {iid}")
+            + f'<figcaption><b>{_sl_inline(sp.get("input_label", "Input"))}</b>'
+              f'<span>{_sl_inline(sp.get("input_sub", ""))}</span></figcaption></figure>')
+
+    cells = ['<div class="m-corner"></div>']
+    for c in conds:
+        cells.append(f'<div class="m-col"><b>{_sl_inline(c["label"])}</b>'
+                     f'<span>{_sl_inline(c.get("count", ""))}</span></div>')
+    for r in rows:
+        cells.append(f'<div class="m-row"><b>{_sl_inline(r["label"])}</b>'
+                     f'<span>{_sl_inline(r.get("sub", ""))}</span></div>')
+        for c in conds:
+            cells.append('<div class="m-cell">'
+                         + _sl_video(deck, r["set"].replace("{cond}", c["key"]), iid,
+                                     f'{r["label"]}, {iid}, {c["label"]}')
+                         + "</div>")
+    errs = info.get("errors") or []
+    if errs:
+        cells.append('<div class="m-row err"><b>Joint error</b>'
+                     '<span>vs. the input motion</span></div>')
+        best = min(errs)
+        for i, e in enumerate(errs):
+            cls = " low" if e == best else ""
+            cells.append(f'<div class="m-err{cls}">{e}<i>mm</i></div>')
+    grid = (f'<div class="matrix{" has-err" if errs else ""}" '
+            f'style="--cols:{len(conds)};--rows:{len(rows)}">' + "".join(cells) + "</div>")
+    return f'<div class="s-clip"><header class="s-head">{"".join(head)}</header>{grid}</div>'
+
+
+def _slide_row(deck: Deck, sl: dict) -> str:
+    sp = deck.spec
+    conds = sp.get("conditions", [])
+    ids = sl.get("ids", [])
+    cells = ['<div class="m-corner"></div>']
+    for c in conds:
+        cells.append(f'<div class="m-col"><b>{_sl_inline(c["label"])}</b>'
+                     f'<span>{_sl_inline(c.get("count", ""))}</span></div>')
+    for iid in ids:
+        cells.append(f'<div class="m-row"><b>{iid.replace("_", " ")}</b>'
+                     f'<span>{_sl_inline(sl.get("row_label", ""))}</span></div>')
+        for c in conds:
+            cells.append('<div class="m-cell">'
+                         + _sl_video(deck, sl["set"].replace("{cond}", c["key"]), iid,
+                                     f'{iid}, {c["label"]}')
+                         + "</div>")
+    bits = [f'<h2 class="s-h">{_sl_inline(sl.get("title", ""))}</h2>',
+            f'<p class="s-headline wide">{_sl_inline(sl.get("headline", ""))}</p>',
+            f'<div class="matrix" style="--cols:{len(conds)};--rows:{len(ids)}">'
+            + "".join(cells) + "</div>"]
+    if sl.get("note"):
+        bits.append(f'<p class="s-note">{_sl_inline(sl["note"])}</p>')
+    return f'<div class="s-row">{"".join(bits)}</div>'
+
+
+def _slide_closing(deck: Deck, sl: dict) -> str:
+    cl = deck.spec.get("closing", {})
+    cols = []
+    for c in cl.get("columns", []):
+        cols.append(
+            f'<div class="cl-col {c.get("kind", "")}">'
+            f'<div class="cl-t">{_sl_inline(c.get("title", ""))}</div><ul>'
+            + "".join(f"<li>{_sl_inline(x)}</li>" for x in c.get("items", []))
+            + "</ul></div>")
+    return (
+        '<div class="s-close">'
+        f'<h2 class="s-h">{_sl_inline(cl.get("title", "What the sweep shows"))}</h2>'
+        f'<p class="s-headline wide">{_sl_inline(cl.get("headline", ""))}</p>'
+        f'<div class="cl-cols">{"".join(cols)}</div>'
+        + (f'<p class="s-punch">{_sl_inline(cl["punchline"])}</p>'
+           if cl.get("punchline") else "")
+        + "</div>")
+
+
+_SLIDE_KINDS = {"intro": _slide_intro, "conditions": _slide_conditions,
+                "clip": _slide_clip, "row": _slide_row, "closing": _slide_closing}
+
+
+def write_slide_deck(deck: Deck, site: dict) -> None:
+    spec = deck.spec
+    sections = []
+    for i, sl in enumerate(spec.get("slides", [])):
+        fn = _SLIDE_KINDS.get(sl.get("type", ""))
+        if fn is None:
+            warn(f"{deck.exp.id}/slides.json: unknown slide type '{sl.get('type')}'")
+            continue
+        sections.append(f'<section class="slide{" on" if i == 0 else ""}" '
+                        f'data-i="{len(sections)}">{fn(deck, sl)}</section>')
+    n = len(sections)
+    tpl = (THEME / "slides.html").read_text(encoding="utf-8")
+    body = tpl
+    for k, v in {
+        "LANG": site.get("lang", "en"),
+        "TITLE": f'{spec.get("subtitle") or deck.exp.nav} · {site.get("short_title", "")}',
+        "BACK": f'{deck.rel}{deck.exp.pages[0].url}' if deck.exp.pages else f"{deck.rel}index.html",
+        "SLIDES": "".join(sections),
+        "COUNT": str(n),
+        "FOOTER": spec.get("footer", deck.exp.title),
+    }.items():
+        body = body.replace(f"{{{{{k}}}}}", v or "")
+    dst = OUT / deck.out_rel
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    dst.write_text(body, encoding="utf-8")
+    SLIDE_DECKS.append(deck.out_rel)
+    print(f"  deck: {deck.out_rel} ({n} slides, {len(deck.assets)} clips)")
+
+
 def prune(all_pages, static_used: set[str]) -> int:
     """Delete output that no longer corresponds to anything in content/.
 
@@ -1076,6 +1422,7 @@ def prune(all_pages, static_used: set[str]) -> int:
         if a.poster:
             keep.add((OUT / a.poster).resolve())
     keep |= {(OUT / rel).resolve() for rel in static_used}
+    keep |= {(OUT / rel).resolve() for rel in SLIDE_DECKS}
     for f in (THEME / "assets").iterdir():
         if f.is_file():
             keep.add((OUT / "assets" / f.name).resolve())

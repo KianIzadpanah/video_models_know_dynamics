@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="color-scheme" content="light dark">
+<style>
+/* A deck is one screen per slide, sized to the viewport, never scrolling. Every
+   length that has to survive a projector is in vmin/vh so the whole thing scales
+   with the screen instead of assuming 1920x1080. */
+:root{
+  --bg:#0d0f13; --panel:#161a21; --panel-2:#1b2029; --line:#2a3038;
+  --ink:#eef1f5; --ink-2:#c3cad4; --muted:#98a1ad; --faint:#6f7885;
+  --accent:#7aa7ff; --accent-soft:#1b2740; --key:#4fcf9b; --warn:#e0ab4d;
+  --heavy:#ff9469;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,"JetBrains Mono",Menlo,Consolas,monospace;
+  --sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased}
+code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);
+  padding:.08em .34em;border-radius:4px}
+strong{font-weight:680;color:#fff}
+em{font-style:italic;color:var(--ink)}
+
+/* ---------- slide frame ---------- */
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;display:none;
+  padding:3.0vh 2.6vw 6.4vh;flex-direction:column;min-height:0}
+.slide.on{display:flex}
+.slide>*{display:flex;flex-direction:column;flex:1;min-height:0}
+
+.s-h{margin:0;font-size:clamp(20px,2.7vh,34px);line-height:1.15;
+  letter-spacing:-.02em;font-weight:700;display:flex;align-items:baseline;
+  gap:.7em;flex-wrap:wrap}
+.s-prompt{font-size:.62em;font-weight:400;color:var(--muted);letter-spacing:0}
+.s-headline{margin:.7vh 0 0;font-size:clamp(13px,1.85vh,20px);line-height:1.45;
+  color:var(--ink-2);max-width:100ch}
+.s-headline.wide{max-width:none}
+.s-note{margin:1.1vh 0 0;font-size:clamp(11px,1.5vh,15px);line-height:1.45;
+  color:var(--faint);max-width:110ch}
+
+/* ---------- title slide ---------- */
+.s-intro{justify-content:center;gap:1.2vh}
+.s-title{margin:0;font-size:clamp(26px,4.6vh,58px);line-height:1.08;
+  letter-spacing:-.03em;font-weight:730}
+.s-sub{font:600 clamp(12px,1.7vh,17px)/1.3 var(--mono);letter-spacing:.09em;
+  text-transform:uppercase;color:var(--accent)}
+.s-q{margin:.4vh 0 0;font-size:clamp(14px,2.1vh,23px);line-height:1.4;
+  color:var(--ink-2);max-width:86ch;font-style:italic}
+.s-pipe{margin:1.4vh 0 .4vh;flex:0 1 auto;min-height:0;display:flex;
+  justify-content:center}
+svg.pipe{width:100%;max-height:24vh;height:auto}
+svg.pipe .pb{fill:var(--panel);stroke:var(--line);stroke-width:1.5}
+svg.pipe .pb.alt{fill:var(--accent-soft);stroke:var(--accent)}
+svg.pipe .pt{fill:var(--ink);font:600 15px/1 var(--sans);text-anchor:middle}
+svg.pipe .ps{fill:var(--muted);font:12px/1 var(--sans);text-anchor:middle}
+svg.pipe .pa{stroke:var(--faint);stroke-width:1.8;fill:none;stroke-linecap:round;
+  stroke-linejoin:round}
+.s-bul{margin:.6vh 0 0;padding:0 0 0 1.15em;display:flex;flex-direction:column;
+  gap:.75vh;font-size:clamp(12px,1.75vh,19px);line-height:1.42;color:var(--ink-2);
+  max-width:118ch}
+.s-bul li::marker{color:var(--accent)}
+.s-stats{display:flex;gap:2.4vw;margin-top:1.5vh;flex-wrap:wrap}
+.s-stats div{display:flex;flex-direction:column}
+.s-stats b{font:700 clamp(17px,2.9vh,34px)/1 var(--sans);letter-spacing:-.02em}
+.s-stats span{font:600 clamp(9px,1.15vh,12px)/1.3 var(--mono);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);margin-top:.4vh}
+
+/* ---------- conditions slide ---------- */
+.s-conds{gap:0;justify-content:center}
+.cd{display:grid;grid-template-columns:auto auto 1fr auto;gap:1.4vh 1.6vw;
+  align-items:center;margin-top:2.2vh;flex:0 0 auto}
+/* the example row has no header of its own; it reuses the matrix so the clips
+   line up under the condition labels the reader has just read */
+/* One row only, so it must not swallow the slack the way a 1fr row would --
+   size the cells to the clip's own aspect instead. */
+.matrix.ex{grid-template-rows:auto;margin-top:2.6vh;flex:0 0 auto}
+.matrix.ex .m-cell{min-height:0}
+.matrix.ex .sv{flex:1 1 auto;aspect-ratio:var(--ar,720/416);max-height:25vh}
+.cd-l{font:700 clamp(13px,2vh,24px)/1 var(--sans)}
+.cd-n{font:600 clamp(10px,1.3vh,14px)/1 var(--mono);color:var(--accent);
+  letter-spacing:.05em;white-space:nowrap}
+.cd-t{min-width:0}
+svg.tl{width:100%;height:4.2vh;min-height:20px;max-height:44px;display:block}
+svg.tl .tlbar{stroke:var(--line);stroke-width:2}
+svg.tl .tltick{stroke:var(--accent);stroke-width:3.5;stroke-linecap:round}
+.cd-f{font:clamp(9px,1.25vh,13px)/1.3 var(--mono);color:var(--faint);
+  white-space:nowrap}
+
+/* ---------- clip slide ---------- */
+.s-clip{gap:0}
+.s-head{display:flex;gap:2vw;align-items:flex-start;flex:0 0 auto}
+.s-head-t{flex:1;min-width:0;display:flex;flex-direction:column}
+.s-chips{display:flex;gap:.5vw;margin-top:.9vh;flex-wrap:wrap}
+.s-chip{font:650 clamp(9px,1.15vh,12px)/1.5 var(--mono);letter-spacing:.06em;
+  text-transform:uppercase;padding:.25em .6em;border-radius:999px;
+  border:1px solid var(--accent);color:var(--accent)}
+.s-input{margin:0;flex:0 0 auto;width:clamp(120px,13vw,220px);display:flex;
+  flex-direction:column;gap:.5vh}
+.s-input figcaption{display:flex;flex-direction:column;line-height:1.25}
+.s-input figcaption b{font-size:clamp(10px,1.35vh,14px)}
+.s-input figcaption span{font-size:clamp(9px,1.15vh,12px);color:var(--muted)}
+
+/* the matrix: one column per condition, one row per stage, and it must fit */
+.matrix{
+  flex:1;min-height:0;margin-top:2vh;display:grid;
+  grid-template-columns:clamp(90px,9.5vw,150px) repeat(var(--cols),minmax(0,1fr));
+  /* The header and the error strip size to their content; only the video rows
+     share what is left, so the clips get every pixel the slide can spare. */
+  grid-template-rows:auto repeat(var(--rows),minmax(0,1fr));
+  gap:.9vh .55vw;align-items:stretch;
+}
+.matrix.has-err{grid-template-rows:auto repeat(var(--rows),minmax(0,1fr)) auto}
+.matrix .m-corner,.matrix .m-col{grid-row:1}
+.m-col,.m-row{display:flex;flex-direction:column;justify-content:center;
+  min-width:0;line-height:1.2}
+.m-col{align-items:center;text-align:center}
+.m-col b{font:700 clamp(11px,1.7vh,19px)/1.1 var(--sans)}
+.m-col span{font:600 clamp(8px,1.05vh,11px)/1.3 var(--mono);color:var(--accent);
+  letter-spacing:.04em;margin-top:.25vh}
+.m-row{align-items:flex-start;padding-right:.5vw}
+.m-row b{font:700 clamp(10px,1.5vh,17px)/1.15 var(--sans)}
+.m-row span{font-size:clamp(8px,1.1vh,12px);color:var(--muted);margin-top:.25vh}
+.m-cell{min-width:0;min-height:0;display:flex}
+.sv{position:relative;flex:1;min-width:0;min-height:0;border-radius:6px;
+  overflow:hidden;background:#000;border:1px solid var(--line);display:flex}
+.sv video,.sv img{width:100%;height:100%;object-fit:contain;display:block}
+.sv.miss{align-items:center;justify-content:center;font:11px var(--mono);
+  color:var(--faint);background:var(--panel)}
+.m-row.err{padding-top:.4vh}
+.m-row.err b{color:var(--muted)}
+.m-err{display:flex;align-items:center;justify-content:center;gap:.25em;
+  padding:.5vh 0;
+  font:700 clamp(12px,1.9vh,21px)/1 var(--sans);color:var(--ink-2);
+  background:var(--panel);border-radius:6px;font-variant-numeric:tabular-nums}
+.m-err i{font:600 clamp(8px,1.05vh,11px)/1 var(--mono);font-style:normal;
+  color:var(--faint)}
+.m-err.low{color:var(--key);background:color-mix(in srgb,var(--key) 12%,var(--panel))}
+
+/* ---------- closing slide ---------- */
+/* The first and last slides are composed blocks rather than dense grids, so
+   both centre vertically; the content slides in between stay top-aligned. */
+.s-close{gap:0;justify-content:center}
+.cl-cols{flex:0 0 auto;display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.6vw;margin-top:2.4vh;align-items:start}
+.cl-col{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:1.8vh 1.3vw;border-top:3px solid var(--accent);display:flex;
+  flex-direction:column;min-height:0}
+.cl-col.good{border-top-color:var(--key)}
+.cl-col.bad{border-top-color:var(--heavy)}
+.cl-t{font:700 clamp(12px,1.85vh,20px)/1.2 var(--sans);margin-bottom:1.1vh}
+.cl-col ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;
+  gap:.9vh;font-size:clamp(11px,1.55vh,16px);line-height:1.4;color:var(--ink-2)}
+.cl-col.good ul li::marker{color:var(--key)}
+.cl-col.bad ul li::marker{color:var(--heavy)}
+.s-punch{margin:3vh 0 0;font-size:clamp(13px,2.05vh,23px);
+  line-height:1.35;text-align:center;color:var(--ink)}
+
+/* ---------- row slide ---------- */
+.s-row{gap:0}
+
+/* ---------- hud ---------- */
+.hud{position:fixed;left:0;right:0;bottom:0;height:5.0vh;min-height:34px;
+  display:flex;align-items:center;gap:.9vw;padding:0 2.6vw;
+  background:var(--panel);border-top:1px solid var(--line);z-index:10;
+  font-size:clamp(10px,1.3vh,13px)}
+.hud a,.hud button{font:inherit;color:var(--muted);background:transparent;
+  border:1px solid var(--line);border-radius:6px;padding:.35em .7em;cursor:pointer;
+  text-decoration:none;white-space:nowrap}
+.hud a:hover,.hud button:hover{color:var(--accent);border-color:var(--accent)}
+.hud .seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;
+  overflow:hidden}
+.hud .seg button{border:0;border-right:1px solid var(--line);border-radius:0}
+.hud .seg button:last-child{border-right:0}
+.hud .seg button[aria-pressed="true"]{background:var(--accent);color:#08101f}
+.hud .foot{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;color:var(--faint)}
+.hud .count{font-family:var(--mono);color:var(--ink-2);
+  font-variant-numeric:tabular-nums}
+.dots{display:flex;gap:4px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--line);
+  display:block;cursor:pointer}
+.dots i.on{background:var(--accent)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:900px){
+  .cl-cols{grid-template-columns:1fr;overflow:auto}
+  .s-head{flex-direction:column}
+  .s-input{width:min(220px,40vw)}
+}
+</style>
+</head>
+<body>
+
+<div class="deck">{{SLIDES}}</div>
+
+<div class="hud">
+  <a href="{{BACK}}" title="Back to the write-up">&larr; write-up</a>
+  <button data-prev title="Previous slide (&larr;)">&lsaquo;</button>
+  <span class="count"><b>1</b> / {{COUNT}}</span>
+  <button data-next title="Next slide (&rarr; or space)">&rsaquo;</button>
+  <div class="dots" role="tablist"></div>
+  <div class="seg" title="Playback speed">
+    <button data-rate="0.25">&frac14;&times;</button>
+    <button data-rate="0.5">&frac12;&times;</button>
+    <button data-rate="1" aria-pressed="true">1&times;</button>
+    <button data-rate="2">2&times;</button>
+  </div>
+  <button data-restart title="Restart the clips on this slide (r)">&#9654; restart</button>
+  <button data-full title="Full screen (f)">&#9974; full screen</button>
+  <span class="foot">{{FOOTER}}</span>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var n = slides.length, cur = 0, rate = 1;
+  var countEl = document.querySelector('.count b');
+  var dotsEl = document.querySelector('.dots');
+
+  slides.forEach(function (s, i) {
+    var d = document.createElement('i');
+    d.setAttribute('role', 'tab');
+    d.title = 'Slide ' + (i + 1);
+    d.addEventListener('click', function () { go(i); });
+    dotsEl.appendChild(d);
+  });
+  var dots = Array.prototype.slice.call(dotsEl.children);
+
+  function vids(i) {
+    return slides[i] ? Array.prototype.slice.call(slides[i].querySelectorAll('video')) : [];
+  }
+
+  /* Only the current slide and its neighbour hold a loaded video. A deck of
+     fourteen slides carries ~160 clips; attaching them all would stall the tab
+     and is exactly what a live demo cannot afford. */
+  function attach(i) {
+    vids(i).forEach(function (v) {
+      if (!v.src && v.dataset.src) v.src = v.dataset.src;
+      v.loop = false;
+      v.playbackRate = rate;
+    });
+  }
+  function detach(i) {
+    vids(i).forEach(function (v) {
+      v.pause();
+      if (v.src) { v.removeAttribute('src'); v.load(); }
+    });
+  }
+
+  /* One timer restarts every clip on the slide together, on a period set by the
+     longest of them, so the columns stay frame-aligned instead of drifting. */
+  var timer = null;
+  function stopCycle() { if (timer) { clearTimeout(timer); timer = null; } }
+  function cycle() {
+    stopCycle();
+    var vs = vids(cur).filter(function (v) { return v.src; });
+    if (!vs.length) return;
+    var len = 0;
+    vs.forEach(function (v) {
+      if (v.duration && isFinite(v.duration)) len = Math.max(len, v.duration);
+    });
+    if (!len) { timer = setTimeout(cycle, 200); return; }
+    vs.forEach(function (v) {
+      try { v.currentTime = 0; } catch (e) {}
+      v.playbackRate = rate;
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    });
+    timer = setTimeout(cycle, (len / rate) * 1000 + 90);
+  }
+
+  function go(i) {
+    i = Math.max(0, Math.min(n - 1, i));
+    if (i === cur && slides[i].classList.contains('on')) { cycle(); return; }
+    stopCycle();
+    slides.forEach(function (s, j) { s.classList.toggle('on', j === i); });
+    dots.forEach(function (d, j) { d.classList.toggle('on', j === i); });
+    cur = i;
+    countEl.textContent = String(i + 1);
+    for (var j = 0; j < n; j++) {
+      if (j < i - 1 || j > i + 1) detach(j);
+    }
+    attach(i);
+    if (i + 1 < n) attach(i + 1);
+    cycle();
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {}
+  }
+
+  function setRate(r) {
+    rate = r;
+    document.querySelectorAll('[data-rate]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(parseFloat(b.dataset.rate) === r));
+    });
+    vids(cur).forEach(function (v) { v.playbackRate = r; });
+    cycle();
+  }
+
+  document.querySelector('.hud').addEventListener('click', function (e) {
+    var r = e.target.closest('[data-rate]');
+    if (r) { setRate(parseFloat(r.dataset.rate)); return; }
+    if (e.target.closest('[data-next]')) { go(cur + 1); return; }
+    if (e.target.closest('[data-prev]')) { go(cur - 1); return; }
+    if (e.target.closest('[data-restart]')) { cycle(); return; }
+    if (e.target.closest('[data-full]')) {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen)
+        document.documentElement.requestFullscreen();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Enter') {
+      e.preventDefault(); go(cur + 1);
+    } else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace') {
+      e.preventDefault(); go(cur - 1);
+    } else if (k === 'Home') { e.preventDefault(); go(0); }
+    else if (k === 'End') { e.preventDefault(); go(n - 1); }
+    else if (k === 'r') { cycle(); }
+    else if (k === 'f') {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen)
+        document.documentElement.requestFullscreen();
+    }
+  });
+
+  // clicking the slide itself advances, which is what a presenter reaches for
+  document.querySelector('.deck').addEventListener('click', function (e) {
+    if (e.target.closest('a,button,video')) return;
+    go(cur + (e.clientX < window.innerWidth * 0.18 ? -1 : 1));
+  });
+
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) cycle(); else stopCycle();
+  });
+
+  var start = parseInt((location.hash || '').replace('#', ''), 10);
+  go(isFinite(start) && start > 0 ? start - 1 : 0);
+})();
+</script>
+</body>
+</html>

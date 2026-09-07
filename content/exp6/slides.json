@@ -1,0 +1,398 @@
+{
+  "title": "Photoreal output, correct animation as control",
+  "subtitle": "Experiment 6 · how little pose is enough?",
+  "footer": "Experiment 6 · 10 AMASS/BABEL clips · 5 conditioning densities · 50 videos",
+  "intro": {
+    "question": "Given a clean motion-capture clip as depth control and a sentence for appearance, how few conditioned frames still produce the right action?",
+    "bullets": [
+      "**Earlier experiments used a motion model's output as the control.** It often did not perform the action in the prompt at all, so we could never separate *did the video model improve the motion* from *can it rescue a motion that was never right*.",
+      "**Here the control is clean motion capture** — ten AMASS/BABEL clips that genuinely perform the action they are labelled with.",
+      "**The animation is control only.** We render it as a depth video and feed that in. Appearance comes from the text prompt, so the output is a photorealistic person in a real place.",
+      "**Then we pull the motion back out** with pose recovery and re-render it on the same neutral body, so the motion that came back can be compared with the motion that went in.",
+      "**The one variable is how many frames carry a pose** — 22 of them down to 2. Everything else is held fixed."
+    ],
+    "stats": [
+      [
+        "10",
+        "clips"
+      ],
+      [
+        "5",
+        "densities"
+      ],
+      [
+        "50",
+        "videos"
+      ],
+      [
+        "169",
+        "frames @ 25 fps"
+      ],
+      [
+        "1216×704",
+        "resolution"
+      ]
+    ],
+    "pipeline": [
+      [
+        "AMASS/BABEL clip",
+        "SMPL, 169 frames"
+      ],
+      [
+        "Depth render",
+        "dense or sparse"
+      ],
+      [
+        "LTX-2.3 + IC-LoRA",
+        "depth control"
+      ],
+      [
+        "Photoreal video",
+        "1216×704, 6.76 s"
+      ],
+      [
+        "GVHMR",
+        "video → SMPL"
+      ],
+      [
+        "Recovered motion",
+        "neutral body"
+      ]
+    ],
+    "pipeline_side": [
+      "text prompt",
+      "appearance only, no motion words"
+    ]
+  },
+  "conditions": [
+    {
+      "key": "dense",
+      "label": "dense",
+      "count": "22 frames",
+      "frames": [
+        0,
+        8,
+        16,
+        24,
+        32,
+        40,
+        48,
+        56,
+        64,
+        72,
+        80,
+        88,
+        96,
+        104,
+        112,
+        120,
+        128,
+        136,
+        144,
+        152,
+        160,
+        168
+      ]
+    },
+    {
+      "key": "K8",
+      "label": "K = 8",
+      "count": "8 frames",
+      "frames": [
+        0,
+        24,
+        48,
+        72,
+        96,
+        120,
+        144,
+        168
+      ]
+    },
+    {
+      "key": "K5",
+      "label": "K = 5",
+      "count": "5 frames",
+      "frames": [
+        0,
+        40,
+        88,
+        128,
+        168
+      ]
+    },
+    {
+      "key": "K3",
+      "label": "K = 3",
+      "count": "3 frames",
+      "frames": [
+        0,
+        88,
+        168
+      ]
+    },
+    {
+      "key": "K2",
+      "label": "K = 2",
+      "count": "2 frames",
+      "frames": [
+        0,
+        168
+      ]
+    }
+  ],
+  "num_frames": 169,
+  "rows": [
+    {
+      "set": "depth_{cond}",
+      "label": "Depth control",
+      "sub": "what the model was given"
+    },
+    {
+      "set": "vid_{cond}",
+      "label": "Photoreal output",
+      "sub": "what the model made"
+    },
+    {
+      "set": "lift_{cond}",
+      "label": "Recovered motion",
+      "sub": "what came back as SMPL"
+    }
+  ],
+  "input_set": "input",
+  "input_label": "Input motion",
+  "input_sub": "what went in",
+  "clips": {
+    "walk": {
+      "prompt": "a man walking along a city sidewalk",
+      "headline": "The action survives to two frames. The input's **path** does not — from K = 5 it walks straight across frame and never makes the turn.",
+      "errors": [
+        48,
+        84,
+        184,
+        177,
+        170
+      ],
+      "breaks": "copying breaks at K = 5",
+      "action": "action holds to K = 2"
+    },
+    "run": {
+      "prompt": "a man running on an outdoor running track",
+      "headline": "Same threshold as walk, sharper. From K = 5 it is a generic run — and foot skate goes from 180 mm/s in to **900–1800 mm/s out**.",
+      "errors": [
+        78,
+        126,
+        230,
+        220,
+        219
+      ],
+      "breaks": "copying breaks at K = 5",
+      "action": "action holds to K = 2"
+    },
+    "jump": {
+      "prompt": "a man jumping upward",
+      "headline": "The error steps up at K = 8 and then never gets worse. The crouch-and-launch survives to two frames — and from K = 8 the model adds a **basketball** the control never contained.",
+      "errors": [
+        73,
+        149,
+        148,
+        147,
+        162
+      ],
+      "breaks": "copying breaks at K = 8",
+      "action": "action holds to K = 2"
+    },
+    "kick": {
+      "prompt": "a man performing a kick",
+      "headline": "**The only clip that loses its action.** At K = 3 and K = 2 the kick is gone; what is left is footwork with one late leg raise.",
+      "errors": [
+        74,
+        156,
+        172,
+        241,
+        154
+      ],
+      "breaks": "copying breaks at K = 8",
+      "action": "action lost at K = 3"
+    },
+    "sit_down": {
+      "prompt": "a man lowering himself into a seated position",
+      "headline": "The flattest curve in the set — and the best result in the experiment. **The depth control has no chair in it.** At every density the model puts a stool or a box under him and sits him on it.",
+      "errors": [
+        67,
+        69,
+        85,
+        99,
+        79
+      ],
+      "breaks": "never breaks sharply",
+      "action": "action holds to K = 2"
+    },
+    "stand_up": {
+      "prompt": "a man rising to his feet from a seated position",
+      "headline": "The input starts prone on the floor, which is hard for pose recovery — even dense is 140 mm, the highest of the ten. **Read the photoreal row, not the recovered row.** Visually the rise survives to K = 2.",
+      "errors": [
+        140,
+        136,
+        301,
+        279,
+        270
+      ],
+      "breaks": "copying breaks at K = 5",
+      "action": "action holds to K = 2"
+    },
+    "throw": {
+      "prompt": "a man throwing with an overhand motion",
+      "headline": "**The one clip where the prompt loses.** At every density, dense included, the model hands him a tennis racket and turns the wind-up into a serve. The prompt named no ball, so the model picked its own object.",
+      "errors": [
+        113,
+        166,
+        193,
+        244,
+        252
+      ],
+      "breaks": "copying breaks at K = 8",
+      "action": "prompt misread at every density"
+    },
+    "turn": {
+      "prompt": "a man turning around to face the other direction",
+      "headline": "Degrades gently and never breaks. Turning around is large and unambiguous — two frames at the ends are enough to specify it.",
+      "errors": [
+        56,
+        92,
+        108,
+        98,
+        117
+      ],
+      "breaks": "never breaks sharply",
+      "action": "action holds to K = 2"
+    },
+    "squat": {
+      "prompt": "a man performing a deep squat",
+      "headline": "The cleanest monotone slope of the ten, so the best single row for reading the sweep. At K = 2 the model does something interesting rather than wrong: the input holds one squat for six seconds, and given only the two ends it does **repetitions**.",
+      "errors": [
+        51,
+        76,
+        102,
+        137,
+        168
+      ],
+      "breaks": "copying breaks gradually, from K = 8",
+      "action": "action holds to K = 2"
+    },
+    "wave": {
+      "prompt": "a man waving one arm",
+      "headline": "Essentially flat — K = 8 is marginally *closer* to the input than dense. A small motion is fully specified by its endpoints. Foot skate goes 22.6 → **1.3 mm/s**.",
+      "errors": [
+        61,
+        56,
+        75,
+        92,
+        78
+      ],
+      "breaks": "never breaks",
+      "action": "action holds to K = 2"
+    }
+  },
+  "slides": [
+    {
+      "type": "intro"
+    },
+    {
+      "type": "conditions",
+      "example": "walk",
+      "example_set": "depth_{cond}",
+      "example_label": "What that looks like"
+    },
+    {
+      "type": "clip",
+      "id": "walk"
+    },
+    {
+      "type": "clip",
+      "id": "run"
+    },
+    {
+      "type": "clip",
+      "id": "jump"
+    },
+    {
+      "type": "clip",
+      "id": "kick"
+    },
+    {
+      "type": "clip",
+      "id": "sit_down"
+    },
+    {
+      "type": "clip",
+      "id": "stand_up"
+    },
+    {
+      "type": "clip",
+      "id": "throw"
+    },
+    {
+      "type": "clip",
+      "id": "turn"
+    },
+    {
+      "type": "clip",
+      "id": "squat"
+    },
+    {
+      "type": "clip",
+      "id": "wave"
+    },
+    {
+      "type": "row",
+      "title": "dense is the worst-looking condition of the five",
+      "headline": "In **all ten clips** the dense output dresses the person in white or off-white, or bare skin — the model is reproducing the near-white value of the depth silhouette itself. Skin, fabric and lighting come back at K = 8 and keep improving as the control gets sparser.",
+      "set": "vid_{cond}",
+      "row_label": "Photoreal output",
+      "ids": [
+        "walk",
+        "kick",
+        "squat"
+      ],
+      "note": "This is the \"a video model behaves like a renderer when you specify every frame\" point, showing up in appearance rather than in motion."
+    },
+    {
+      "type": "closing"
+    }
+  ],
+  "closing": {
+    "title": "What the sweep shows",
+    "headline": "For **eight of the ten clips the action survives all the way down to two conditioned frames.** What sparsity costs is not *what* the person does but *when and where* — the input's trajectory, its timing, its specific stride.",
+    "columns": [
+      {
+        "kind": "good",
+        "title": "Where copying breaks",
+        "items": [
+          "**K = 8** — the fast, high-frequency clips: jump, kick, throw",
+          "**K = 5** — the locomotion clips: walk, run, stand up",
+          "**never sharply** — the slow or near-static ones: sit down, turn, squat, wave. They just drift."
+        ]
+      },
+      {
+        "kind": "good",
+        "title": "The model supplies physics the control lacks",
+        "items": [
+          "**sit down** — no chair in the control, no chair in the prompt. It puts a stool under him at every density and keeps him on it.",
+          "**squat at K = 2** — one six-second hold becomes repetitions, which is what a person in a gym actually does.",
+          "**Foot contact beats the motion capture** on every slow clip: wave 22.6 → 1.3 mm/s, squat 39.8 → 10.4, sit down 40.8 → 13.7."
+        ]
+      },
+      {
+        "kind": "bad",
+        "title": "Where it goes wrong",
+        "items": [
+          "**run** — 5–10× the input's foot skate at every sparse density. It knows what running looks like, not where this runner's feet were.",
+          "**throw** — nine times the input's jerk at K = 3, and a tennis racket at every density because the prompt named no ball.",
+          "**stand up** — pose recovery struggles with a body prone on the floor. Third experiment to hit this; the fix is a second camera."
+        ]
+      }
+    ],
+    "punchline": "Two frames plus a sentence is enough to produce the **right action**, six seconds long, in a real place. It is not enough to reproduce a **particular performance**."
+  }
+}
