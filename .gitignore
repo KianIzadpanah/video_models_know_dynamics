@@ -14,5 +14,10 @@ venv/
 Thumbs.db
 desktop.ini
 
+# Slide decks (<exp>-slides.html) are written one level up, next to the experiment
+# folders. That is outside this repo, so git never sees them and there is nothing
+# to ignore -- which is the point: a deck carries its clips inlined and is never
+# published. See README section 4b.
+
 # NOTE: docs/ is intentionally NOT ignored.
 # GitHub Pages serves it directly, so the build output must be committed.

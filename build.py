@@ -19,6 +19,7 @@ See README.md for the authoring guide.
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -1084,8 +1085,14 @@ def patch_ratios(html_text: str) -> str:
 # front of someone: one screen per result, every condition visible at once, no
 # scrolling and no prose to read out. It is driven by content/<exp>/slides.json
 # and reuses the transcodes the site pages already produced.
+#
+# Decks are deliberately NOT part of the website. Each one is written next to the
+# experiment folders as a single self-contained file with its clips inlined, so it
+# can be opened from disk, copied to another machine or emailed, and never appears
+# at a public URL. DECKS_DIR is outside docs/, so the pruner removes any deck a
+# previous build left in the output.
 
-SLIDE_DECKS: list[str] = []
+DECKS_DIR = ROOT.parent
 
 
 class Deck:
@@ -1095,8 +1102,8 @@ class Deck:
     def __init__(self, exp: "Experiment", spec: dict):
         self.exp = exp
         self.spec = spec
-        self.rel = "../"
-        self.out_rel = f"slides/{exp.id}.html"
+        self.rel = ""                      # clips are inlined, so nothing is relative
+        self.out_path = DECKS_DIR / f"{exp.id}-slides.html"
         self.assets: dict[tuple[str, str], Asset] = {}
         self.conds = [c["key"] for c in spec.get("conditions", [])]
 
@@ -1151,16 +1158,29 @@ def _sl_inline(text: str) -> str:
     return t
 
 
+def _data_uri(rel: str, mime: str) -> str:
+    """Inline one output file. A deck has to survive being copied to a laptop with
+    no repo on it, so it carries its clips rather than pointing at them."""
+    f = OUT / rel
+    if not f.is_file():
+        warn(f"deck: {rel} has not been built; run without --no-media")
+        return ""
+    return f"data:{mime};base64," + base64.b64encode(f.read_bytes()).decode("ascii")
+
+
 def _sl_video(deck: Deck, set_name: str, item_id: str, label: str) -> str:
     a = deck.assets.get((set_name, item_id))
     if a is None:
         return '<div class="sv miss">no clip</div>'
     ar = f"{a.w}/{a.h}" if a.w and a.h else "720/416"
     if a.kind == "image":
-        return f'<div class="sv" style="--ar:{ar}"><img src="{deck.rel}{a.url}" alt="{label}"></div>'
+        return (f'<div class="sv" style="--ar:{ar}">'
+                f'<img src="{_data_uri(a.url, "image/jpeg")}" alt="{label}"></div>')
+    poster = f' poster="{_data_uri(a.poster, "image/jpeg")}"' if a.poster else ""
     return (f'<div class="sv" style="--ar:{ar}">'
-            f'<video muted playsinline preload="none" data-src="{deck.rel}{a.url}"'
-            f' poster="{deck.rel}{a.poster}" aria-label="{label}"></video></div>')
+            f'<video muted playsinline preload="none"'
+            f' data-src="{_data_uri(a.url, "video/mp4")}"{poster}'
+            f' aria-label="{label}"></video></div>')
 
 
 def _sl_pipeline_svg(stages: list, side: list | None) -> str:
@@ -1378,6 +1398,14 @@ _SLIDE_KINDS = {"intro": _slide_intro, "conditions": _slide_conditions,
                 "clip": _slide_clip, "row": _slide_row, "closing": _slide_closing}
 
 
+def _deck_back_link(deck: Deck, site: dict) -> str:
+    """A local file cannot resolve a relative path into docs/, so link the deck at
+    the published write-up if site.json knows the URL."""
+    base = (site.get("url") or "").rstrip("/")
+    page = deck.exp.pages[0].url if deck.exp.pages else "index.html"
+    return f"{base}/{page}" if base else ""
+
+
 def write_slide_deck(deck: Deck, site: dict) -> None:
     spec = deck.spec
     sections = []
@@ -1394,17 +1422,19 @@ def write_slide_deck(deck: Deck, site: dict) -> None:
     for k, v in {
         "LANG": site.get("lang", "en"),
         "TITLE": f'{spec.get("subtitle") or deck.exp.nav} · {site.get("short_title", "")}',
-        "BACK": f'{deck.rel}{deck.exp.pages[0].url}' if deck.exp.pages else f"{deck.rel}index.html",
+        "BACK": _deck_back_link(deck, site),
         "SLIDES": "".join(sections),
         "COUNT": str(n),
         "FOOTER": spec.get("footer", deck.exp.title),
     }.items():
         body = body.replace(f"{{{{{k}}}}}", v or "")
-    dst = OUT / deck.out_rel
+    dst = deck.out_path
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.write_text(body, encoding="utf-8")
-    SLIDE_DECKS.append(deck.out_rel)
-    print(f"  deck: {deck.out_rel} ({n} slides, {len(deck.assets)} clips)")
+    mb = dst.stat().st_size / 1e6
+    print(f"  deck: {dst.name} ({n} slides, {len(deck.assets)} clips, {mb:.1f} MB) "
+          f"-> {dst.parent}")
+    print("        local only, not part of docs/ and never published")
 
 
 def prune(all_pages, static_used: set[str]) -> int:
@@ -1422,7 +1452,6 @@ def prune(all_pages, static_used: set[str]) -> int:
         if a.poster:
             keep.add((OUT / a.poster).resolve())
     keep |= {(OUT / rel).resolve() for rel in static_used}
-    keep |= {(OUT / rel).resolve() for rel in SLIDE_DECKS}
     for f in (THEME / "assets").iterdir():
         if f.is_file():
             keep.add((OUT / "assets" / f.name).resolve())

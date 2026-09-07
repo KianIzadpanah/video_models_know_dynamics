@@ -354,13 +354,36 @@ all surface as warnings rather than silently producing an empty grid.
 
 ## 4b. Slide decks
 
-An experiment gets a deck by dropping a `slides.json` next to its `exp.json`. The
-build emits `docs/slides/<exp>.html` — a self-contained deck that reuses the
-transcodes the site pages already produced, so a deck costs no extra media.
+An experiment gets a deck by dropping a `slides.json` next to its `exp.json`.
+
+> **Decks are not part of the website.**
+
+Each one is written **one level up, next to the experiment folders** — outside this
+repo — as a single self-contained `.html` with its clips inlined as data URIs:
 
 ```bash
-python build.py     # reports: deck: slides/exp6.html (14 slides, 160 clips)
+python build.py
+#   deck: exp6-slides.html (14 slides, 160 clips, 24.3 MB) -> …/Experiments
+#         local only, not part of docs/ and never published
 ```
+
+That means a deck
+
+- **never appears at a public URL.** Nothing in `docs/` links to one, and because
+  the file lands outside the repo, git never sees it — there is nothing to
+  accidentally commit. If a previous build left one in `docs/`, the
+  [pruner](#what-the-build-tells-you) deletes it.
+- **works from disk.** Double-click it, or copy it to a laptop or a USB stick. It
+  carries its own clips, so it needs no repo, no server and no network.
+- **costs nothing to rebuild.** It reuses the transcodes the site pages already
+  produced, so no extra ffmpeg work.
+
+The price is size: inlining 160 clips makes a ~24 MB file. That is the right trade
+for something you present from and hand around, and the wrong one for something you
+serve, which is the other reason it is not on the site.
+
+`site.json`'s `url` is used for the deck's "← write-up" link, so a local deck can
+still point back at the published pages.
 
 `content/exp6/slides.json` is the worked example. Its shape:
 

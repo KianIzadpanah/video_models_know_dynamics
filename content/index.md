@@ -142,10 +142,6 @@ that needs reading rather than watching lives on the Observations page.
 **Picking a page hides the sidebar**, so the clips get the whole window. The button at
 the top left, or `n`, brings it back.
 
-Where an experiment has a **slide deck**, it is linked at the top of its overview —
-[Experiment 6's is here](slides/exp6.html). A deck is the same clips laid out one
-screen per result, for standing up and talking through rather than reading.
-
 Clips autoplay muted. **They loop in lockstep rather than independently** — one
 timer restarts every visible clip together, so a comparison stays frame-aligned
 instead of drifting apart after a few seconds. Where the arms differ in length, the
