@@ -54,3 +54,9 @@ The three keyframe sets for one prompt:
 :::
 
 [Photoreal outputs →](photoreal.html) · [Dense vs sparse →](dense-vs-sparse.html) · [Recovered motion →](recovered.html)
+
+## Every clip
+
+One page per motion, with every condition and every seed — the control, the photoreal output, the recovered motion:
+
+[walk_wave](clips-walk-wave.html) · [run_jump](clips-run-jump.html) · [walk_stop_turn](clips-walk-stop-turn.html) · [pick_up](clips-pick-up.html) · [climb_ladder](clips-climb-ladder.html) · [take_shelf](clips-take-shelf.html) · [pirate_parrot](clips-pirate-parrot.html) · [backpack_table](clips-backpack-table.html) · [kneel_pick_stand](clips-kneel-pick-stand.html) · [walk_jump](clips-walk-jump.html) · [squat_wave](clips-squat-wave.html) · [walk_back_dribble](clips-walk-back-dribble.html)

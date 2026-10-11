@@ -53,3 +53,9 @@ How the controls differ, for `kick`:
 :::
 
 [Photoreal outputs →](photoreal.html) · [How loose? →](looseness.html) · [Recovered motion →](recovered.html)
+
+## Every clip
+
+One page per motion, with every condition and every seed — the control, the photoreal output, the recovered motion:
+
+[wave](clips-wave.html) · [raise_arm](clips-raise-arm.html) · [sit_down](clips-sit-down.html) · [stand_up](clips-stand-up.html) · [walk](clips-walk.html) · [turn](clips-turn.html) · [squat](clips-squat.html) · [step_side](clips-step-side.html) · [run](clips-run.html) · [jump](clips-jump.html) · [kick](clips-kick.html) · [throw](clips-throw.html) · [heavy_box](clips-heavy-box.html) · [high_shelf](clips-high-shelf.html) · [push_door](clips-push-door.html) · [carry_tray](clips-carry-tray.html) · [step_over](clips-step-over.html) · [climb_ladder](clips-climb-ladder.html) · [crawl_under](clips-crawl-under.html) · [step_up](clips-step-up.html) · [tie_shoe](clips-tie-shoe.html) · [sit_cross](clips-sit-cross.html) · [pirate_bird](clips-pirate-bird.html) · [lean_wall](clips-lean-wall.html)

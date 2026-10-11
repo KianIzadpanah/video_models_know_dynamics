@@ -132,42 +132,48 @@
         "pattern": "{id}.mp4",
         "label": "Source video",
         "sublabel": "from Exp 15, best of 3 seeds",
-        "max_width": 720
+        "max_width": 720,
+        "seedless": true
       },
       "r_lift": {
         "dir": "results/renders/lift",
         "pattern": "{id}.mp4",
         "label": "GVHMR lift",
         "sublabel": "the video's pose, every frame",
-        "max_width": 720
+        "max_width": 720,
+        "seedless": true
       },
       "r_lift_smooth": {
         "dir": "results/renders/lift_smooth",
         "pattern": "{id}.mp4",
         "label": "lift, smoothed",
         "sublabel": "Savitzky–Golay, 9 frames",
-        "max_width": 720
+        "max_width": 720,
+        "seedless": true
       },
       "r_blend_uniform": {
         "dir": "results/renders/blend_uniform",
         "pattern": "{id}.mp4",
         "label": "blend",
         "sublabel": "straight line between 5 keyframes",
-        "max_width": 720
+        "max_width": 720,
+        "seedless": true
       },
       "r_inbetween_uniform": {
         "dir": "results/renders/inbetween_uniform",
         "pattern": "{id}.mp4",
         "label": "CondMDI",
         "sublabel": "5 keyframes, no text",
-        "max_width": 720
+        "max_width": 720,
+        "seedless": true
       },
       "r_motion_text_uniform": {
         "dir": "results/renders/motion_text_uniform",
         "pattern": "{id}.mp4",
         "label": "CondMDI + text",
         "sublabel": "5 keyframes + the prompt",
-        "max_width": 720
+        "max_width": 720,
+        "seedless": true
       }
     }
   }

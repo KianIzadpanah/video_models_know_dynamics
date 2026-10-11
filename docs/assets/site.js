@@ -240,7 +240,7 @@
   function applySeed() {
     if (!clips.length) return;
     clips.forEach(function (c) {
-      var on = !state.seed || state.seed === 'all' || c.dataset.seed === state.seed;
+      var on = !state.seed || state.seed === 'all' || !c.dataset.seed || c.dataset.seed === state.seed;
       c.hidden = !on;
       var v = c.querySelector('video');
       if (v && !on) v.pause();

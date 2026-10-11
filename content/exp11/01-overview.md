@@ -50,3 +50,9 @@ It asks three things:
 :::
 
 [Photoreal outputs →](photoreal.html) · [Anchor schemes →](anchor-schemes.html) · [Recovered motion →](recovered.html)
+
+## Every clip
+
+One page per motion, with every condition and every seed — the control, the photoreal output, the recovered motion and the blend:
+
+[heavy_box](clips-heavy-box.html) · [high_shelf](clips-high-shelf.html) · [push_door](clips-push-door.html) · [carry_tray](clips-carry-tray.html) · [step_over](clips-step-over.html) · [climb_ladder](clips-climb-ladder.html) · [crawl_under](clips-crawl-under.html) · [step_up](clips-step-up.html) · [tie_shoe](clips-tie-shoe.html) · [sit_cross](clips-sit-cross.html) · [pirate_bird](clips-pirate-bird.html) · [lean_wall](clips-lean-wall.html)

@@ -525,22 +525,31 @@ class Renderer:
             warn(f"{self.ctx.src}: unknown arm '{arm}' (not in exp.json media.sets)")
             return '<div class="cc"><div class="missing">unknown arm</div></div>'
         clips = []
-        for seed in seeds:
+        # a seedless set (input render, control, blend) has one clip, shown whatever
+        # seed the toolbar selects; data-seed="" tells site.js to never hide it
+        seedless = spec.get("seedless") and "{seed}" not in spec.get("pattern", "")
+        for seed in (seeds[:1] if seedless else seeds):
             src = exp.resolve(arm, item_id, seed)
+            if seedless:
+                seed = ""
             if src is None or not src.is_file():
                 warn(f"{self.ctx.src}: missing media {arm}/{item_id}/s{seed} -> {src}")
                 clips.append(f'<div class="clip miss" data-seed="{seed}">'
                              f'<div class="missing">no file<br><small>seed {seed}</small></div></div>')
                 continue
             asset = MEDIA.request(src, exp, kind=spec.get("kind", "video"),
-                                  max_width=spec.get("max_width"))
-            label = f'{exp.sets[arm].get("label", arm)} · {item_id or ""} · seed {seed}'.strip(" ·")
+                                  max_width=spec.get("max_width"), crf=spec.get("crf"))
+            label = (f'{exp.sets[arm].get("label", arm)} · {item_id or ""}'
+                     + (f" · seed {seed}" if seed != "" else "")).strip(" ·")
             clips.append(self._clip_html(asset, seed, label))
         return f'<div class="cc">{"".join(clips)}</div>'
 
     def _clip_html(self, asset: "Asset", seed, label):
         rel = self.ctx.rel
         ar = f"{asset.w}/{asset.h}" if asset.w and asset.h else "16/9"
+        # numeric seeds read "s1234"; a named one ("best") as-is; a seedless clip has none
+        tag = f"s{seed}" if str(seed).isdigit() else seed
+        badge = f'<span class="sd">{tag}</span>' if seed != "" else ""
         if asset.kind == "image":
             # data-img (not data-src) so the lightbox knows to show a still and
             # hide the transport controls. Strips are 2000px+ tall composites and
@@ -548,13 +557,13 @@ class Renderer:
             return (f'<div class="clip is-img" data-seed="{seed}" style="--ar:{ar}" '
                     f'data-label="{label}" data-img="{rel}{asset.url}">'
                     f'<img src="{rel}{asset.url}" alt="{label}" loading="lazy">'
-                    f'<span class="sd">{"s" + seed if str(seed).isdigit() else seed}</span>'
+                    f'{badge}'
                     f'<button class="zoom" type="button" aria-label="expand image">⤢</button></div>')
         return (f'<div class="clip" data-seed="{seed}" style="--ar:{ar}" '
                 f'data-label="{label}" data-src="{rel}{asset.url}">'
                 f'<video muted loop playsinline preload="none" '
                 f'poster="{rel}{asset.poster}" data-src="{rel}{asset.url}"></video>'
-                f'<span class="sd">{"s" + seed if str(seed).isdigit() else seed}</span>'
+                f'{badge}'
                 f'<button class="zoom" type="button" aria-label="expand clip">⤢</button></div>')
 
 
@@ -579,7 +588,7 @@ def parse_attrs(s: str) -> dict:
 # ---------------------------------------------------------------------------
 
 class Asset:
-    __slots__ = ("url", "poster", "w", "h", "dur", "kind", "src", "out", "max_width")
+    __slots__ = ("url", "poster", "w", "h", "dur", "kind", "src", "out", "max_width", "crf")
 
     def __init__(self, **kw):
         for k in self.__slots__:
@@ -604,7 +613,7 @@ class MediaPipeline:
                 self.cache = {}
 
     def request(self, src: Path, exp: "Experiment", kind: str = "video",
-                max_width: int | None = None) -> Asset:
+                max_width: int | None = None, crf: int | None = None) -> Asset:
         src = src.resolve()
         if src in self.requests:
             return self.requests[src]
@@ -615,13 +624,16 @@ class MediaPipeline:
         poster = "" if kind == "image" else f"media/{exp.id}/{rel.with_suffix('.poster.jpg').as_posix()}"
         c = self.cache.get(str(src), {})
         a = Asset(url=url, poster=poster, w=c.get("w"), h=c.get("h"), dur=c.get("dur"),
-                  kind=kind, src=src, out=out, max_width=max_width)
+                  kind=kind, src=src, out=out, max_width=max_width, crf=crf)
         self.requests[src] = a
         return a
 
     def _sig(self, src: Path, a: Asset) -> str:
         st = src.stat()
-        key = json.dumps([st.st_mtime_ns, st.st_size, self.cfg, a.max_width], sort_keys=True)
+        parts = [st.st_mtime_ns, st.st_size, self.cfg, a.max_width]
+        if a.crf is not None:  # only when set, so older signatures stay valid
+            parts.append(a.crf)
+        key = json.dumps(parts, sort_keys=True)
         return hashlib.sha1(key.encode()).hexdigest()[:16]
 
     def _width(self, a: Asset) -> int:
@@ -705,7 +717,7 @@ class MediaPipeline:
             run_ff(["ffmpeg", "-y", "-v", "error", "-i", str(src), "-an", "-sn", "-dn",
                     "-vf", f"scale='min({mw},iw)':-2:flags=lanczos",
                     "-c:v", "libx264", "-profile:v", "high", "-pix_fmt", "yuv420p",
-                    "-crf", str(self.cfg.get("video_crf", 28)),
+                    "-crf", str(a.crf if a.crf is not None else self.cfg.get("video_crf", 28)),
                     "-preset", self.cfg.get("video_preset", "medium"),
                     "-movflags", "+faststart", str(a.out)])
             # poster from ~40% in: more representative of the action than frame 0

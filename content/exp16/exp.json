@@ -90,147 +90,175 @@
         "pattern": "{id}.mp4",
         "label": "Mocap input",
         "sublabel": "AMASS — the ground truth",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_text_only": {
         "dir": "results/generated/text_only",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — text only",
         "sublabel": "no control",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_text_only": {
         "dir": "results/rerender/text_only",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — text only",
         "sublabel": "no control",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_single_bad": {
         "dir": "results/control/skeleton/front/single_bad",
         "pattern": "{id}.mp4",
         "label": "Control — bad · black",
         "sublabel": "5 bad keyframes, black between",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_single_bad": {
         "dir": "results/generated/single_bad",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — bad · black",
         "sublabel": "5 bad keyframes, black between",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_single_bad": {
         "dir": "results/rerender/single_bad",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — bad · black",
         "sublabel": "5 bad keyframes, black between",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_single_uniform": {
         "dir": "results/control/skeleton/front/single_uniform",
         "pattern": "{id}.mp4",
         "label": "Control — uniform · black",
         "sublabel": "0·40·88·128·168, black between",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_single_uniform": {
         "dir": "results/generated/single_uniform",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — uniform · black",
         "sublabel": "0·40·88·128·168, black between",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_single_uniform": {
         "dir": "results/rerender/single_uniform",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — uniform · black",
         "sublabel": "0·40·88·128·168, black between",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_single_hand": {
         "dir": "results/control/skeleton/front/single_hand",
         "pattern": "{id}.mp4",
         "label": "Control — hand · black",
         "sublabel": "5 hand-picked keyframes, black between",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_single_hand": {
         "dir": "results/generated/single_hand",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — hand · black",
         "sublabel": "5 hand-picked keyframes, black between",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_single_hand": {
         "dir": "results/rerender/single_hand",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — hand · black",
         "sublabel": "5 hand-picked keyframes, black between",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_trunkee_bad": {
         "dir": "results/control/skeleton/front/trunkee_bad",
         "pattern": "{id}.mp4",
         "label": "Control — bad · trunk",
         "sublabel": "5 bad keyframes + trunk and dots on every frame",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_trunkee_bad": {
         "dir": "results/generated/trunkee_bad",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — bad · trunk",
         "sublabel": "5 bad keyframes + trunk and dots on every frame",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_trunkee_bad": {
         "dir": "results/rerender/trunkee_bad",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — bad · trunk",
         "sublabel": "5 bad keyframes + trunk and dots on every frame",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_trunkee_uniform": {
         "dir": "results/control/skeleton/front/trunkee_uniform",
         "pattern": "{id}.mp4",
         "label": "Control — uniform · trunk",
         "sublabel": "5 uniform keyframes + trunk and dots on every frame",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_trunkee_uniform": {
         "dir": "results/generated/trunkee_uniform",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — uniform · trunk",
         "sublabel": "5 uniform keyframes + trunk and dots on every frame",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_trunkee_uniform": {
         "dir": "results/rerender/trunkee_uniform",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — uniform · trunk",
         "sublabel": "5 uniform keyframes + trunk and dots on every frame",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_trunkee_hand": {
         "dir": "results/control/skeleton/front/trunkee_hand",
         "pattern": "{id}.mp4",
         "label": "Control — hand · trunk",
         "sublabel": "5 hand-picked keyframes + trunk and dots on every frame",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_trunkee_hand": {
         "dir": "results/generated/trunkee_hand",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — hand · trunk",
         "sublabel": "5 hand-picked keyframes + trunk and dots on every frame",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_trunkee_hand": {
         "dir": "results/rerender/trunkee_hand",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — hand · trunk",
         "sublabel": "5 hand-picked keyframes + trunk and dots on every frame",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       }
     }
   }

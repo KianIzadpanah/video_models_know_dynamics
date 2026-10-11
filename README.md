@@ -293,6 +293,8 @@ directory plus a filename pattern with `{id}` and `{seed}` placeholders.
 
 `max_width` is optional and overrides the global cap — use it for composites that
 pack several tiles into one frame, which need more pixels than a single clip.
+`crf` likewise overrides the global `video_crf` for that set. Exps 7–17 use
+`max_width: 360, crf: 30` to keep the published site under GitHub Pages' 1 GB cap.
 Add `"kind": "image"` for stills.
 
 One set per column. Where an experiment has a *condition* axis rather than a model

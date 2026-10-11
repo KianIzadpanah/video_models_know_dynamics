@@ -50,3 +50,9 @@ whether what comes back is a better motion than what went in.
 :::
 
 [Photoreal outputs →](photoreal.html) · [Recovered motion and blend →](recovered.html)
+
+## Every clip
+
+One page per motion, with every condition and every seed — the control, the photoreal output, the recovered motion and the blend:
+
+[wave](clips-wave.html) · [raise_arm](clips-raise-arm.html) · [sit_down](clips-sit-down.html) · [stand_up](clips-stand-up.html) · [walk](clips-walk.html) · [turn](clips-turn.html) · [squat](clips-squat.html) · [step_side](clips-step-side.html) · [run](clips-run.html) · [jump](clips-jump.html) · [kick](clips-kick.html) · [throw](clips-throw.html)

@@ -44,3 +44,9 @@ robot walk.
 :::
 
 [Photoreal outputs →](photoreal.html) · [Recovered motion →](recovered.html)
+
+## Every clip
+
+One page per motion, with every condition and every seed — the control, the photoreal output, the recovered motion:
+
+[jump_obstacle](clips-jump-obstacle.html) · [jumping_jacks](clips-jumping-jacks.html) · [throw](clips-throw.html) · [getup_floor](clips-getup-floor.html) · [lie_down_getup](clips-lie-down-getup.html) · [cartwheels](clips-cartwheels.html) · [squats_run](clips-squats-run.html) · [walk_dribble](clips-walk-dribble.html) · [duck_walk](clips-duck-walk.html) · [walk_back_tiptoe](clips-walk-back-tiptoe.html) · [robot_walk](clips-robot-walk.html) · [airplane_run](clips-airplane-run.html)

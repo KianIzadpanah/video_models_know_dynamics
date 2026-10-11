@@ -52,3 +52,9 @@ The track controls for `run`:
 :::
 
 [Photoreal outputs →](photoreal.html) · [Recovered motion →](recovered.html)
+
+## Every clip
+
+One page per motion, with every condition and every seed — the control, the photoreal output, the recovered motion:
+
+[squat](clips-squat.html) · [walk](clips-walk.html) · [run](clips-run.html) · [jump](clips-jump.html) · [kick](clips-kick.html) · [stand_up](clips-stand-up.html) · [throw](clips-throw.html) · [turn](clips-turn.html) · [wave](clips-wave.html)

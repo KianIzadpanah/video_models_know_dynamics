@@ -134,168 +134,200 @@
         "pattern": "{id}.mp4",
         "label": "T2M input",
         "sublabel": "MotionGPT3, flawed",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_text_only": {
         "dir": "results/reference/generated/text_only",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — text only",
         "sublabel": "no skeleton (from Exp 13)",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_text_only": {
         "dir": "results/reference/rerender/text_only",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — text only",
         "sublabel": "no skeleton (from Exp 13)",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_trunk_K5": {
         "dir": "results/reference/control/trunk_K5",
         "pattern": "{id}.mp4",
         "label": "Control — trunk + K5",
         "sublabel": "trunk every frame, skeleton on 5 keyframes (Exp 13)",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_trunk_K5": {
         "dir": "results/reference/generated/trunk_K5",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — trunk + K5",
         "sublabel": "trunk every frame, skeleton on 5 keyframes (Exp 13)",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_trunk_K5": {
         "dir": "results/reference/rerender/trunk_K5",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — trunk + K5",
         "sublabel": "trunk every frame, skeleton on 5 keyframes (Exp 13)",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_dense_s06": {
         "dir": "results/reference/control/dense_s06",
         "pattern": "{id}.mp4",
         "label": "Control — dense 0.6",
         "sublabel": "skeleton on all 169 frames, strength 0.6 (Exp 13)",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_dense_s06": {
         "dir": "results/reference/generated/dense_s06",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — dense 0.6",
         "sublabel": "skeleton on all 169 frames, strength 0.6 (Exp 13)",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_dense_s06": {
         "dir": "results/reference/rerender/dense_s06",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — dense 0.6",
         "sublabel": "skeleton on all 169 frames, strength 0.6 (Exp 13)",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_trunk_K3": {
         "dir": "results/control/skeleton/front/trunk_K3",
         "pattern": "{id}.mp4",
         "label": "Control — trunk + K3",
         "sublabel": "trunk every frame, skeleton on 3 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_trunk_K3": {
         "dir": "results/generated/trunk_K3",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — trunk + K3",
         "sublabel": "trunk every frame, skeleton on 3 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_trunk_K3": {
         "dir": "results/rerender/trunk_K3",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — trunk + K3",
         "sublabel": "trunk every frame, skeleton on 3 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_trunk_K8": {
         "dir": "results/control/skeleton/front/trunk_K8",
         "pattern": "{id}.mp4",
         "label": "Control — trunk + K8",
         "sublabel": "trunk every frame, skeleton on 8 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_trunk_K8": {
         "dir": "results/generated/trunk_K8",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — trunk + K8",
         "sublabel": "trunk every frame, skeleton on 8 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_trunk_K8": {
         "dir": "results/rerender/trunk_K8",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — trunk + K8",
         "sublabel": "trunk every frame, skeleton on 8 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_trunk_ee_K3": {
         "dir": "results/control/skeleton/front/trunk_ee_K3",
         "pattern": "{id}.mp4",
         "label": "Control — trunk + dots + K3",
         "sublabel": "trunk and wrist/ankle dots every frame, 3 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_trunk_ee_K3": {
         "dir": "results/generated/trunk_ee_K3",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — trunk + dots + K3",
         "sublabel": "trunk and wrist/ankle dots every frame, 3 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_trunk_ee_K3": {
         "dir": "results/rerender/trunk_ee_K3",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — trunk + dots + K3",
         "sublabel": "trunk and wrist/ankle dots every frame, 3 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_trunk_ee_K5": {
         "dir": "results/control/skeleton/front/trunk_ee_K5",
         "pattern": "{id}.mp4",
         "label": "Control — trunk + dots + K5",
         "sublabel": "trunk and wrist/ankle dots every frame, 5 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_trunk_ee_K5": {
         "dir": "results/generated/trunk_ee_K5",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — trunk + dots + K5",
         "sublabel": "trunk and wrist/ankle dots every frame, 5 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_trunk_ee_K5": {
         "dir": "results/rerender/trunk_ee_K5",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — trunk + dots + K5",
         "sublabel": "trunk and wrist/ankle dots every frame, 5 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_trunk_ee_K8": {
         "dir": "results/control/skeleton/front/trunk_ee_K8",
         "pattern": "{id}.mp4",
         "label": "Control — trunk + dots + K8",
         "sublabel": "trunk and wrist/ankle dots every frame, 8 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_trunk_ee_K8": {
         "dir": "results/generated/trunk_ee_K8",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — trunk + dots + K8",
         "sublabel": "trunk and wrist/ankle dots every frame, 8 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_trunk_ee_K8": {
         "dir": "results/rerender/trunk_ee_K8",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — trunk + dots + K8",
         "sublabel": "trunk and wrist/ankle dots every frame, 8 keyframes",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       }
     }
   }

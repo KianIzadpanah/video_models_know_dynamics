@@ -60,91 +60,107 @@
         "pattern": "{id}.mp4",
         "label": "Input motion",
         "sublabel": "AMASS/BABEL mocap",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "ctrl_skel": {
         "dir": "results/control/skeleton/front",
         "pattern": "{id}.mp4",
         "label": "Skeleton control",
         "sublabel": "DWPose, every frame",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "ctrl_depth": {
         "dir": "results/control/depth/front",
         "pattern": "{id}.mp4",
         "label": "Depth control",
         "sublabel": "the Exp 6 control, for reference",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_depth_dense": {
         "dir": "results/generated/depth_dense",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — depth",
         "sublabel": "depth on every frame, all 8 steps",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_depth_dense": {
         "dir": "results/rerender/depth_dense",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — depth",
         "sublabel": "depth on every frame, all 8 steps",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "gen_skel_100": {
         "dir": "results/generated/skel_100",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — skeleton 100%",
         "sublabel": "control on all 8 steps",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_skel_100": {
         "dir": "results/rerender/skel_100",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — skeleton 100%",
         "sublabel": "control on all 8 steps",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "gen_skel_58": {
         "dir": "results/generated/skel_58",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — skeleton 58%",
         "sublabel": "released after step 7 of 8",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_skel_58": {
         "dir": "results/rerender/skel_58",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — skeleton 58%",
         "sublabel": "released after step 7 of 8",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "gen_skel_28": {
         "dir": "results/generated/skel_28",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — skeleton 28%",
         "sublabel": "released after step 6 of 8",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_skel_28": {
         "dir": "results/rerender/skel_28",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — skeleton 28%",
         "sublabel": "released after step 6 of 8",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "gen_skel_09": {
         "dir": "results/generated/skel_09",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — skeleton 9%",
         "sublabel": "released after step 5 of 8",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_skel_09": {
         "dir": "results/rerender/skel_09",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — skeleton 9%",
         "sublabel": "released after step 5 of 8",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       }
     }
   }

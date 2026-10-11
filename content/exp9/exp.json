@@ -60,105 +60,125 @@
         "pattern": "{id}.mp4",
         "label": "Input motion",
         "sublabel": "AMASS/BABEL mocap",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_text_only": {
         "dir": "results/generated/text_only",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — text only",
         "sublabel": "no control — lower bound",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_text_only": {
         "dir": "results/rerender/text_only",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — text only",
         "sublabel": "no control — lower bound",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_root": {
         "dir": "results/control/front/root",
         "pattern": "{id}.mp4",
         "label": "Control — root",
         "sublabel": "1 track: the pelvis",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_root": {
         "dir": "results/generated/root",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — root",
         "sublabel": "1 track: the pelvis",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_root": {
         "dir": "results/rerender/root",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — root",
         "sublabel": "1 track: the pelvis",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_root_facing": {
         "dir": "results/control/front/root_facing",
         "pattern": "{id}.mp4",
         "label": "Control — root + facing",
         "sublabel": "pelvis + a point 0.5 m ahead",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_root_facing": {
         "dir": "results/generated/root_facing",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — root + facing",
         "sublabel": "pelvis + a point 0.5 m ahead",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_root_facing": {
         "dir": "results/rerender/root_facing",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — root + facing",
         "sublabel": "pelvis + a point 0.5 m ahead",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_root_ee": {
         "dir": "results/control/front/root_ee",
         "pattern": "{id}.mp4",
         "label": "Control — root + limbs",
         "sublabel": "pelvis, both wrists, both ankles",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_root_ee": {
         "dir": "results/generated/root_ee",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — root + limbs",
         "sublabel": "pelvis, both wrists, both ankles",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_root_ee": {
         "dir": "results/rerender/root_ee",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — root + limbs",
         "sublabel": "pelvis, both wrists, both ankles",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "ctrl_skeleton_dense": {
         "dir": "results/control/front/skeleton_dense",
         "pattern": "{id}.mp4",
         "label": "Control — skeleton",
         "sublabel": "full skeleton every frame — upper bound",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30,
+        "seedless": true
       },
       "gen_skeleton_dense": {
         "dir": "results/generated/skeleton_dense",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Photoreal — skeleton",
         "sublabel": "full skeleton every frame — upper bound",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       },
       "rec_skeleton_dense": {
         "dir": "results/rerender/skeleton_dense",
         "pattern": "{id}_s{seed}.mp4",
         "label": "Recovered — skeleton",
         "sublabel": "full skeleton every frame — upper bound",
-        "max_width": 480
+        "max_width": 360,
+        "crf": 30
       }
     }
   }
