@@ -548,13 +548,13 @@ class Renderer:
             return (f'<div class="clip is-img" data-seed="{seed}" style="--ar:{ar}" '
                     f'data-label="{label}" data-img="{rel}{asset.url}">'
                     f'<img src="{rel}{asset.url}" alt="{label}" loading="lazy">'
-                    f'<span class="sd">s{seed}</span>'
+                    f'<span class="sd">{"s" + seed if str(seed).isdigit() else seed}</span>'
                     f'<button class="zoom" type="button" aria-label="expand image">⤢</button></div>')
         return (f'<div class="clip" data-seed="{seed}" style="--ar:{ar}" '
                 f'data-label="{label}" data-src="{rel}{asset.url}">'
                 f'<video muted loop playsinline preload="none" '
                 f'poster="{rel}{asset.poster}" data-src="{rel}{asset.url}"></video>'
-                f'<span class="sd">s{seed}</span>'
+                f'<span class="sd">{"s" + seed if str(seed).isdigit() else seed}</span>'
                 f'<button class="zoom" type="button" aria-label="expand clip">⤢</button></div>')
 
 

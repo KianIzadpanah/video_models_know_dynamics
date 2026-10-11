@@ -68,6 +68,116 @@ contact — that a motion model's samples do not.
     <span class="meta-chip tag">50 clips</span>
   </div>
 </a>
+<a class="card" href="exp7/overview.html">
+  <div class="card-c">Exp 7</div>
+  <div class="card-t">Photoreal output, dense skeleton as control</div>
+  <div class="card-q">Does a skeleton on every frame keep the pose while freeing the appearance — and does releasing the control early in denoising give the model more room?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-09-11</span>
+    <span class="meta-chip tag">90 clips</span>
+  </div>
+</a>
+<a class="card" href="exp8/overview.html">
+  <div class="card-c">Exp 8</div>
+  <div class="card-t">Photoreal output, partial skeleton as control</div>
+  <div class="card-q">With the skeleton given on only K frames, where does the model stop copying the anchors, and where does the action stop being recognisable?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-09-12</span>
+    <span class="meta-chip tag">90 clips</span>
+  </div>
+</a>
+<a class="card" href="exp9/overview.html">
+  <div class="card-c">Exp 9</div>
+  <div class="card-t">Photoreal output, trajectory as control</div>
+  <div class="card-q">If the model is told only where the body goes — a pelvis path, a few point tracks — and not how it moves, does the prompt and the video prior supply the action?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-09-15</span>
+    <span class="meta-chip tag">90 clips</span>
+  </div>
+</a>
+<a class="card" href="exp10/overview.html">
+  <div class="card-c">Exp 10</div>
+  <div class="card-t">Broken input, photoreal output, skeleton as control</div>
+  <div class="card-q">Given a flawed text-to-motion clip as a skeleton on only K frames, does the video model redraw the bad frames in between into a better motion?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-09-23</span>
+    <span class="meta-chip tag">120 clips</span>
+  </div>
+</a>
+<a class="card" href="exp11/overview.html">
+  <div class="card-c">Exp 11</div>
+  <div class="card-t">Broken input, harder prompts, smarter anchors</div>
+  <div class="card-q">On harder, object-heavy prompts where the text-to-motion input is clearly wrong, does the video model supply what is missing — and does picking the anchor frames smartly beat picking them evenly?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-09-28</span>
+    <span class="meta-chip tag">192 clips</span>
+  </div>
+</a>
+<a class="card" href="exp12/overview.html">
+  <div class="card-c">Exp 12</div>
+  <div class="card-t">Broken input — choosing keyframes by motion entropy</div>
+  <div class="card-q">When does the choice of keyframes matter? Pick the frames where the body moves in the most directions at once, and see whether that recovers short key moments that evenly spaced frames miss.</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-09-28</span>
+    <span class="meta-chip tag">360 clips</span>
+  </div>
+</a>
+<a class="card" href="exp13/overview.html">
+  <div class="card-c">Exp 13</div>
+  <div class="card-t">Broken input — changing how the control video is drawn</div>
+  <div class="card-q">Exp 12's outputs followed their keyframes too loosely. Keep the keyframes fixed and change how the control video is built: does holding, chunking, a dense trunk or a full dense skeleton make the model follow — without just copying the flawed input?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-10-01</span>
+    <span class="meta-chip tag">528 clips</span>
+  </div>
+</a>
+<a class="card" href="exp14/overview.html">
+  <div class="card-c">Exp 14</div>
+  <div class="card-t">Broken input — trunk plus wrist and ankle dots</div>
+  <div class="card-q">Exp 13's best control (trunk on every frame, full skeleton on keyframes) lost free-limb actions like kicks. Do wrist and ankle dots on every frame bring them back, and how many keyframes should the limbs get?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-10-01</span>
+    <span class="meta-chip tag">240 clips</span>
+  </div>
+</a>
+<a class="card" href="exp15/overview.html">
+  <div class="card-c">Exp 15</div>
+  <div class="card-t">Broken input — bad, uniform and hand-picked keyframes</div>
+  <div class="card-q">Do keyframes picked by hand beat evenly spaced ones, are deliberately bad picks worse — and can a stage-by-stage prompt act as control on its own?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-10-09</span>
+    <span class="meta-chip tag">270 clips</span>
+  </div>
+</a>
+<a class="card" href="exp16/overview.html">
+  <div class="card-c">Exp 16</div>
+  <div class="card-t">Mocap input — bad, uniform and hand-picked keyframes</div>
+  <div class="card-q">Repeat the keyframe ablation on real motion capture, where the true motion is known: does the choice of keyframes matter, and how much does a dense trunk signal add?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-10-09</span>
+    <span class="meta-chip tag">252 clips</span>
+  </div>
+</a>
+<a class="card" href="exp17/overview.html">
+  <div class="card-c">Exp 17</div>
+  <div class="card-t">Video model output as a condition for a motion model</div>
+  <div class="card-q">Turn the pipeline around: take keyframes from a generated video and let a motion model (CondMDI) fill in between them. Is the result better 3D animation than the video's own pose lift?</div>
+  <div class="card-m">
+    <span class="status s-complete">complete</span>
+    <span class="meta-chip">2026-10-09</span>
+    <span class="meta-chip tag">120 motions</span>
+  </div>
+</a>
 </div>
 
 ::: note title="Why the numbering is out of order"
@@ -81,6 +191,9 @@ jobs at once — and fixed it. Experiment 6 then fixed the *other* problem those
 experiments shared: the control motion itself was often wrong, so it swaps
 MotionGPT3's output for clean motion capture. Experiments 3 and 5 are not written up
 here; 5 is the data-preparation step Experiment 6 consumes.
+
+Experiments 7–17 are shorter write-ups. Each has an overview with the goal and the
+main findings, followed by pages of clips.
 :::
 
 ## What the experiments add up to

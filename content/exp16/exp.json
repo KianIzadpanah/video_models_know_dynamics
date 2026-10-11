@@ -1,0 +1,237 @@
+{
+  "id": "exp16",
+  "nav": "Exp 16",
+  "title": "Mocap input — bad, uniform and hand-picked keyframes",
+  "question": "Repeat the keyframe ablation on real motion capture, where the true motion is known: does the choice of keyframes matter, and how much does a dense trunk signal add?",
+  "status": "complete",
+  "date": "2026-10-09",
+  "tags": [
+    "AMASS",
+    "LTX-2.3 distilled",
+    "Union IC-LoRA",
+    "hand-picked keyframes",
+    "GVHMR"
+  ],
+  "source_dir": "../Exp 16 - Mocap input, bad handpicks, good handpicks",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678",
+      "9012"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "jump_obstacle": {
+        "text": "a person jogs forward and leaps over an obstacle, turns around and leaps back over it",
+        "tier": "simple"
+      },
+      "jumping_jacks": {
+        "text": "a person does jumping jacks in place",
+        "tier": "simple"
+      },
+      "throw": {
+        "text": "a person holds a ball in both hands, winds up and throws it hard with the right hand",
+        "tier": "simple"
+      },
+      "getup_floor": {
+        "text": "a person lying on the floor rolls to sitting, gets on all fours, then stands up",
+        "tier": "moderate"
+      },
+      "lie_down_getup": {
+        "text": "a person walks, lies down on their back, then stands back up",
+        "tier": "moderate"
+      },
+      "cartwheels": {
+        "text": "a person does a cartwheel, turns around, and does another cartwheel back",
+        "tier": "complex"
+      },
+      "squats_run": {
+        "text": "a person does three squats, then runs in place and stops",
+        "tier": "compound"
+      },
+      "walk_dribble": {
+        "text": "a person walks around while dribbling a basketball",
+        "tier": "compound"
+      },
+      "duck_walk": {
+        "text": "a person walks backward, squats down, walks forward while squatting, then stands up",
+        "tier": "compound"
+      },
+      "walk_back_tiptoe": {
+        "text": "a person walks slowly backward on their tiptoes",
+        "tier": "ood"
+      },
+      "robot_walk": {
+        "text": "a person walks around stiffly like a robot",
+        "tier": "ood"
+      },
+      "airplane_run": {
+        "text": "a person runs in a figure-8 with both arms held out like an airplane",
+        "tier": "ood"
+      }
+    },
+    "chips": [
+      {
+        "field": "tier",
+        "labels": {
+          "simple": "simple",
+          "moderate": "moderate",
+          "complex": "complex",
+          "compound": "compound",
+          "ood": "out of distribution"
+        }
+      }
+    ],
+    "sets": {
+      "input": {
+        "dir": "results/render/front",
+        "pattern": "{id}.mp4",
+        "label": "Mocap input",
+        "sublabel": "AMASS — the ground truth",
+        "max_width": 480
+      },
+      "gen_text_only": {
+        "dir": "results/generated/text_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — text only",
+        "sublabel": "no control",
+        "max_width": 480
+      },
+      "rec_text_only": {
+        "dir": "results/rerender/text_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — text only",
+        "sublabel": "no control",
+        "max_width": 480
+      },
+      "ctrl_single_bad": {
+        "dir": "results/control/skeleton/front/single_bad",
+        "pattern": "{id}.mp4",
+        "label": "Control — bad · black",
+        "sublabel": "5 bad keyframes, black between",
+        "max_width": 480
+      },
+      "gen_single_bad": {
+        "dir": "results/generated/single_bad",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — bad · black",
+        "sublabel": "5 bad keyframes, black between",
+        "max_width": 480
+      },
+      "rec_single_bad": {
+        "dir": "results/rerender/single_bad",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — bad · black",
+        "sublabel": "5 bad keyframes, black between",
+        "max_width": 480
+      },
+      "ctrl_single_uniform": {
+        "dir": "results/control/skeleton/front/single_uniform",
+        "pattern": "{id}.mp4",
+        "label": "Control — uniform · black",
+        "sublabel": "0·40·88·128·168, black between",
+        "max_width": 480
+      },
+      "gen_single_uniform": {
+        "dir": "results/generated/single_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — uniform · black",
+        "sublabel": "0·40·88·128·168, black between",
+        "max_width": 480
+      },
+      "rec_single_uniform": {
+        "dir": "results/rerender/single_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — uniform · black",
+        "sublabel": "0·40·88·128·168, black between",
+        "max_width": 480
+      },
+      "ctrl_single_hand": {
+        "dir": "results/control/skeleton/front/single_hand",
+        "pattern": "{id}.mp4",
+        "label": "Control — hand · black",
+        "sublabel": "5 hand-picked keyframes, black between",
+        "max_width": 480
+      },
+      "gen_single_hand": {
+        "dir": "results/generated/single_hand",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — hand · black",
+        "sublabel": "5 hand-picked keyframes, black between",
+        "max_width": 480
+      },
+      "rec_single_hand": {
+        "dir": "results/rerender/single_hand",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — hand · black",
+        "sublabel": "5 hand-picked keyframes, black between",
+        "max_width": 480
+      },
+      "ctrl_trunkee_bad": {
+        "dir": "results/control/skeleton/front/trunkee_bad",
+        "pattern": "{id}.mp4",
+        "label": "Control — bad · trunk",
+        "sublabel": "5 bad keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "gen_trunkee_bad": {
+        "dir": "results/generated/trunkee_bad",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — bad · trunk",
+        "sublabel": "5 bad keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "rec_trunkee_bad": {
+        "dir": "results/rerender/trunkee_bad",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — bad · trunk",
+        "sublabel": "5 bad keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "ctrl_trunkee_uniform": {
+        "dir": "results/control/skeleton/front/trunkee_uniform",
+        "pattern": "{id}.mp4",
+        "label": "Control — uniform · trunk",
+        "sublabel": "5 uniform keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "gen_trunkee_uniform": {
+        "dir": "results/generated/trunkee_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — uniform · trunk",
+        "sublabel": "5 uniform keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "rec_trunkee_uniform": {
+        "dir": "results/rerender/trunkee_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — uniform · trunk",
+        "sublabel": "5 uniform keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "ctrl_trunkee_hand": {
+        "dir": "results/control/skeleton/front/trunkee_hand",
+        "pattern": "{id}.mp4",
+        "label": "Control — hand · trunk",
+        "sublabel": "5 hand-picked keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "gen_trunkee_hand": {
+        "dir": "results/generated/trunkee_hand",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — hand · trunk",
+        "sublabel": "5 hand-picked keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "rec_trunkee_hand": {
+        "dir": "results/rerender/trunkee_hand",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — hand · trunk",
+        "sublabel": "5 hand-picked keyframes + trunk and dots on every frame",
+        "max_width": 480
+      }
+    }
+  }
+}

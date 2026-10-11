@@ -1,0 +1,365 @@
+{
+  "id": "exp13",
+  "nav": "Exp 13",
+  "title": "Broken input — changing how the control video is drawn",
+  "question": "Exp 12's outputs followed their keyframes too loosely. Keep the keyframes fixed and change how the control video is built: does holding, chunking, a dense trunk or a full dense skeleton make the model follow — without just copying the flawed input?",
+  "status": "complete",
+  "date": "2026-10-01",
+  "tags": [
+    "MotionGPT3",
+    "LTX-2.3 distilled",
+    "Union IC-LoRA",
+    "dense control",
+    "GVHMR"
+  ],
+  "source_dir": "../Exp 13 - Broken input, Photoreal output, Entropy frame pick 2",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "wave": {
+        "text": "a person waves one hand",
+        "group": "A"
+      },
+      "raise_arm": {
+        "text": "a person raises both arms above the head",
+        "group": "A"
+      },
+      "sit_down": {
+        "text": "a person sits down on a chair",
+        "group": "A"
+      },
+      "stand_up": {
+        "text": "a person stands up from a chair",
+        "group": "A"
+      },
+      "walk": {
+        "text": "a person walks forward",
+        "group": "A"
+      },
+      "turn": {
+        "text": "a person turns around to face the other way",
+        "group": "A"
+      },
+      "squat": {
+        "text": "a person does a deep squat",
+        "group": "A"
+      },
+      "step_side": {
+        "text": "a person steps sideways to the left",
+        "group": "A"
+      },
+      "run": {
+        "text": "a person runs forward",
+        "group": "A"
+      },
+      "jump": {
+        "text": "a person jumps up with both feet",
+        "group": "A"
+      },
+      "kick": {
+        "text": "a person kicks forward with one leg",
+        "group": "A"
+      },
+      "throw": {
+        "text": "a person throws a ball overhand",
+        "group": "A"
+      },
+      "heavy_box": {
+        "text": "a person picks up a heavy box from the floor and carries it",
+        "group": "B"
+      },
+      "high_shelf": {
+        "text": "a person reaches up to take something from a high shelf",
+        "group": "B"
+      },
+      "push_door": {
+        "text": "a person pushes a heavy door open and walks through",
+        "group": "B"
+      },
+      "carry_tray": {
+        "text": "a person carries a tray with both hands",
+        "group": "B"
+      },
+      "step_over": {
+        "text": "a person steps over an obstacle on the ground",
+        "group": "B"
+      },
+      "climb_ladder": {
+        "text": "a person climbs a ladder",
+        "group": "B"
+      },
+      "crawl_under": {
+        "text": "a person crawls under a low bar",
+        "group": "B"
+      },
+      "step_up": {
+        "text": "a person steps up onto a raised platform",
+        "group": "B"
+      },
+      "tie_shoe": {
+        "text": "a person kneels down and ties a shoelace",
+        "group": "B"
+      },
+      "sit_cross": {
+        "text": "a person sits down on a bench and crosses their legs",
+        "group": "B"
+      },
+      "pirate_bird": {
+        "text": "a pirate pets the bird on his shoulder",
+        "group": "B"
+      },
+      "lean_wall": {
+        "text": "a person leans against a wall and folds their arms",
+        "group": "B"
+      }
+    },
+    "chips": [
+      {
+        "field": "group",
+        "labels": {
+          "A": "group A — movement roughly right",
+          "B": "group B — movement wrong"
+        }
+      }
+    ],
+    "sets": {
+      "input": {
+        "dir": "results/render/front",
+        "pattern": "{id}.mp4",
+        "label": "T2M input",
+        "sublabel": "MotionGPT3, flawed",
+        "max_width": 480
+      },
+      "gen_text_only": {
+        "dir": "results/generated/text_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — text only",
+        "sublabel": "no skeleton",
+        "max_width": 480
+      },
+      "rec_text_only": {
+        "dir": "results/rerender/text_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — text only",
+        "sublabel": "no skeleton",
+        "max_width": 480
+      },
+      "ctrl_K5_single": {
+        "dir": "results/control/skeleton/front/K5_single",
+        "pattern": "{id}.mp4",
+        "label": "Control — K5 single",
+        "sublabel": "5 single frames, black between (Exp 12)",
+        "max_width": 480
+      },
+      "gen_K5_single": {
+        "dir": "results/generated/K5_single",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K5 single",
+        "sublabel": "5 single frames, black between (Exp 12)",
+        "max_width": 480
+      },
+      "rec_K5_single": {
+        "dir": "results/rerender/K5_single",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K5 single",
+        "sublabel": "5 single frames, black between (Exp 12)",
+        "max_width": 480
+      },
+      "ctrl_K5_hold": {
+        "dir": "results/control/skeleton/front/K5_hold",
+        "pattern": "{id}.mp4",
+        "label": "Control — K5 hold",
+        "sublabel": "each keyframe pose held across its 8-frame latent group",
+        "max_width": 480
+      },
+      "gen_K5_hold": {
+        "dir": "results/generated/K5_hold",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K5 hold",
+        "sublabel": "each keyframe pose held across its 8-frame latent group",
+        "max_width": 480
+      },
+      "rec_K5_hold": {
+        "dir": "results/rerender/K5_hold",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K5 hold",
+        "sublabel": "each keyframe pose held across its 8-frame latent group",
+        "max_width": 480
+      },
+      "ctrl_K5_chunk": {
+        "dir": "results/control/skeleton/front/K5_chunk",
+        "pattern": "{id}.mp4",
+        "label": "Control — K5 chunk",
+        "sublabel": "the real poses across each keyframe's 8-frame group",
+        "max_width": 480
+      },
+      "gen_K5_chunk": {
+        "dir": "results/generated/K5_chunk",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K5 chunk",
+        "sublabel": "the real poses across each keyframe's 8-frame group",
+        "max_width": 480
+      },
+      "rec_K5_chunk": {
+        "dir": "results/rerender/K5_chunk",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K5 chunk",
+        "sublabel": "the real poses across each keyframe's 8-frame group",
+        "max_width": 480
+      },
+      "ctrl_trunk_K5": {
+        "dir": "results/control/skeleton/front/trunk_K5",
+        "pattern": "{id}.mp4",
+        "label": "Control — trunk + K5",
+        "sublabel": "trunk on every frame, full skeleton on 5 keyframes",
+        "max_width": 480
+      },
+      "gen_trunk_K5": {
+        "dir": "results/generated/trunk_K5",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — trunk + K5",
+        "sublabel": "trunk on every frame, full skeleton on 5 keyframes",
+        "max_width": 480
+      },
+      "rec_trunk_K5": {
+        "dir": "results/rerender/trunk_K5",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — trunk + K5",
+        "sublabel": "trunk on every frame, full skeleton on 5 keyframes",
+        "max_width": 480
+      },
+      "ctrl_trunk_only": {
+        "dir": "results/control/skeleton/front/trunk_only",
+        "pattern": "{id}.mp4",
+        "label": "Control — trunk only",
+        "sublabel": "trunk on every frame, no keyframes",
+        "max_width": 480
+      },
+      "gen_trunk_only": {
+        "dir": "results/generated/trunk_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — trunk only",
+        "sublabel": "trunk on every frame, no keyframes",
+        "max_width": 480
+      },
+      "rec_trunk_only": {
+        "dir": "results/rerender/trunk_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — trunk only",
+        "sublabel": "trunk on every frame, no keyframes",
+        "max_width": 480
+      },
+      "ctrl_Kall": {
+        "dir": "results/control/skeleton/front/Kall",
+        "pattern": "{id}.mp4",
+        "label": "Control — K = all",
+        "sublabel": "22 grid frames, black between",
+        "max_width": 480
+      },
+      "gen_Kall": {
+        "dir": "results/generated/Kall",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = all",
+        "sublabel": "22 grid frames, black between",
+        "max_width": 480
+      },
+      "rec_Kall": {
+        "dir": "results/rerender/Kall",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = all",
+        "sublabel": "22 grid frames, black between",
+        "max_width": 480
+      },
+      "ctrl_dense_s10": {
+        "dir": "results/control/skeleton/front/dense_s10",
+        "pattern": "{id}.mp4",
+        "label": "Control — dense 1.0",
+        "sublabel": "skeleton on all 169 frames, strength 1.0",
+        "max_width": 480
+      },
+      "gen_dense_s10": {
+        "dir": "results/generated/dense_s10",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — dense 1.0",
+        "sublabel": "skeleton on all 169 frames, strength 1.0",
+        "max_width": 480
+      },
+      "rec_dense_s10": {
+        "dir": "results/rerender/dense_s10",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — dense 1.0",
+        "sublabel": "skeleton on all 169 frames, strength 1.0",
+        "max_width": 480
+      },
+      "ctrl_dense_s06": {
+        "dir": "results/control/skeleton/front/dense_s06",
+        "pattern": "{id}.mp4",
+        "label": "Control — dense 0.6",
+        "sublabel": "skeleton on all 169 frames, strength 0.6",
+        "max_width": 480
+      },
+      "gen_dense_s06": {
+        "dir": "results/generated/dense_s06",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — dense 0.6",
+        "sublabel": "skeleton on all 169 frames, strength 0.6",
+        "max_width": 480
+      },
+      "rec_dense_s06": {
+        "dir": "results/rerender/dense_s06",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — dense 0.6",
+        "sublabel": "skeleton on all 169 frames, strength 0.6",
+        "max_width": 480
+      },
+      "ctrl_dense_s04": {
+        "dir": "results/control/skeleton/front/dense_s04",
+        "pattern": "{id}.mp4",
+        "label": "Control — dense 0.4",
+        "sublabel": "skeleton on all 169 frames, strength 0.4",
+        "max_width": 480
+      },
+      "gen_dense_s04": {
+        "dir": "results/generated/dense_s04",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — dense 0.4",
+        "sublabel": "skeleton on all 169 frames, strength 0.4",
+        "max_width": 480
+      },
+      "rec_dense_s04": {
+        "dir": "results/rerender/dense_s04",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — dense 0.4",
+        "sublabel": "skeleton on all 169 frames, strength 0.4",
+        "max_width": 480
+      },
+      "ctrl_dense_early": {
+        "dir": "results/control/skeleton/front/dense_early",
+        "pattern": "{id}.mp4",
+        "label": "Control — dense, early",
+        "sublabel": "all frames, control only in the first 3 of 8 steps",
+        "max_width": 480
+      },
+      "gen_dense_early": {
+        "dir": "results/generated/dense_early",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — dense, early",
+        "sublabel": "all frames, control only in the first 3 of 8 steps",
+        "max_width": 480
+      },
+      "rec_dense_early": {
+        "dir": "results/rerender/dense_early",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — dense, early",
+        "sublabel": "all frames, control only in the first 3 of 8 steps",
+        "max_width": 480
+      }
+    }
+  }
+}

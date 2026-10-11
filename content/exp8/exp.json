@@ -1,0 +1,207 @@
+{
+  "id": "exp8",
+  "nav": "Exp 8",
+  "title": "Photoreal output, partial skeleton as control",
+  "question": "With the skeleton given on only K frames, where does the model stop copying the anchors, and where does the action stop being recognisable?",
+  "status": "complete",
+  "date": "2026-09-12",
+  "tags": [
+    "AMASS/BABEL",
+    "LTX-2.3 distilled",
+    "Union IC-LoRA",
+    "sparse anchors",
+    "GVHMR"
+  ],
+  "source_dir": "../Exp 08 - Photoreal output, Partial Skeleton as Control",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "squat": {
+        "text": "a man performing a deep squat"
+      },
+      "walk": {
+        "text": "a man walking along a city sidewalk"
+      },
+      "run": {
+        "text": "a man running on an outdoor running track",
+        "meta": {
+          "note": "input is a fast walk"
+        }
+      },
+      "jump": {
+        "text": "a man jumping upward"
+      },
+      "kick": {
+        "text": "a man performing a kick"
+      },
+      "stand_up": {
+        "text": "a man rising to his feet from a seated position"
+      },
+      "throw": {
+        "text": "a man throwing with an overhand motion"
+      },
+      "turn": {
+        "text": "a man turning around to face the other direction"
+      },
+      "wave": {
+        "text": "a man waving one arm"
+      }
+    },
+    "chips": [],
+    "sets": {
+      "input": {
+        "dir": "results/render/front",
+        "pattern": "{id}.mp4",
+        "label": "Input motion",
+        "sublabel": "AMASS/BABEL mocap",
+        "max_width": 480
+      },
+      "ctrl_Kall": {
+        "dir": "results/control/skeleton/front/Kall",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = all",
+        "sublabel": "22 frames — 0·8·…·168",
+        "max_width": 480
+      },
+      "gen_Kall": {
+        "dir": "results/generated/Kall",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = all",
+        "sublabel": "22 frames — 0·8·…·168",
+        "max_width": 480
+      },
+      "rec_Kall": {
+        "dir": "results/rerender/Kall",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = all",
+        "sublabel": "22 frames — 0·8·…·168",
+        "max_width": 480
+      },
+      "blend_Kall": {
+        "dir": "results/blend/Kall",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = all",
+        "sublabel": "22 frames — 0·8·…·168",
+        "max_width": 480
+      },
+      "ctrl_K8": {
+        "dir": "results/control/skeleton/front/K8",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168",
+        "max_width": 480
+      },
+      "gen_K8": {
+        "dir": "results/generated/K8",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168",
+        "max_width": 480
+      },
+      "rec_K8": {
+        "dir": "results/rerender/K8",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168",
+        "max_width": 480
+      },
+      "blend_K8": {
+        "dir": "results/blend/K8",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168",
+        "max_width": 480
+      },
+      "ctrl_K5": {
+        "dir": "results/control/skeleton/front/K5",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 5",
+        "sublabel": "0·40·88·128·168",
+        "max_width": 480
+      },
+      "gen_K5": {
+        "dir": "results/generated/K5",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 5",
+        "sublabel": "0·40·88·128·168",
+        "max_width": 480
+      },
+      "rec_K5": {
+        "dir": "results/rerender/K5",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 5",
+        "sublabel": "0·40·88·128·168",
+        "max_width": 480
+      },
+      "blend_K5": {
+        "dir": "results/blend/K5",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 5",
+        "sublabel": "0·40·88·128·168",
+        "max_width": 480
+      },
+      "ctrl_K3": {
+        "dir": "results/control/skeleton/front/K3",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 3",
+        "sublabel": "0·88·168",
+        "max_width": 480
+      },
+      "gen_K3": {
+        "dir": "results/generated/K3",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 3",
+        "sublabel": "0·88·168",
+        "max_width": 480
+      },
+      "rec_K3": {
+        "dir": "results/rerender/K3",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 3",
+        "sublabel": "0·88·168",
+        "max_width": 480
+      },
+      "blend_K3": {
+        "dir": "results/blend/K3",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 3",
+        "sublabel": "0·88·168",
+        "max_width": 480
+      },
+      "ctrl_K2": {
+        "dir": "results/control/skeleton/front/K2",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 2",
+        "sublabel": "0·168 — the two ends",
+        "max_width": 480
+      },
+      "gen_K2": {
+        "dir": "results/generated/K2",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 2",
+        "sublabel": "0·168 — the two ends",
+        "max_width": 480
+      },
+      "rec_K2": {
+        "dir": "results/rerender/K2",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 2",
+        "sublabel": "0·168 — the two ends",
+        "max_width": 480
+      },
+      "blend_K2": {
+        "dir": "results/blend/K2",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 2",
+        "sublabel": "0·168 — the two ends",
+        "max_width": 480
+      }
+    }
+  }
+}

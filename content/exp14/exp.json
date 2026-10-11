@@ -1,0 +1,302 @@
+{
+  "id": "exp14",
+  "nav": "Exp 14",
+  "title": "Broken input — trunk plus wrist and ankle dots",
+  "question": "Exp 13's best control (trunk on every frame, full skeleton on keyframes) lost free-limb actions like kicks. Do wrist and ankle dots on every frame bring them back, and how many keyframes should the limbs get?",
+  "status": "complete",
+  "date": "2026-10-01",
+  "tags": [
+    "MotionGPT3",
+    "LTX-2.3 distilled",
+    "Union IC-LoRA",
+    "trunk + end-effectors",
+    "GVHMR"
+  ],
+  "source_dir": "../Exp 14 - Brokent input, Photoreal output, Entropy frame pick 3",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "wave": {
+        "text": "a person waves one hand",
+        "group": "A"
+      },
+      "raise_arm": {
+        "text": "a person raises both arms above the head",
+        "group": "A"
+      },
+      "sit_down": {
+        "text": "a person sits down on a chair",
+        "group": "A"
+      },
+      "stand_up": {
+        "text": "a person stands up from a chair",
+        "group": "A"
+      },
+      "walk": {
+        "text": "a person walks forward",
+        "group": "A"
+      },
+      "turn": {
+        "text": "a person turns around to face the other way",
+        "group": "A"
+      },
+      "squat": {
+        "text": "a person does a deep squat",
+        "group": "A"
+      },
+      "step_side": {
+        "text": "a person steps sideways to the left",
+        "group": "A"
+      },
+      "run": {
+        "text": "a person runs forward",
+        "group": "A"
+      },
+      "jump": {
+        "text": "a person jumps up with both feet",
+        "group": "A"
+      },
+      "kick": {
+        "text": "a person kicks forward with one leg",
+        "group": "A"
+      },
+      "throw": {
+        "text": "a person throws a ball overhand",
+        "group": "A"
+      },
+      "heavy_box": {
+        "text": "a person picks up a heavy box from the floor and carries it",
+        "group": "B"
+      },
+      "high_shelf": {
+        "text": "a person reaches up to take something from a high shelf",
+        "group": "B"
+      },
+      "push_door": {
+        "text": "a person pushes a heavy door open and walks through",
+        "group": "B"
+      },
+      "carry_tray": {
+        "text": "a person carries a tray with both hands",
+        "group": "B"
+      },
+      "step_over": {
+        "text": "a person steps over an obstacle on the ground",
+        "group": "B"
+      },
+      "climb_ladder": {
+        "text": "a person climbs a ladder",
+        "group": "B"
+      },
+      "crawl_under": {
+        "text": "a person crawls under a low bar",
+        "group": "B"
+      },
+      "step_up": {
+        "text": "a person steps up onto a raised platform",
+        "group": "B"
+      },
+      "tie_shoe": {
+        "text": "a person kneels down and ties a shoelace",
+        "group": "B"
+      },
+      "sit_cross": {
+        "text": "a person sits down on a bench and crosses their legs",
+        "group": "B"
+      },
+      "pirate_bird": {
+        "text": "a pirate pets the bird on his shoulder",
+        "group": "B"
+      },
+      "lean_wall": {
+        "text": "a person leans against a wall and folds their arms",
+        "group": "B"
+      }
+    },
+    "chips": [
+      {
+        "field": "group",
+        "labels": {
+          "A": "group A — movement roughly right",
+          "B": "group B — movement wrong"
+        }
+      }
+    ],
+    "sets": {
+      "input": {
+        "dir": "results/render/front",
+        "pattern": "{id}.mp4",
+        "label": "T2M input",
+        "sublabel": "MotionGPT3, flawed",
+        "max_width": 480
+      },
+      "gen_text_only": {
+        "dir": "results/reference/generated/text_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — text only",
+        "sublabel": "no skeleton (from Exp 13)",
+        "max_width": 480
+      },
+      "rec_text_only": {
+        "dir": "results/reference/rerender/text_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — text only",
+        "sublabel": "no skeleton (from Exp 13)",
+        "max_width": 480
+      },
+      "ctrl_trunk_K5": {
+        "dir": "results/reference/control/trunk_K5",
+        "pattern": "{id}.mp4",
+        "label": "Control — trunk + K5",
+        "sublabel": "trunk every frame, skeleton on 5 keyframes (Exp 13)",
+        "max_width": 480
+      },
+      "gen_trunk_K5": {
+        "dir": "results/reference/generated/trunk_K5",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — trunk + K5",
+        "sublabel": "trunk every frame, skeleton on 5 keyframes (Exp 13)",
+        "max_width": 480
+      },
+      "rec_trunk_K5": {
+        "dir": "results/reference/rerender/trunk_K5",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — trunk + K5",
+        "sublabel": "trunk every frame, skeleton on 5 keyframes (Exp 13)",
+        "max_width": 480
+      },
+      "ctrl_dense_s06": {
+        "dir": "results/reference/control/dense_s06",
+        "pattern": "{id}.mp4",
+        "label": "Control — dense 0.6",
+        "sublabel": "skeleton on all 169 frames, strength 0.6 (Exp 13)",
+        "max_width": 480
+      },
+      "gen_dense_s06": {
+        "dir": "results/reference/generated/dense_s06",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — dense 0.6",
+        "sublabel": "skeleton on all 169 frames, strength 0.6 (Exp 13)",
+        "max_width": 480
+      },
+      "rec_dense_s06": {
+        "dir": "results/reference/rerender/dense_s06",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — dense 0.6",
+        "sublabel": "skeleton on all 169 frames, strength 0.6 (Exp 13)",
+        "max_width": 480
+      },
+      "ctrl_trunk_K3": {
+        "dir": "results/control/skeleton/front/trunk_K3",
+        "pattern": "{id}.mp4",
+        "label": "Control — trunk + K3",
+        "sublabel": "trunk every frame, skeleton on 3 keyframes",
+        "max_width": 480
+      },
+      "gen_trunk_K3": {
+        "dir": "results/generated/trunk_K3",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — trunk + K3",
+        "sublabel": "trunk every frame, skeleton on 3 keyframes",
+        "max_width": 480
+      },
+      "rec_trunk_K3": {
+        "dir": "results/rerender/trunk_K3",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — trunk + K3",
+        "sublabel": "trunk every frame, skeleton on 3 keyframes",
+        "max_width": 480
+      },
+      "ctrl_trunk_K8": {
+        "dir": "results/control/skeleton/front/trunk_K8",
+        "pattern": "{id}.mp4",
+        "label": "Control — trunk + K8",
+        "sublabel": "trunk every frame, skeleton on 8 keyframes",
+        "max_width": 480
+      },
+      "gen_trunk_K8": {
+        "dir": "results/generated/trunk_K8",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — trunk + K8",
+        "sublabel": "trunk every frame, skeleton on 8 keyframes",
+        "max_width": 480
+      },
+      "rec_trunk_K8": {
+        "dir": "results/rerender/trunk_K8",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — trunk + K8",
+        "sublabel": "trunk every frame, skeleton on 8 keyframes",
+        "max_width": 480
+      },
+      "ctrl_trunk_ee_K3": {
+        "dir": "results/control/skeleton/front/trunk_ee_K3",
+        "pattern": "{id}.mp4",
+        "label": "Control — trunk + dots + K3",
+        "sublabel": "trunk and wrist/ankle dots every frame, 3 keyframes",
+        "max_width": 480
+      },
+      "gen_trunk_ee_K3": {
+        "dir": "results/generated/trunk_ee_K3",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — trunk + dots + K3",
+        "sublabel": "trunk and wrist/ankle dots every frame, 3 keyframes",
+        "max_width": 480
+      },
+      "rec_trunk_ee_K3": {
+        "dir": "results/rerender/trunk_ee_K3",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — trunk + dots + K3",
+        "sublabel": "trunk and wrist/ankle dots every frame, 3 keyframes",
+        "max_width": 480
+      },
+      "ctrl_trunk_ee_K5": {
+        "dir": "results/control/skeleton/front/trunk_ee_K5",
+        "pattern": "{id}.mp4",
+        "label": "Control — trunk + dots + K5",
+        "sublabel": "trunk and wrist/ankle dots every frame, 5 keyframes",
+        "max_width": 480
+      },
+      "gen_trunk_ee_K5": {
+        "dir": "results/generated/trunk_ee_K5",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — trunk + dots + K5",
+        "sublabel": "trunk and wrist/ankle dots every frame, 5 keyframes",
+        "max_width": 480
+      },
+      "rec_trunk_ee_K5": {
+        "dir": "results/rerender/trunk_ee_K5",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — trunk + dots + K5",
+        "sublabel": "trunk and wrist/ankle dots every frame, 5 keyframes",
+        "max_width": 480
+      },
+      "ctrl_trunk_ee_K8": {
+        "dir": "results/control/skeleton/front/trunk_ee_K8",
+        "pattern": "{id}.mp4",
+        "label": "Control — trunk + dots + K8",
+        "sublabel": "trunk and wrist/ankle dots every frame, 8 keyframes",
+        "max_width": 480
+      },
+      "gen_trunk_ee_K8": {
+        "dir": "results/generated/trunk_ee_K8",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — trunk + dots + K8",
+        "sublabel": "trunk and wrist/ankle dots every frame, 8 keyframes",
+        "max_width": 480
+      },
+      "rec_trunk_ee_K8": {
+        "dir": "results/rerender/trunk_ee_K8",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — trunk + dots + K8",
+        "sublabel": "trunk and wrist/ankle dots every frame, 8 keyframes",
+        "max_width": 480
+      }
+    }
+  }
+}

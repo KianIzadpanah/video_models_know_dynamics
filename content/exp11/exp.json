@@ -1,0 +1,305 @@
+{
+  "id": "exp11",
+  "nav": "Exp 11",
+  "title": "Broken input, harder prompts, smarter anchors",
+  "question": "On harder, object-heavy prompts where the text-to-motion input is clearly wrong, does the video model supply what is missing — and does picking the anchor frames smartly beat picking them evenly?",
+  "status": "complete",
+  "date": "2026-09-28",
+  "tags": [
+    "MotionGPT3",
+    "LTX-2.3 distilled",
+    "Union IC-LoRA",
+    "anchor selection",
+    "GVHMR"
+  ],
+  "source_dir": "../Exp 11 - Broken input, Photoreal output, Skeleton as Control 2",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "heavy_box": {
+        "text": "a person picks up a heavy box from the floor and carries it",
+        "verdict": "improved"
+      },
+      "high_shelf": {
+        "text": "a person reaches up to take something from a high shelf",
+        "verdict": "improved"
+      },
+      "push_door": {
+        "text": "a person pushes a heavy door open and walks through",
+        "verdict": "improved"
+      },
+      "carry_tray": {
+        "text": "a person carries a tray with both hands",
+        "verdict": "improved"
+      },
+      "step_over": {
+        "text": "a person steps over an obstacle on the ground",
+        "verdict": "no-change"
+      },
+      "climb_ladder": {
+        "text": "a person climbs a ladder",
+        "verdict": "text"
+      },
+      "crawl_under": {
+        "text": "a person crawls under a low bar",
+        "verdict": "improved"
+      },
+      "step_up": {
+        "text": "a person steps up onto a raised platform",
+        "verdict": "text"
+      },
+      "tie_shoe": {
+        "text": "a person kneels down and ties a shoelace",
+        "verdict": "improved"
+      },
+      "sit_cross": {
+        "text": "a person sits down on a bench and crosses their legs",
+        "verdict": "improved"
+      },
+      "pirate_bird": {
+        "text": "a pirate pets the bird on his shoulder",
+        "verdict": "partial"
+      },
+      "lean_wall": {
+        "text": "a person leans against a wall and folds their arms",
+        "verdict": "improved"
+      }
+    },
+    "chips": [
+      {
+        "field": "verdict",
+        "labels": {
+          "improved": "refined under control",
+          "text": "refined by text only",
+          "partial": "object only sometimes",
+          "no-change": "not refined"
+        }
+      }
+    ],
+    "sets": {
+      "input": {
+        "dir": "results/render/front",
+        "pattern": "{id}.mp4",
+        "label": "T2M input",
+        "sublabel": "MotionGPT3, no object",
+        "max_width": 480
+      },
+      "gen_text_only": {
+        "dir": "results/generated/text_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — text only",
+        "sublabel": "no skeleton",
+        "max_width": 480
+      },
+      "rec_text_only": {
+        "dir": "results/rerender/text_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — text only",
+        "sublabel": "no skeleton",
+        "max_width": 480
+      },
+      "ctrl_Kall": {
+        "dir": "results/control/skeleton/front/Kall",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = all",
+        "sublabel": "22 frames",
+        "max_width": 480
+      },
+      "gen_Kall": {
+        "dir": "results/generated/Kall",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = all",
+        "sublabel": "22 frames",
+        "max_width": 480
+      },
+      "rec_Kall": {
+        "dir": "results/rerender/Kall",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = all",
+        "sublabel": "22 frames",
+        "max_width": 480
+      },
+      "blend_Kall": {
+        "dir": "results/blend/Kall",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = all",
+        "sublabel": "22 frames",
+        "max_width": 480
+      },
+      "ctrl_K5_uniform": {
+        "dir": "results/control/skeleton/front/K5_uniform",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 5 uniform",
+        "sublabel": "evenly spaced",
+        "max_width": 480
+      },
+      "gen_K5_uniform": {
+        "dir": "results/generated/K5_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 5 uniform",
+        "sublabel": "evenly spaced",
+        "max_width": 480
+      },
+      "rec_K5_uniform": {
+        "dir": "results/rerender/K5_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 5 uniform",
+        "sublabel": "evenly spaced",
+        "max_width": 480
+      },
+      "blend_K5_uniform": {
+        "dir": "results/blend/K5_uniform",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 5 uniform",
+        "sublabel": "evenly spaced",
+        "max_width": 480
+      },
+      "ctrl_K5_velmin": {
+        "dir": "results/control/skeleton/front/K5_velmin",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 5 velmin",
+        "sublabel": "where the body is slowest",
+        "max_width": 480
+      },
+      "gen_K5_velmin": {
+        "dir": "results/generated/K5_velmin",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 5 velmin",
+        "sublabel": "where the body is slowest",
+        "max_width": 480
+      },
+      "rec_K5_velmin": {
+        "dir": "results/rerender/K5_velmin",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 5 velmin",
+        "sublabel": "where the body is slowest",
+        "max_width": 480
+      },
+      "blend_K5_velmin": {
+        "dir": "results/blend/K5_velmin",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 5 velmin",
+        "sublabel": "where the body is slowest",
+        "max_width": 480
+      },
+      "ctrl_K5_plaus": {
+        "dir": "results/control/skeleton/front/K5_plaus",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 5 plaus",
+        "sublabel": "the most physically plausible frames",
+        "max_width": 480
+      },
+      "gen_K5_plaus": {
+        "dir": "results/generated/K5_plaus",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 5 plaus",
+        "sublabel": "the most physically plausible frames",
+        "max_width": 480
+      },
+      "rec_K5_plaus": {
+        "dir": "results/rerender/K5_plaus",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 5 plaus",
+        "sublabel": "the most physically plausible frames",
+        "max_width": 480
+      },
+      "blend_K5_plaus": {
+        "dir": "results/blend/K5_plaus",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 5 plaus",
+        "sublabel": "the most physically plausible frames",
+        "max_width": 480
+      },
+      "ctrl_K3_uniform": {
+        "dir": "results/control/skeleton/front/K3_uniform",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 3 uniform",
+        "sublabel": "evenly spaced",
+        "max_width": 480
+      },
+      "gen_K3_uniform": {
+        "dir": "results/generated/K3_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 3 uniform",
+        "sublabel": "evenly spaced",
+        "max_width": 480
+      },
+      "rec_K3_uniform": {
+        "dir": "results/rerender/K3_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 3 uniform",
+        "sublabel": "evenly spaced",
+        "max_width": 480
+      },
+      "blend_K3_uniform": {
+        "dir": "results/blend/K3_uniform",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 3 uniform",
+        "sublabel": "evenly spaced",
+        "max_width": 480
+      },
+      "ctrl_K3_velmin": {
+        "dir": "results/control/skeleton/front/K3_velmin",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 3 velmin",
+        "sublabel": "where the body is slowest",
+        "max_width": 480
+      },
+      "gen_K3_velmin": {
+        "dir": "results/generated/K3_velmin",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 3 velmin",
+        "sublabel": "where the body is slowest",
+        "max_width": 480
+      },
+      "rec_K3_velmin": {
+        "dir": "results/rerender/K3_velmin",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 3 velmin",
+        "sublabel": "where the body is slowest",
+        "max_width": 480
+      },
+      "blend_K3_velmin": {
+        "dir": "results/blend/K3_velmin",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 3 velmin",
+        "sublabel": "where the body is slowest",
+        "max_width": 480
+      },
+      "ctrl_K3_plaus": {
+        "dir": "results/control/skeleton/front/K3_plaus",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 3 plaus",
+        "sublabel": "the most physically plausible frames",
+        "max_width": 480
+      },
+      "gen_K3_plaus": {
+        "dir": "results/generated/K3_plaus",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 3 plaus",
+        "sublabel": "the most physically plausible frames",
+        "max_width": 480
+      },
+      "rec_K3_plaus": {
+        "dir": "results/rerender/K3_plaus",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 3 plaus",
+        "sublabel": "the most physically plausible frames",
+        "max_width": 480
+      },
+      "blend_K3_plaus": {
+        "dir": "results/blend/K3_plaus",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 3 plaus",
+        "sublabel": "the most physically plausible frames",
+        "max_width": 480
+      }
+    }
+  }
+}

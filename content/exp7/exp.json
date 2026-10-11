@@ -1,0 +1,151 @@
+{
+  "id": "exp7",
+  "nav": "Exp 7",
+  "title": "Photoreal output, dense skeleton as control",
+  "question": "Does a skeleton on every frame keep the pose while freeing the appearance — and does releasing the control early in denoising give the model more room?",
+  "status": "complete",
+  "date": "2026-09-11",
+  "tags": [
+    "AMASS/BABEL",
+    "LTX-2.3 distilled",
+    "Union IC-LoRA",
+    "DWPose skeleton",
+    "GVHMR"
+  ],
+  "source_dir": "../Exp 07 - Photoreal output, Dense Skeleton as Control",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "squat": {
+        "text": "a man performing a deep squat"
+      },
+      "walk": {
+        "text": "a man walking along a city sidewalk"
+      },
+      "run": {
+        "text": "a man running on an outdoor running track",
+        "meta": {
+          "note": "input is a fast walk"
+        }
+      },
+      "jump": {
+        "text": "a man jumping upward"
+      },
+      "kick": {
+        "text": "a man performing a kick"
+      },
+      "stand_up": {
+        "text": "a man rising to his feet from a seated position"
+      },
+      "throw": {
+        "text": "a man throwing with an overhand motion"
+      },
+      "turn": {
+        "text": "a man turning around to face the other direction"
+      },
+      "wave": {
+        "text": "a man waving one arm"
+      }
+    },
+    "chips": [],
+    "sets": {
+      "input": {
+        "dir": "results/render/front",
+        "pattern": "{id}.mp4",
+        "label": "Input motion",
+        "sublabel": "AMASS/BABEL mocap",
+        "max_width": 480
+      },
+      "ctrl_skel": {
+        "dir": "results/control/skeleton/front",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton control",
+        "sublabel": "DWPose, every frame",
+        "max_width": 480
+      },
+      "ctrl_depth": {
+        "dir": "results/control/depth/front",
+        "pattern": "{id}.mp4",
+        "label": "Depth control",
+        "sublabel": "the Exp 6 control, for reference",
+        "max_width": 480
+      },
+      "gen_depth_dense": {
+        "dir": "results/generated/depth_dense",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — depth",
+        "sublabel": "depth on every frame, all 8 steps",
+        "max_width": 480
+      },
+      "rec_depth_dense": {
+        "dir": "results/rerender/depth_dense",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — depth",
+        "sublabel": "depth on every frame, all 8 steps",
+        "max_width": 480
+      },
+      "gen_skel_100": {
+        "dir": "results/generated/skel_100",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — skeleton 100%",
+        "sublabel": "control on all 8 steps",
+        "max_width": 480
+      },
+      "rec_skel_100": {
+        "dir": "results/rerender/skel_100",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — skeleton 100%",
+        "sublabel": "control on all 8 steps",
+        "max_width": 480
+      },
+      "gen_skel_58": {
+        "dir": "results/generated/skel_58",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — skeleton 58%",
+        "sublabel": "released after step 7 of 8",
+        "max_width": 480
+      },
+      "rec_skel_58": {
+        "dir": "results/rerender/skel_58",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — skeleton 58%",
+        "sublabel": "released after step 7 of 8",
+        "max_width": 480
+      },
+      "gen_skel_28": {
+        "dir": "results/generated/skel_28",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — skeleton 28%",
+        "sublabel": "released after step 6 of 8",
+        "max_width": 480
+      },
+      "rec_skel_28": {
+        "dir": "results/rerender/skel_28",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — skeleton 28%",
+        "sublabel": "released after step 6 of 8",
+        "max_width": 480
+      },
+      "gen_skel_09": {
+        "dir": "results/generated/skel_09",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — skeleton 9%",
+        "sublabel": "released after step 5 of 8",
+        "max_width": 480
+      },
+      "rec_skel_09": {
+        "dir": "results/rerender/skel_09",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — skeleton 9%",
+        "sublabel": "released after step 5 of 8",
+        "max_width": 480
+      }
+    }
+  }
+}

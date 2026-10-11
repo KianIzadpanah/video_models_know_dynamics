@@ -1,0 +1,246 @@
+{
+  "id": "exp10",
+  "nav": "Exp 10",
+  "title": "Broken input, photoreal output, skeleton as control",
+  "question": "Given a flawed text-to-motion clip as a skeleton on only K frames, does the video model redraw the bad frames in between into a better motion?",
+  "status": "complete",
+  "date": "2026-09-23",
+  "tags": [
+    "MotionGPT3",
+    "LTX-2.3 distilled",
+    "Union IC-LoRA",
+    "DWPose skeleton",
+    "GVHMR"
+  ],
+  "source_dir": "../Exp 10 - Broken input, Photoreal output, Skeleton as Control",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "wave": {
+        "text": "a person waves one hand",
+        "verdict": "improved",
+        "group": "easy"
+      },
+      "raise_arm": {
+        "text": "a person raises both arms above the head",
+        "verdict": "partial",
+        "group": "easy"
+      },
+      "sit_down": {
+        "text": "a person sits down on a chair",
+        "verdict": "improved",
+        "group": "easy"
+      },
+      "stand_up": {
+        "text": "a person stands up from a chair",
+        "verdict": "improved",
+        "group": "easy"
+      },
+      "walk": {
+        "text": "a person walks forward",
+        "verdict": "improved",
+        "group": "medium"
+      },
+      "turn": {
+        "text": "a person turns around to face the other way",
+        "verdict": "partial",
+        "group": "medium"
+      },
+      "squat": {
+        "text": "a person does a deep squat",
+        "verdict": "partial",
+        "group": "medium"
+      },
+      "step_side": {
+        "text": "a person steps sideways to the left",
+        "verdict": "no-change",
+        "group": "medium"
+      },
+      "run": {
+        "text": "a person runs forward",
+        "verdict": "no-change",
+        "group": "hard"
+      },
+      "jump": {
+        "text": "a person jumps up with both feet",
+        "verdict": "no-change",
+        "group": "hard"
+      },
+      "kick": {
+        "text": "a person kicks forward with one leg",
+        "verdict": "partial",
+        "group": "hard"
+      },
+      "throw": {
+        "text": "a person throws a ball overhand",
+        "verdict": "no-change",
+        "group": "hard"
+      }
+    },
+    "chips": [
+      {
+        "field": "verdict",
+        "labels": {
+          "improved": "refined at every K",
+          "partial": "refined, best at K = 5",
+          "no-change": "not refined"
+        }
+      }
+    ],
+    "sets": {
+      "input": {
+        "dir": "results/render/front",
+        "pattern": "{id}.mp4",
+        "label": "T2M input",
+        "sublabel": "MotionGPT3, flawed",
+        "max_width": 480
+      },
+      "ctrl_Kall": {
+        "dir": "results/control/skeleton/front/Kall",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = all",
+        "sublabel": "22 frames — 0·8·…·168",
+        "max_width": 480
+      },
+      "gen_Kall": {
+        "dir": "results/generated/Kall",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = all",
+        "sublabel": "22 frames — 0·8·…·168",
+        "max_width": 480
+      },
+      "rec_Kall": {
+        "dir": "results/rerender/Kall",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = all",
+        "sublabel": "22 frames — 0·8·…·168",
+        "max_width": 480
+      },
+      "blend_Kall": {
+        "dir": "results/blend/Kall",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = all",
+        "sublabel": "22 frames — 0·8·…·168",
+        "max_width": 480
+      },
+      "ctrl_K8": {
+        "dir": "results/control/skeleton/front/K8",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168",
+        "max_width": 480
+      },
+      "gen_K8": {
+        "dir": "results/generated/K8",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168",
+        "max_width": 480
+      },
+      "rec_K8": {
+        "dir": "results/rerender/K8",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168",
+        "max_width": 480
+      },
+      "blend_K8": {
+        "dir": "results/blend/K8",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 8",
+        "sublabel": "0·24·48·72·96·120·144·168",
+        "max_width": 480
+      },
+      "ctrl_K5": {
+        "dir": "results/control/skeleton/front/K5",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 5",
+        "sublabel": "0·40·88·128·168",
+        "max_width": 480
+      },
+      "gen_K5": {
+        "dir": "results/generated/K5",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 5",
+        "sublabel": "0·40·88·128·168",
+        "max_width": 480
+      },
+      "rec_K5": {
+        "dir": "results/rerender/K5",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 5",
+        "sublabel": "0·40·88·128·168",
+        "max_width": 480
+      },
+      "blend_K5": {
+        "dir": "results/blend/K5",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 5",
+        "sublabel": "0·40·88·128·168",
+        "max_width": 480
+      },
+      "ctrl_K3": {
+        "dir": "results/control/skeleton/front/K3",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 3",
+        "sublabel": "0·88·168",
+        "max_width": 480
+      },
+      "gen_K3": {
+        "dir": "results/generated/K3",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 3",
+        "sublabel": "0·88·168",
+        "max_width": 480
+      },
+      "rec_K3": {
+        "dir": "results/rerender/K3",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 3",
+        "sublabel": "0·88·168",
+        "max_width": 480
+      },
+      "blend_K3": {
+        "dir": "results/blend/K3",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 3",
+        "sublabel": "0·88·168",
+        "max_width": 480
+      },
+      "ctrl_K2": {
+        "dir": "results/control/skeleton/front/K2",
+        "pattern": "{id}.mp4",
+        "label": "Skeleton — K = 2",
+        "sublabel": "0·168 — the two ends",
+        "max_width": 480
+      },
+      "gen_K2": {
+        "dir": "results/generated/K2",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — K = 2",
+        "sublabel": "0·168 — the two ends",
+        "max_width": 480
+      },
+      "rec_K2": {
+        "dir": "results/rerender/K2",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — K = 2",
+        "sublabel": "0·168 — the two ends",
+        "max_width": 480
+      },
+      "blend_K2": {
+        "dir": "results/blend/K2",
+        "pattern": "{id}.mp4",
+        "label": "Blend — K = 2",
+        "sublabel": "0·168 — the two ends",
+        "max_width": 480
+      }
+    }
+  }
+}

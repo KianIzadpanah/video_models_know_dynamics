@@ -1,0 +1,265 @@
+{
+  "id": "exp15",
+  "nav": "Exp 15",
+  "title": "Broken input — bad, uniform and hand-picked keyframes",
+  "question": "Do keyframes picked by hand beat evenly spaced ones, are deliberately bad picks worse — and can a stage-by-stage prompt act as control on its own?",
+  "status": "complete",
+  "date": "2026-10-09",
+  "tags": [
+    "MotionGPT3",
+    "LTX-2.3 distilled",
+    "Union IC-LoRA",
+    "hand-picked keyframes",
+    "staged prompts",
+    "GVHMR"
+  ],
+  "source_dir": "../Exp 15 - Broken input, bad handpicks, good handpicks",
+  "media": {
+    "seeds": [
+      "1234",
+      "5678",
+      "9012"
+    ],
+    "default_seeds": [
+      "1234"
+    ],
+    "items": {
+      "walk_wave": {
+        "text": "a person walks forward while waving one hand",
+        "tier": "simple"
+      },
+      "run_jump": {
+        "text": "a person runs forward and jumps",
+        "tier": "simple"
+      },
+      "walk_stop_turn": {
+        "text": "a person walks forward, stops, and turns around",
+        "tier": "simple"
+      },
+      "pick_up": {
+        "text": "a person picks up an object from the floor",
+        "tier": "moderate"
+      },
+      "climb_ladder": {
+        "text": "a person climbs a ladder",
+        "tier": "moderate"
+      },
+      "take_shelf": {
+        "text": "a person takes something from a shelf",
+        "tier": "moderate"
+      },
+      "pirate_parrot": {
+        "text": "a pirate pets the parrot sitting on his shoulder",
+        "tier": "complex"
+      },
+      "backpack_table": {
+        "text": "a person takes an object out of a backpack and places it on a table",
+        "tier": "complex"
+      },
+      "kneel_pick_stand": {
+        "text": "a person kneels down, picks something up, and stands up",
+        "tier": "complex"
+      },
+      "walk_jump": {
+        "text": "a person walks forward, then jumps up with both feet",
+        "tier": "added"
+      },
+      "squat_wave": {
+        "text": "a person squats down while waving one hand",
+        "tier": "added"
+      },
+      "walk_back_dribble": {
+        "text": "a person walks backward while dribbling a basketball",
+        "tier": "added"
+      }
+    },
+    "chips": [
+      {
+        "field": "tier",
+        "labels": {
+          "simple": "simple",
+          "moderate": "moderate",
+          "complex": "complex",
+          "added": "added later"
+        }
+      }
+    ],
+    "sets": {
+      "input": {
+        "dir": "results/render/front",
+        "pattern": "{id}.mp4",
+        "label": "T2M input",
+        "sublabel": "MotionGPT3, flawed",
+        "max_width": 480
+      },
+      "gen_text_only": {
+        "dir": "results/generated/text_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — text only",
+        "sublabel": "short prompt, no control",
+        "max_width": 480
+      },
+      "rec_text_only": {
+        "dir": "results/rerender/text_only",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — text only",
+        "sublabel": "short prompt, no control",
+        "max_width": 480
+      },
+      "gen_text_only_staged": {
+        "dir": "results/generated/text_only_staged",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — staged text",
+        "sublabel": "\"first…, then…\" prompt, no control",
+        "max_width": 480
+      },
+      "rec_text_only_staged": {
+        "dir": "results/rerender/text_only_staged",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — staged text",
+        "sublabel": "\"first…, then…\" prompt, no control",
+        "max_width": 480
+      },
+      "ctrl_single_bad": {
+        "dir": "results/control/skeleton/front/single_bad",
+        "pattern": "{id}.mp4",
+        "label": "Control — bad · black",
+        "sublabel": "5 bad keyframes, black between",
+        "max_width": 480
+      },
+      "gen_single_bad": {
+        "dir": "results/generated/single_bad",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — bad · black",
+        "sublabel": "5 bad keyframes, black between",
+        "max_width": 480
+      },
+      "rec_single_bad": {
+        "dir": "results/rerender/single_bad",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — bad · black",
+        "sublabel": "5 bad keyframes, black between",
+        "max_width": 480
+      },
+      "ctrl_single_uniform": {
+        "dir": "results/control/skeleton/front/single_uniform",
+        "pattern": "{id}.mp4",
+        "label": "Control — uniform · black",
+        "sublabel": "0·40·88·128·168, black between",
+        "max_width": 480
+      },
+      "gen_single_uniform": {
+        "dir": "results/generated/single_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — uniform · black",
+        "sublabel": "0·40·88·128·168, black between",
+        "max_width": 480
+      },
+      "rec_single_uniform": {
+        "dir": "results/rerender/single_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — uniform · black",
+        "sublabel": "0·40·88·128·168, black between",
+        "max_width": 480
+      },
+      "ctrl_single_hand": {
+        "dir": "results/control/skeleton/front/single_hand",
+        "pattern": "{id}.mp4",
+        "label": "Control — hand · black",
+        "sublabel": "5 hand-picked keyframes, black between",
+        "max_width": 480
+      },
+      "gen_single_hand": {
+        "dir": "results/generated/single_hand",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — hand · black",
+        "sublabel": "5 hand-picked keyframes, black between",
+        "max_width": 480
+      },
+      "rec_single_hand": {
+        "dir": "results/rerender/single_hand",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — hand · black",
+        "sublabel": "5 hand-picked keyframes, black between",
+        "max_width": 480
+      },
+      "ctrl_trunkee_bad": {
+        "dir": "results/control/skeleton/front/trunkee_bad",
+        "pattern": "{id}.mp4",
+        "label": "Control — bad · trunk",
+        "sublabel": "5 bad keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "gen_trunkee_bad": {
+        "dir": "results/generated/trunkee_bad",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — bad · trunk",
+        "sublabel": "5 bad keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "rec_trunkee_bad": {
+        "dir": "results/rerender/trunkee_bad",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — bad · trunk",
+        "sublabel": "5 bad keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "ctrl_trunkee_uniform": {
+        "dir": "results/control/skeleton/front/trunkee_uniform",
+        "pattern": "{id}.mp4",
+        "label": "Control — uniform · trunk",
+        "sublabel": "5 uniform keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "gen_trunkee_uniform": {
+        "dir": "results/generated/trunkee_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — uniform · trunk",
+        "sublabel": "5 uniform keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "rec_trunkee_uniform": {
+        "dir": "results/rerender/trunkee_uniform",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — uniform · trunk",
+        "sublabel": "5 uniform keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "ctrl_trunkee_hand": {
+        "dir": "results/control/skeleton/front/trunkee_hand",
+        "pattern": "{id}.mp4",
+        "label": "Control — hand · trunk",
+        "sublabel": "5 hand-picked keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "gen_trunkee_hand": {
+        "dir": "results/generated/trunkee_hand",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — hand · trunk",
+        "sublabel": "5 hand-picked keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "rec_trunkee_hand": {
+        "dir": "results/rerender/trunkee_hand",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — hand · trunk",
+        "sublabel": "5 hand-picked keyframes + trunk and dots on every frame",
+        "max_width": 480
+      },
+      "gen_trunkee_hand_staged": {
+        "dir": "results/generated/trunkee_hand_staged",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Photoreal — hand · trunk · staged",
+        "sublabel": "hand · trunk control + staged prompt",
+        "max_width": 480
+      },
+      "rec_trunkee_hand_staged": {
+        "dir": "results/rerender/trunkee_hand_staged",
+        "pattern": "{id}_s{seed}.mp4",
+        "label": "Recovered — hand · trunk · staged",
+        "sublabel": "hand · trunk control + staged prompt",
+        "max_width": 480
+      }
+    }
+  }
+}

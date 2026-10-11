@@ -1,0 +1,174 @@
+{
+  "id": "exp17",
+  "nav": "Exp 17",
+  "title": "Video model output as a condition for a motion model",
+  "question": "Turn the pipeline around: take keyframes from a generated video and let a motion model (CondMDI) fill in between them. Is the result better 3D animation than the video's own pose lift?",
+  "status": "complete",
+  "date": "2026-10-09",
+  "tags": [
+    "Exp 15 videos",
+    "GVHMR",
+    "CondMDI",
+    "in-betweening"
+  ],
+  "source_dir": "../Exp 17 - Video Model output as a condition for Motion model",
+  "media": {
+    "seeds": [
+      "best"
+    ],
+    "default_seeds": [
+      "best"
+    ],
+    "items": {
+      "walk_wave__src_text": {
+        "text": "a person walks forward while waving one hand",
+        "src": "text"
+      },
+      "walk_wave__src_method": {
+        "text": "a person walks forward while waving one hand",
+        "src": "method"
+      },
+      "run_jump__src_text": {
+        "text": "a person runs forward and jumps",
+        "src": "text"
+      },
+      "run_jump__src_method": {
+        "text": "a person runs forward and jumps",
+        "src": "method"
+      },
+      "walk_stop_turn__src_text": {
+        "text": "a person walks forward, stops, and turns around",
+        "src": "text"
+      },
+      "walk_stop_turn__src_method": {
+        "text": "a person walks forward, stops, and turns around",
+        "src": "method"
+      },
+      "pick_up__src_text": {
+        "text": "a person picks up an object from the floor",
+        "src": "text"
+      },
+      "pick_up__src_method": {
+        "text": "a person picks up an object from the floor",
+        "src": "method"
+      },
+      "climb_ladder__src_text": {
+        "text": "a person climbs a ladder",
+        "src": "text"
+      },
+      "climb_ladder__src_method": {
+        "text": "a person climbs a ladder",
+        "src": "method"
+      },
+      "take_shelf__src_text": {
+        "text": "a person takes something from a shelf",
+        "src": "text"
+      },
+      "take_shelf__src_method": {
+        "text": "a person takes something from a shelf",
+        "src": "method"
+      },
+      "pirate_parrot__src_text": {
+        "text": "a pirate pets the parrot sitting on his shoulder",
+        "src": "text"
+      },
+      "pirate_parrot__src_method": {
+        "text": "a pirate pets the parrot sitting on his shoulder",
+        "src": "method"
+      },
+      "backpack_table__src_text": {
+        "text": "a person takes an object out of a backpack and places it on a table",
+        "src": "text"
+      },
+      "backpack_table__src_method": {
+        "text": "a person takes an object out of a backpack and places it on a table",
+        "src": "method"
+      },
+      "kneel_pick_stand__src_text": {
+        "text": "a person kneels down, picks something up, and stands up",
+        "src": "text"
+      },
+      "kneel_pick_stand__src_method": {
+        "text": "a person kneels down, picks something up, and stands up",
+        "src": "method"
+      },
+      "walk_jump__src_text": {
+        "text": "a person walks forward, then jumps up with both feet",
+        "src": "text"
+      },
+      "walk_jump__src_method": {
+        "text": "a person walks forward, then jumps up with both feet",
+        "src": "method"
+      },
+      "squat_wave__src_text": {
+        "text": "a person squats down while waving one hand",
+        "src": "text"
+      },
+      "squat_wave__src_method": {
+        "text": "a person squats down while waving one hand",
+        "src": "method"
+      },
+      "walk_back_dribble__src_text": {
+        "text": "a person walks backward while dribbling a basketball",
+        "src": "text"
+      },
+      "walk_back_dribble__src_method": {
+        "text": "a person walks backward while dribbling a basketball",
+        "src": "method"
+      }
+    },
+    "chips": [
+      {
+        "field": "src",
+        "labels": {
+          "text": "source: text-only video",
+          "method": "source: skeleton-controlled video"
+        }
+      }
+    ],
+    "sets": {
+      "source": {
+        "dir": "results/source_videos",
+        "pattern": "{id}.mp4",
+        "label": "Source video",
+        "sublabel": "from Exp 15, best of 3 seeds",
+        "max_width": 720
+      },
+      "r_lift": {
+        "dir": "results/renders/lift",
+        "pattern": "{id}.mp4",
+        "label": "GVHMR lift",
+        "sublabel": "the video's pose, every frame",
+        "max_width": 720
+      },
+      "r_lift_smooth": {
+        "dir": "results/renders/lift_smooth",
+        "pattern": "{id}.mp4",
+        "label": "lift, smoothed",
+        "sublabel": "Savitzky–Golay, 9 frames",
+        "max_width": 720
+      },
+      "r_blend_uniform": {
+        "dir": "results/renders/blend_uniform",
+        "pattern": "{id}.mp4",
+        "label": "blend",
+        "sublabel": "straight line between 5 keyframes",
+        "max_width": 720
+      },
+      "r_inbetween_uniform": {
+        "dir": "results/renders/inbetween_uniform",
+        "pattern": "{id}.mp4",
+        "label": "CondMDI",
+        "sublabel": "5 keyframes, no text",
+        "max_width": 720
+      },
+      "r_motion_text_uniform": {
+        "dir": "results/renders/motion_text_uniform",
+        "pattern": "{id}.mp4",
+        "label": "CondMDI + text",
+        "sublabel": "5 keyframes + the prompt",
+        "max_width": 720
+      }
+    }
+  }
+}
